@@ -17,30 +17,21 @@ export const Title = styled.h1`
 
 export const Game = styled.section`
   display: flex;
-  height: 80%;
-  width: 90%;
-  max-width: 1200px;
-  max-height: 800px;
-  gap: 1em;
+  justify-content: center;
+  gap: 0.5em;
 `
 
 export const ChessBoardWrapper = styled.section`
   display: flex;
-  flex: 6; /* 60% of the container */
+  flex: 0 0 calc(65vmin); /* 65% of the smaller viewport dimension */
+  height: calc(65vmin); /* Ensure it stays square */
   border: solid #FFF;
   min-width: 0; /* Allow chess board to shrink on window resize */
-  align-items: center;
-  justify-content: center;
-`
-
-export const ChessBoardContainer = styled.div`
-  border: solid red;
-  width: 200px;
 `
 
 export const Panel = styled.section`
   display: flex;  
-  flex: 4; /* 40% of the container */
+  flex: 0 0 calc(30vmin); /* 30% of the smaller viewport dimension */
   border: solid #FFF;
 `
 
