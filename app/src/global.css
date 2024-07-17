@@ -13,18 +13,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root {
+html, body, #root {
   height: 100%;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	min-height: 100%;
-	min-width: 100%;
-
-  box-sizing: border-box;
-  padding: 5rem;
+  margin: 0;
+  padding: 0;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 a {
   font-weight: 500;
@@ -33,19 +33,6 @@ a {
 }
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 4em;
-  line-height: 1.1;
 }
 
 button {

@@ -1,18 +1,24 @@
 import Logo from '/logo.svg'
-import { Header, Game, ChessBoard, Panel } from './styled'
+import { Header, Title, Game, ChessBoardWrapper, Panel, Footer } from './styled'
+import ChessBoard from './ChessBoard'
 
-function App() {
+const App = () => {
   return (
     <>
       <Header>
-        <img src={Logo} height="100" alt="Chessort Logo" />
-        <h1>Chessort</h1>
+        <img src={Logo} height="100em" alt="Chessort Logo" />
+        <Title>Chessort</Title>
       </Header>
 
       <Game>
-        <ChessBoard>TODO</ChessBoard>
-        <Panel>TODO</Panel>
+        <ChessBoardWrapper>
+          TODO!
+            {/* <ChessBoard /> */}
+        </ChessBoardWrapper>
+        <Panel>PANEL</Panel>
       </Game>
+
+      <Footer>FOOTER</Footer>
     </>
   )
 }
