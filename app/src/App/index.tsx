@@ -1,17 +1,18 @@
 import Logo from '/logo.svg'
-import { HeaderWrapper } from './styled'
+import { Header, Game, ChessBoard, Panel } from './styled'
 
 function App() {
   return (
     <>
-      <HeaderWrapper id="header">
+      <Header>
         <img src={Logo} height="100" alt="Chessort Logo" />
         <h1>Chessort</h1>
-      </HeaderWrapper>
+      </Header>
 
-      <div>
-        <p>TODO!!</p>
-      </div>
+      <Game>
+        <ChessBoard>TODO</ChessBoard>
+        <Panel>TODO</Panel>
+      </Game>
     </>
   )
 }
