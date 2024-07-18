@@ -1,6 +1,7 @@
 import LogoSvg from '/logo.svg'
-import { Header, Logo, Title, Game, ChessBoardWrapper, Panel, Footer } from './styled'
+import { Header, Logo, Title, Game, ChessBoardWrapper, PanelWrapper, Footer } from './styled'
 import ChessBoard from './ChessBoard'
+import Panel from './Panel'
 
 const App = () => {
   return (
@@ -14,7 +15,9 @@ const App = () => {
         <ChessBoardWrapper>
           <ChessBoard />
         </ChessBoardWrapper>
-        <Panel>PANEL</Panel>
+        <PanelWrapper>
+          <Panel />
+        </PanelWrapper>
       </Game>
 
       <Footer>FOOTER</Footer>

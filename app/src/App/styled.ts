@@ -49,7 +49,7 @@ export const ChessBoardWrapper = styled.section`
   min-width: 0; /* Allow chess board to shrink on window resize */
 `
 
-export const Panel = styled.section`
+export const PanelWrapper = styled.section`
   display: flex;  
   flex: 0 0 calc(30vmin); /* 30% of the smaller viewport dimension */
   border: solid #FFF;
