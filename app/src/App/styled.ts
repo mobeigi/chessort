@@ -2,12 +2,10 @@ import { styled } from 'styled-components'
 
 export const Header = styled.header`
   display: flex;
-  height: 10%;
   min-height: 125px;
   align-items: center;
   justify-content: center;
   gap: 1em;
-  padding: 0.5em 0;
 `
 
 export const Title = styled.h1`
@@ -23,8 +21,12 @@ export const Game = styled.section`
 
 export const ChessBoardWrapper = styled.section`
   display: flex;
-  flex: 0 0 calc(65vmin); /* 65% of the smaller viewport dimension */
-  height: calc(65vmin); /* Ensure it stays square */
+  /* Hack below to ensure chessboard looks good on any viewport.
+   * This is because the board's height/width is set based on parent elements width.
+   * We set width/height to square based on vmin with an enforced minimum pixel amount.
+  */
+  flex: 0 0 calc(max(65vmin, 300px));
+  height: calc(max(65vmin, 300px));
   border: solid #FFF;
   min-width: 0; /* Allow chess board to shrink on window resize */
 `
@@ -38,7 +40,6 @@ export const Panel = styled.section`
 export const Footer = styled.footer`
   display: flex;
   min-height: 85px;
-  height: 5%;
 
   justify-content: center;
   align-items: center;
