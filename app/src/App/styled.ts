@@ -25,8 +25,8 @@ export const ChessBoardWrapper = styled.section`
    * This is because the board's height/width is set based on parent elements width.
    * We set width/height to square based on vmin with an enforced minimum pixel amount.
   */
-  flex: 0 0 calc(max(65vmin, 300px));
-  height: calc(max(65vmin, 300px));
+  flex: 0 0 calc(max(65vmin, 200px));
+  height: calc(max(65vmin, 200px));
   border: solid #FFF;
   min-width: 0; /* Allow chess board to shrink on window resize */
 `
