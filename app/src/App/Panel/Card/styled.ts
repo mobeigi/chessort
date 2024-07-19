@@ -97,6 +97,7 @@ export const EngineRank = styled.span<EngineRankProps>`
   font-size: 0.7em;
   font-weight: 600;
   opacity: 0.8;
+  padding: 2px;
 
   &::before {
     content: '${(props) => props.$rank}';
@@ -110,7 +111,6 @@ export const EngineRank = styled.span<EngineRankProps>`
     props.$rank <= 3 &&
     `
     clip-path: polygon(50% 0%, 63% 33%, 98% 35%, 68% 57%, 79% 91%, 50% 72%, 21% 91%, 32% 57%, 2% 35%, 37% 33%);
-    padding: 2px;
   `}
 
   ${(props) =>
@@ -137,10 +137,9 @@ export const EngineRank = styled.span<EngineRankProps>`
   ${(props) =>
     props.$rank > 3 &&
     `
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
     background-color: #808080;
     color: #ffffeb;
-    border-radius: 50%;
-    padding: 0px;
   `}
 `;
 
