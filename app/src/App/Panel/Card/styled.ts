@@ -13,7 +13,6 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   },
 }))<CardContainerProps>`
   display: flex;
-  gap: 0.4em;
   background-color: #b58b69;
   color: #323232;
   padding: 1em 0.8em;
@@ -21,15 +20,23 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   border-radius: 0.2em;
   cursor: grab;
   align-items: center;
+
+  > *:not(:first-child) {
+    margin-left: 0.4em; /* Set the default gap */
+  }
+
+  > *:nth-child(2) {
+    margin-left: 0.2em; /* No gap between 1st & 2nd child */
+  }
 `;
 
 export const CurrentRankWrapper = styled.span`
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 0.2em;
 `
 
-export const CurrentRankIconWrapper = styled.span`
+export const StatusIconWrapper = styled.span`
   display: flex;
   
   svg {
@@ -40,12 +47,6 @@ export const CurrentRankIconWrapper = styled.span`
 
 export const CurrentRankNumber = styled.span`
   font-weight: bold;
-`
-
-export const StatusIconWrapper = styled.span`
-  display: block;
-  width: 24px;
-  height: 24px;
 `
 
 export const SanMoveWrapper = styled.span`

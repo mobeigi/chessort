@@ -25,8 +25,8 @@ const initCardDetails: CardDetails[] = [
     revealed: true,
     evalResults: {
       rank: 2,
-      engineEval: '-1651', 
-      engineOverallRank: 2
+      engineEval: '-125', 
+      engineOverallRank: 27
     }
   },
   { 
@@ -35,9 +35,9 @@ const initCardDetails: CardDetails[] = [
     curRank: 3, 
     revealed: true,
     evalResults: {
-      rank: 2,
-      engineEval: '#4', 
-      engineOverallRank: 4
+      rank: 4,
+      engineEval: '#-4', 
+      engineOverallRank: 152
     }
   },
   { 
