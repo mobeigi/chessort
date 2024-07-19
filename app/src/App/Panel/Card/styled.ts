@@ -17,7 +17,7 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   background-color: #b58b69;
   color: #323232;
   padding: 1em 0.8em;
-  border: 2px solid #000;
+  border: 2px solid #242424;
   border-radius: 0.2em;
   cursor: grab;
   align-items: center;
