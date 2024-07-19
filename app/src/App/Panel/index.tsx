@@ -7,10 +7,45 @@ import { Card } from './Card';
 import { CardDetails } from './Card/types';
 
 const initCardDetails: CardDetails[] = [
-  { uciMove: 'e2e4', sanMove: 'e4', curRank: 1, revealed: false },
-  { uciMove: 'd2d4', sanMove: 'd4', curRank: 2, revealed: false },
-  { uciMove: 'g1f3', sanMove: 'Nf3', curRank: 3, revealed: false },
-  { uciMove: 'c2c4', sanMove: 'c4', curRank: 4, revealed: false },
+  { 
+    uciMove: 'e2e4', 
+    sanMove: 'e4', 
+    curRank: 1, 
+    revealed: true,
+    evalResults: {
+      rank: 1,
+      engineEval: '+265', 
+      engineOverallRank: 1
+    }
+  },
+  { 
+    uciMove: 'd2d4', 
+    sanMove: 'd4', 
+    curRank: 2, 
+    revealed: true,
+    evalResults: {
+      rank: 2,
+      engineEval: '-1651', 
+      engineOverallRank: 2
+    }
+  },
+  { 
+    uciMove: 'g1f3', 
+    sanMove: 'h7h8=N', 
+    curRank: 3, 
+    revealed: true,
+    evalResults: {
+      rank: 2,
+      engineEval: '#4', 
+      engineOverallRank: 4
+    }
+  },
+  { 
+    uciMove: 'c2c4', 
+    sanMove: 'c4', 
+    curRank: 4, 
+    revealed: false 
+  },
 ];
 
 const Panel = () => {

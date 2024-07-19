@@ -15,3 +15,9 @@ export type EvalResults = {
   engineEval: string;
   engineOverallRank: number;
 }
+
+export enum Advantage {
+  White = 'white',
+  Black = 'black',
+  Neutral = 'neutral'
+}
