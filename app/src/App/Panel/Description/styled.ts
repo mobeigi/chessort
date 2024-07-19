@@ -1,6 +1,11 @@
 import { styled } from 'styled-components';
 import { Difficulty } from '../../../context/types';
 
+export const DifficultyLine = styled.div`
+  display: flex;
+  gap: 0.5em;
+`;
+
 interface DifficultyWrapperProps {
   difficulty: Difficulty;
 }
@@ -22,8 +27,10 @@ const getBackgroundColor = (difficulty: Difficulty) => {
   }
 };
 
-export const DifficultyWrapper = styled.span<DifficultyWrapperProps>`
-  display: inline-block;
+export const DifficultyLozenge = styled.span<DifficultyWrapperProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0.1em 0.3em;
   border-radius: 4px;
   font-size: 0.8rem;

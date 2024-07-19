@@ -1,5 +1,5 @@
 import { useGameContext } from '../../../context/gameContext';
-import { DifficultyWrapper } from './styled';
+import { DifficultyLine, DifficultyLozenge } from './styled';
 
 export const Description = () => {
   const { state } = useGameContext();
@@ -9,10 +9,10 @@ export const Description = () => {
       <p>
         <strong>Puzzle: </strong> TODO
       </p>
-      <p>
+      <DifficultyLine>
         <strong>Difficulty: </strong>
-        <DifficultyWrapper difficulty={state.gameDetails.difficulty}>{state.gameDetails.difficulty}</DifficultyWrapper>
-      </p>
+        <DifficultyLozenge difficulty={state.gameDetails.difficulty}>{state.gameDetails.difficulty}</DifficultyLozenge>
+      </DifficultyLine>
     </>
   );
 };
