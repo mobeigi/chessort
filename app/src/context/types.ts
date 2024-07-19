@@ -1,6 +1,6 @@
 export interface GameState {
   gameDetails: GameDetails;
-  moveDetails: MoveDetails[];
+  moveDetails: MoveDetail[];
 }
 
 export type GameDetails = {
@@ -9,7 +9,7 @@ export type GameDetails = {
   }
 
 
-export type MoveDetails = {
+export type MoveDetail = {
     uciMove: string;
     sanMove: string;
     curRank: number;

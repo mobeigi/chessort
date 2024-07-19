@@ -59,7 +59,7 @@ const GameContext = createContext<{
 
 const gameReducer = (state: GameState, action: GameAction): GameState => {
   switch (action.type) {
-    case 'UPDATE_CARD_DETAILS':
+    case 'UPDATE_MOVE_DETAILS':
       return {
         ...state,
         moveDetails: action.payload,

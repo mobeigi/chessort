@@ -22,12 +22,12 @@ const Panel = () => {
       const newIndex = over ? state.moveDetails.findIndex(card => card.uciMove === over.id) : oldIndex;
 
       // Keep curRank updated to position in list
-      const newCardDetails = arrayMove(state.moveDetails, oldIndex, newIndex).map((cardDetail, index) => ({
-        ...cardDetail,
+      const newMoveDetails = arrayMove(state.moveDetails, oldIndex, newIndex).map((moveDetail, index) => ({
+        ...moveDetail,
         curRank: index + 1
       }));
 
-      dispatch({ type: 'UPDATE_CARD_DETAILS', payload: newCardDetails });
+      dispatch({ type: 'UPDATE_MOVE_DETAILS', payload: newMoveDetails });
     }
   };
 
@@ -41,8 +41,8 @@ const Panel = () => {
       <CardsWrapper>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd} modifiers={[restrictToParentElement]}>
           <SortableContext items={state.moveDetails.map(card => card.uciMove)} strategy={verticalListSortingStrategy}>
-            {state.moveDetails.map((cardDetail) => (
-              <Card key={cardDetail.uciMove} cardDetail={cardDetail} />
+            {state.moveDetails.map((moveDetail) => (
+              <Card key={moveDetail.uciMove} moveDetail={moveDetail} />
             ))}
           </SortableContext>
         </DndContext>
