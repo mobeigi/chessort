@@ -118,3 +118,23 @@ export const getOverlayColor = (color: Color): string => {
       return '#312e2b';
   }
 };
+
+export const getOrdinalSuffix = (number: number) => {
+  const lastDigit = number % 10;
+  const lastTwoDigits = number % 100;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+    return `${number}th`; // 11th, 12th, 13th
+  }
+
+  switch (lastDigit) {
+    case 1:
+      return `${number}st`;
+    case 2:
+      return `${number}nd`;
+    case 3:
+      return `${number}rd`;
+    default:
+      return `${number}th`;
+  }
+};

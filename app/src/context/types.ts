@@ -21,10 +21,10 @@ export type MoveDetail = {
   sanMove: string;
   curRank: number;
   revealed: boolean;
-  evalResults?: EvalResults;
+  evalResult?: EvalResult;
 };
 
-export type EvalResults = {
+export type EvalResult = {
   rank: number; // the real relative ranking for the position
   engineEval: string;
   engineOverallRank: number;

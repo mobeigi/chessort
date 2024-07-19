@@ -8,7 +8,7 @@ const initialState: GameState = {
       sanMove: 'Qd6',
       curRank: 1,
       revealed: true,
-      evalResults: {
+      evalResult: {
         rank: 1,
         engineEval: '+265',
         engineOverallRank: 1,
@@ -19,7 +19,7 @@ const initialState: GameState = {
       sanMove: 'Nd4',
       curRank: 2,
       revealed: true,
-      evalResults: {
+      evalResult: {
         rank: 2,
         engineEval: '-125',
         engineOverallRank: 2,
@@ -30,7 +30,7 @@ const initialState: GameState = {
       sanMove: 'h7h8=N',
       curRank: 3,
       revealed: true,
-      evalResults: {
+      evalResult: {
         rank: 4,
         engineEval: '#-4',
         engineOverallRank: 37,
