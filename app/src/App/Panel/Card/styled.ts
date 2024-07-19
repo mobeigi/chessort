@@ -54,9 +54,10 @@ export const SanMoveWrapper = styled.span`
   flex-grow: 1;
   justify-content: center;
 
-  font-size: 1.4em;
-  font-family: 'Chesan';
-  color: #FFF;
+  font-size: 1.2em;
+  font-weight: bold;
+  font-family: 'Roboto Mono', monospace;
+  color: #fff;
   text-shadow: 0px 0px 4px #000;
 `
 

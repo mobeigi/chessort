@@ -20,7 +20,7 @@ const initCardDetails: CardDetails[] = [
   },
   { 
     uciMove: 'd2d4', 
-    sanMove: 'd4', 
+    sanMove: 'Nd4', 
     curRank: 2, 
     revealed: true,
     evalResults: {

@@ -45,7 +45,9 @@ export const Card = ({ cardDetail }: CardProps) => {
           <CurrentRankNumber>{cardDetail.curRank}</CurrentRankNumber>
         </CurrentRankWrapper>
         <SanMoveWrapper>{cardDetail.sanMove}</SanMoveWrapper>
-        <EngineRankWrapper>1</EngineRankWrapper>
+        {cardDetail.revealed && 
+          <EngineRankWrapper>1</EngineRankWrapper> 
+        }
         <EngineEvalWrapper $advantageFor={advantage}>{engineEvalValue}</EngineEvalWrapper>
       </CardContainer>
     );
