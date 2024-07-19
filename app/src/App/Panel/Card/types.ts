@@ -1,4 +1,4 @@
-import { MoveDetail } from '../../../context/types'
+import { MoveDetail } from '../../../context/types';
 export interface CardProps {
   moveDetail: MoveDetail;
 }
@@ -6,7 +6,7 @@ export interface CardProps {
 export enum Color {
   White = 'white',
   Black = 'black',
-  Neutral = 'neutral'
+  Neutral = 'neutral',
 }
 
 // Unicode characters for chess pieces in Noto Sans Symbols 2

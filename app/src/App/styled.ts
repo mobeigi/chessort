@@ -1,4 +1,4 @@
-import { styled } from 'styled-components'
+import { styled } from 'styled-components';
 
 export const Header = styled.header`
   display: flex;
@@ -13,7 +13,7 @@ export const Header = styled.header`
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-`
+`;
 
 export const Logo = styled.img`
   height: 6em;
@@ -24,18 +24,18 @@ export const Logo = styled.img`
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-`
+`;
 
 export const Title = styled.h1`
   font-size: 4.5em;
   line-height: 1em;
-`
+`;
 
 export const GameWrapper = styled.section`
   display: flex;
   justify-content: center;
   gap: 0.5em;
-`
+`;
 
 export const ChessBoardWrapper = styled.section`
   display: flex;
@@ -48,13 +48,13 @@ export const ChessBoardWrapper = styled.section`
   border: 1px solid #ccc;
   box-sizing: border-box;
   min-width: 0; /* Allow chess board to shrink on window resize */
-`
+`;
 
 export const PanelWrapper = styled.section`
-  display: flex;  
+  display: flex;
   flex: 0 0 calc(30vmin); /* 30% of the smaller viewport dimension */
   border: 1px solid #ccc;
-`
+`;
 
 export const Footer = styled.footer`
   display: flex;
@@ -62,4 +62,4 @@ export const Footer = styled.footer`
 
   justify-content: center;
   align-items: center;
-`
+`;

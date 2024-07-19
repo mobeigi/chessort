@@ -1,7 +1,7 @@
-import LogoSvg from '/logo.svg'
-import { Header, Logo, Title, GameWrapper, ChessBoardWrapper, PanelWrapper, Footer } from './styled'
-import ChessBoard from './ChessBoard'
-import Panel from './Panel'
+import LogoSvg from '/logo.svg';
+import { Header, Logo, Title, GameWrapper, ChessBoardWrapper, PanelWrapper, Footer } from './styled';
+import ChessBoard from './ChessBoard';
+import Panel from './Panel';
 import { GameProvider } from '../context/gameContext';
 
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
 
       <Footer>FOOTER</Footer>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

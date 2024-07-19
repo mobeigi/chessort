@@ -3,7 +3,7 @@ import { BLACK_PIECES } from './constants';
 
 /**
  * Evaluates the given chess engine evaluation string and determines the advantage.
- * 
+ *
  * @param evaluation - The evaluation string from the chess engine.
  *                      This can be in the form of a centipawn evaluation (e.g., "+265", "-462")
  *                      or a mate evaluation (e.g., "#1", "#-1").
@@ -29,7 +29,7 @@ export const evaluateAdvantage = (evaluation: string): Color => {
 
 /**
  * Formats the given chess engine evaluation string to a more readable format.
- * 
+ *
  * @param evaluation - The evaluation string from the chess engine.
  *                      This can be in the form of a centipawn evaluation (e.g., "+265", "-462")
  *                      or a mate evaluation (e.g., "#1", "#-1").
@@ -54,11 +54,11 @@ const determineSign = (centipawnValue: number): string => {
     return '';
   }
   return centipawnValue > 0 ? '+' : '-';
-}
+};
 
 /**
  * Returns the Unicode character for the black piece being moved in SAN notation.
- * 
+ *
  * @param san - The SAN notation of the move.
  *              This can be in the form of a piece move (e.g., "Nf3" for knight move)
  *              or a pawn move (e.g., "e5").
@@ -83,7 +83,7 @@ export const getPieceUnicode = (san: string): string => {
 
 /**
  * Returns the base color (background color) based on the given color.
- * 
+ *
  * @param color - The color indicating who has the advantage (Color.White, Color.Black, or Color.Neutral).
  * @returns The base color as a string.
  */
@@ -102,7 +102,7 @@ export const getBaseColor = (color: Color): string => {
 
 /**
  * Returns the overlay color (text color) based on the given color.
- * 
+ *
  * @param color - The color indicating who has the advantage (Color.White, Color.Black, or Color.Neutral).
  * @returns The overlay color as a string.
  */

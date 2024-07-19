@@ -1,4 +1,4 @@
-import { styled } from 'styled-components'
+import { styled } from 'styled-components';
 
 export const PanelContainer = styled.div`
   display: flex;
@@ -7,9 +7,9 @@ export const PanelContainer = styled.div`
   height: 100%;
   align-items: center;
   justify-content: center;
-  gap: 1em;  
+  gap: 1em;
   background: linear-gradient(135deg, #242424, #36454f);
-`
+`;
 
 export const DescriptionWrapper = styled.main`
   display: flex;
@@ -19,10 +19,10 @@ export const DescriptionWrapper = styled.main`
   gap: 0.2em;
 
   p {
-  	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
   }
-`
+`;
 
 export const CardsWrapper = styled.div`
   display: flex;
@@ -36,5 +36,5 @@ export const CardsWrapper = styled.div`
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  -ms-user-select: none
-`
+  -ms-user-select: none;
+`;
