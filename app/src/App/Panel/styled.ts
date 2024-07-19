@@ -32,4 +32,9 @@ export const CardsWrapper = styled.div`
   gap: 0.4em;
   padding: 0.5em 0.5em;
   box-sizing: border-box; /* Ensure padding is included in element so you can slightly drag upwards/outwards at first/last dragables */
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none
 `
