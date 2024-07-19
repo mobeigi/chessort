@@ -3,8 +3,8 @@ import { CSS } from '@dnd-kit/utilities';
 import { CardContainer } from './styled';
 import { CardProps } from './types';
 
-export const Card = ({ id }: CardProps) => {
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+export const Card = ({ cardDetail }: CardProps) => {
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: cardDetail.uciMove });
   
     const transformStyle = CSS.Transform.toString(transform);
   
@@ -16,7 +16,8 @@ export const Card = ({ id }: CardProps) => {
         {...attributes}
         {...listeners}
       >
-        {id}
+        {cardDetail.curRank}&nbsp;
+        {cardDetail.sanMove}&nbsp;
       </CardContainer>
     );
   };

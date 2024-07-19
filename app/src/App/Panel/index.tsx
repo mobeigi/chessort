@@ -4,11 +4,17 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { Card } from './Card';
+import { CardDetails } from './Card/types';
 
-const initialItems = ['Card 1', 'Card 2', 'Card 3', 'Card 4'];
+const initCardDetails: CardDetails[] = [
+  { uciMove: 'e2e4', sanMove: 'e4', curRank: 1, revealed: false },
+  { uciMove: 'd2d4', sanMove: 'd4', curRank: 2, revealed: false },
+  { uciMove: 'g1f3', sanMove: 'Nf3', curRank: 3, revealed: false },
+  { uciMove: 'c2c4', sanMove: 'c4', curRank: 4, revealed: false },
+];
 
 const Panel = () => {
-  const [items, setItems] = useState(initialItems);
+  const [cardDetails, setCardDetails] = useState(initCardDetails);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -20,15 +26,20 @@ const Panel = () => {
     const { active, over } = event;
 
     if (active.id !== over?.id) {
-      setItems((items) => {
-        const oldIndex = items.indexOf(active.id as string);
-        const newIndex = over ? items.indexOf(over.id as string) : oldIndex;
+      setCardDetails((cardDetails) => {
+        const oldIndex = cardDetails.findIndex(card => card.uciMove === active.id);
+        const newIndex = over ? cardDetails.findIndex(card => card.uciMove === over.id) : oldIndex;
 
-        return arrayMove(items, oldIndex, newIndex);
+        // Keep curRank updated to position in list
+        const newCards = arrayMove(cardDetails, oldIndex, newIndex).map((cardDetail, index) => ({
+          ...cardDetail,
+          curRank: index + 1
+        }));
+
+        return newCards;
       });
     }
   };
-
 
   return (
     <PanelContainer>
@@ -39,9 +50,9 @@ const Panel = () => {
 
       <CardsWrapper>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd} modifiers={[restrictToParentElement]}>
-          <SortableContext items={items} strategy={verticalListSortingStrategy}>
-            {items.map((item) => (
-              <Card key={item} id={item} />
+          <SortableContext items={cardDetails.map(card => card.uciMove)} strategy={verticalListSortingStrategy}>
+            {cardDetails.map((cardDetail) => (
+              <Card key={cardDetail.uciMove} cardDetail={cardDetail} />
             ))}
           </SortableContext>
         </DndContext>
