@@ -3,9 +3,17 @@ export interface GameState {
   moveDetails: MoveDetail[];
 }
 
+export enum Difficulty {
+  BEGINNER = 'Beginner',
+  EASY = 'Easy',
+  MEDIUM = 'Medium',
+  HARD = 'Hard',
+  MASTER = 'Master',
+}
+
 export type GameDetails = {
   fen: string;
-  difficulty: string;
+  difficulty: Difficulty;
 };
 
 export type MoveDetail = {

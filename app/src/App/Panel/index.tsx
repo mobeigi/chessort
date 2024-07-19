@@ -17,6 +17,7 @@ import {
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { Card } from './Card';
 import { useGameContext } from '../../context/gameContext';
+import { Description } from './Description';
 
 const Panel = () => {
   const { state, dispatch } = useGameContext();
@@ -24,7 +25,7 @@ const Panel = () => {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -47,12 +48,7 @@ const Panel = () => {
   return (
     <PanelContainer>
       <DescriptionWrapper>
-        <p>
-          <strong>Puzzle: </strong> TODO
-        </p>
-        <p>
-          <strong>Difficulty: </strong> Hidden
-        </p>
+        <Description />
       </DescriptionWrapper>
 
       <CardsWrapper>

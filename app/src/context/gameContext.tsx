@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext, ReactNode } from 'react';
-import { GameState, GameAction } from './types';
+import { GameState, GameAction, Difficulty } from './types';
 
 const initialState: GameState = {
   moveDetails: [
@@ -45,7 +45,7 @@ const initialState: GameState = {
   ],
   gameDetails: {
     fen: 'start',
-    difficulty: 'easy', // TODO: Make into enum
+    difficulty: Difficulty.BEGINNER,
   },
 };
 
