@@ -1,55 +1,12 @@
-import { useState } from "react";
 import { PanelContainer, DescriptionWrapper, CardsWrapper } from './styled';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { Card } from './Card';
-import { CardDetails } from './Card/types';
-
-const initCardDetails: CardDetails[] = [
-  { 
-    uciMove: 'e2e4', 
-    sanMove: 'Qd6', 
-    curRank: 1, 
-    revealed: true,
-    evalResults: {
-      rank: 1,
-      engineEval: '+265', 
-      engineOverallRank: 1
-    }
-  },
-  { 
-    uciMove: 'd2d4', 
-    sanMove: 'Nd4', 
-    curRank: 2, 
-    revealed: true,
-    evalResults: {
-      rank: 2,
-      engineEval: '-125', 
-      engineOverallRank: 2
-    }
-  },
-  { 
-    uciMove: 'g1f3', 
-    sanMove: 'h7h8=N', 
-    curRank: 3, 
-    revealed: true,
-    evalResults: {
-      rank: 4,
-      engineEval: '#-4', 
-      engineOverallRank: 37
-    }
-  },
-  { 
-    uciMove: 'c2c4', 
-    sanMove: 'c4', 
-    curRank: 4, 
-    revealed: false 
-  },
-];
+import { useGameContext } from '../../context/gameContext';
 
 const Panel = () => {
-  const [cardDetails, setCardDetails] = useState(initCardDetails);
+  const { state, dispatch } = useGameContext();
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -61,18 +18,16 @@ const Panel = () => {
     const { active, over } = event;
 
     if (active.id !== over?.id) {
-      setCardDetails((cardDetails) => {
-        const oldIndex = cardDetails.findIndex(card => card.uciMove === active.id);
-        const newIndex = over ? cardDetails.findIndex(card => card.uciMove === over.id) : oldIndex;
+      const oldIndex = state.cardDetails.findIndex(card => card.uciMove === active.id);
+      const newIndex = over ? state.cardDetails.findIndex(card => card.uciMove === over.id) : oldIndex;
 
-        // Keep curRank updated to position in list
-        const newCards = arrayMove(cardDetails, oldIndex, newIndex).map((cardDetail, index) => ({
-          ...cardDetail,
-          curRank: index + 1
-        }));
+      // Keep curRank updated to position in list
+      const newCardDetails = arrayMove(state.cardDetails, oldIndex, newIndex).map((cardDetail, index) => ({
+        ...cardDetail,
+        curRank: index + 1
+      }));
 
-        return newCards;
-      });
+      dispatch({ type: 'UPDATE_CARD_DETAILS', payload: newCardDetails });
     }
   };
 
@@ -85,8 +40,8 @@ const Panel = () => {
 
       <CardsWrapper>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd} modifiers={[restrictToParentElement]}>
-          <SortableContext items={cardDetails.map(card => card.uciMove)} strategy={verticalListSortingStrategy}>
-            {cardDetails.map((cardDetail) => (
+          <SortableContext items={state.cardDetails.map(card => card.uciMove)} strategy={verticalListSortingStrategy}>
+            {state.cardDetails.map((cardDetail) => (
               <Card key={cardDetail.uciMove} cardDetail={cardDetail} />
             ))}
           </SortableContext>
@@ -98,4 +53,4 @@ const Panel = () => {
   )
 }
 
-export default Panel
+export default Panel;

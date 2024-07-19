@@ -31,7 +31,7 @@ export const Title = styled.h1`
   line-height: 1em;
 `
 
-export const Game = styled.section`
+export const GameWrapper = styled.section`
   display: flex;
   justify-content: center;
   gap: 0.5em;
