@@ -26,7 +26,7 @@ const initCardDetails: CardDetails[] = [
     evalResults: {
       rank: 2,
       engineEval: '-125', 
-      engineOverallRank: 27
+      engineOverallRank: 2
     }
   },
   { 
@@ -37,7 +37,7 @@ const initCardDetails: CardDetails[] = [
     evalResults: {
       rank: 4,
       engineEval: '#-4', 
-      engineOverallRank: 152
+      engineOverallRank: 37
     }
   },
   { 

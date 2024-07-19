@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { CardContainer, CurrentRankWrapper, CurrentRankNumber, StatusIconWrapper, SanMoveWrapper, MoveChessPiece, MoveNotation, EngineRankWrapper, EngineEvalWrapper } from './styled';
+import { CardContainer, CurrentRankWrapper, CurrentRankNumber, StatusIconWrapper, SanMoveWrapper, MoveChessPiece, MoveNotation, EngineRankWrapper, EngineRank, EngineEvalWrapper } from './styled';
 import { CardProps, Color, CardDetails } from './types';
 import CorrectIcon from '../../../assets/icons/correct.svg?react';
 import IncorrectIcon from '../../../assets/icons/incorrect.svg?react';
@@ -51,7 +51,9 @@ export const Card = ({ cardDetail }: CardProps) => {
           <MoveNotation $color={turnToMove}>{cardDetail.sanMove}</MoveNotation>
         </SanMoveWrapper>
         {cardDetail.revealed && 
-          <EngineRankWrapper>1</EngineRankWrapper> 
+          <EngineRankWrapper>
+            <EngineRank $rank={cardDetail.evalResults!!.engineOverallRank}></EngineRank> 
+          </EngineRankWrapper>
         }
         <EngineEvalWrapper $advantageFor={advantageColor}>{engineEvalValue}</EngineEvalWrapper>
       </CardContainer>

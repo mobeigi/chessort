@@ -27,9 +27,9 @@ export const DescriptionWrapper = styled.main`
 export const CardsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 97%;
   justify-content: center;
   gap: 0.4em;
-  padding: 0.4em 0.2em;
+  padding: 0.5em 0.5em;
   box-sizing: border-box; /* Ensure padding is included in element so you can slightly drag upwards/outwards at first/last dragables */
 `

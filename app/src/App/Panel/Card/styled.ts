@@ -81,7 +81,58 @@ export const MoveNotation = styled.span<SanMovePieceProps>`
   text-shadow: 0px 0px 4px ${(props) => getOverlayColor(props.$color)};
 `
 
-export const EngineRankWrapper = styled.span``
+export const EngineRankWrapper = styled.span`
+  display: flex;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25)); // Need to add the drop shadow here so it affects clip-path in child
+`
+
+interface EngineRankProps {
+  $rank: number;
+}
+
+export const EngineRank = styled.span<EngineRankProps>`
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  font-size: 0.7em;
+  font-weight: 600;
+  opacity: 0.8;
+
+  &::before {
+    content: "${props => props.$rank}";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  ${props => props.$rank <= 3 && `
+    clip-path: polygon(50% 0%, 63% 33%, 98% 35%, 68% 57%, 79% 91%, 50% 72%, 21% 91%, 32% 57%, 2% 35%, 37% 33%);
+    padding: 2px;
+  `}
+
+  ${props => props.$rank === 1 && `
+    background-color: gold;
+    color: #B8860B;
+  `}
+
+  ${props => props.$rank === 2 && `
+    background-color: silver;
+    color: #4F4F4F;
+  `}
+
+  ${props => props.$rank === 3 && `
+    background-color: #cd7f32;
+    color: #964e12;
+  `}
+
+  ${props => props.$rank > 3 && `
+    background-color: #808080;
+    color: #ffffeb;
+    border-radius: 50%;
+    padding: 0px;
+  `}
+`;
 
 interface EngineEvalWrapperProps {
   $advantageFor: Color;
