@@ -27,6 +27,34 @@ html, body {
   align-items: center;
 }
 
+@font-face {
+  font-family: 'Chesan';
+  src: url('/fonts/chesan/Chesan Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Chesan';
+  src: url('/fonts/chesan/Chesan Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Chesan';
+  src: url('/fonts/chesan/Chesan Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Chesan';
+  src: url('/fonts/chesan/Chesan Bold Italic.otf') format('opentype');
+  font-weight: bold;
+  font-style: italic;
+}
+
 /* a {
   font-weight: 500;
   color: #646cff;

@@ -15,17 +15,17 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   display: flex;
   gap: 0.4em;
   background-color: #b58b69;
-  color: #000;
+  color: #323232;
   padding: 1em 0.8em;
   border: 2px solid #000;
   border-radius: 0.2em;
   cursor: grab;
+  align-items: center;
 `;
 
 export const CurrentRankWrapper = styled.span`
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 3px;
 `
 
@@ -52,5 +52,9 @@ export const SanMoveWrapper = styled.span`
   display: flex;
   flex-grow: 1;
   justify-content: center;
-  font-weight: bold;
+
+  font-size: 1.4em;
+  font-family: 'Chesan';
+  color: #FFF;
+  text-shadow: 0px 0px 4px #000;
 `
