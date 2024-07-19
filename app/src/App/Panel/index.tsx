@@ -9,7 +9,7 @@ import { CardDetails } from './Card/types';
 const initCardDetails: CardDetails[] = [
   { 
     uciMove: 'e2e4', 
-    sanMove: 'e4', 
+    sanMove: 'Qd6', 
     curRank: 1, 
     revealed: true,
     evalResults: {

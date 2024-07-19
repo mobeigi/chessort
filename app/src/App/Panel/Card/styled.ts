@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { Advantage } from './types';
+import { Color } from './types';
+import { getBaseColor, getOverlayColor } from './utils';
 
 interface CardContainerProps {
   $isDragging: boolean;
@@ -52,49 +53,46 @@ export const CurrentRankNumber = styled.span`
 export const SanMoveWrapper = styled.span`
   display: flex;
   flex-grow: 1;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  line-height: 1.2em;
+  gap: 0.2em;
+  padding-left: 0.6em;
+`
 
-  font-size: 1.2em;
+interface SanMovePieceProps {
+  $color: Color;
+}
+
+export const MoveChessPiece = styled.span<SanMovePieceProps>`
+  font-size: 1.3em;
+  font-family: "Noto Sans Symbols 2", sans-serif;
+  margin-bottom: -0.35em; /* Fine-tune alignment between both fonts */
+  line-height: 1.2em;
+  color: ${(props) => getBaseColor(props.$color)};
+  text-shadow: 0px 0px 4px ${(props) => getOverlayColor(props.$color)};
+`;
+
+export const MoveNotation = styled.span<SanMovePieceProps>`
   font-weight: bold;
   font-family: 'Roboto Mono', monospace;
-  color: #fff;
-  text-shadow: 0px 0px 4px #000;
+  line-height: 1.2em;
+  color: ${(props) => getBaseColor(props.$color)};
+  text-shadow: 0px 0px 4px ${(props) => getOverlayColor(props.$color)};
 `
 
 export const EngineRankWrapper = styled.span``
 
 interface EngineEvalWrapperProps {
-  $advantageFor: Advantage;
+  $advantageFor: Color;
 }
 
 export const EngineEvalWrapper = styled.span<EngineEvalWrapperProps>`
   display: flex;  
   width: 3em;
   justify-content: center;
-  background-color: ${(props) => { /* Background colour based on who has the advantage */
-    switch (props.$advantageFor) {
-      case Advantage.White:
-        return '#fff';
-      case Advantage.Black:
-        return '#312e2b';
-      case Advantage.Neutral:
-        return '#808080';
-      default:
-        return '#fff';
-    }
-  }};
-  color: ${(props) => {
-    switch (props.$advantageFor) {
-      case Advantage.White:
-        return '#312e2b';
-      case Advantage.Black:
-        return '#fff';
-      case Advantage.Neutral:
-        return '#fff';
-      default:
-        return '#312e2b';
-    }
-  }};
+  background-color: ${(props) => getBaseColor(props.$advantageFor)};
+  color: ${(props) => getOverlayColor(props.$advantageFor)};
   border-radius: 0.2em;
   padding: 0.2em 0.3em;
   font-size: 0.8em;
