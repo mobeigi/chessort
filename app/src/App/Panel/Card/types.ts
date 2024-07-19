@@ -1,6 +1,6 @@
-import { CardDetails } from '../../../context/types'
+import { MoveDetails } from '../../../context/types'
 export interface CardProps {
-  cardDetail: CardDetails;
+  cardDetail: MoveDetails;
 }
 
 export enum Color {

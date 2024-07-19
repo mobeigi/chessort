@@ -2,7 +2,7 @@ import React, { createContext, useReducer, useContext, ReactNode } from 'react';
 import { GameState, GameAction} from './types';
 
 const initialState: GameState = {
-  cardDetails: [
+  moveDetails: [
     { 
       uciMove: 'e2e4', 
       sanMove: 'Qd6', 
@@ -41,9 +41,12 @@ const initialState: GameState = {
       sanMove: 'c4', 
       curRank: 4, 
       revealed: false 
-    },
+    }
   ],
-  // Initialize other game state properties here
+  gameDetails: {
+    fen: 'start',
+    difficulty: 'easy' // TODO: Make into enum
+  }
 };
 
 const GameContext = createContext<{
@@ -59,7 +62,12 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
     case 'UPDATE_CARD_DETAILS':
       return {
         ...state,
-        cardDetails: action.payload,
+        moveDetails: action.payload,
+      };
+    case 'UPDATE_GAME':
+      return {
+        ...state,
+        gameDetails: { ...state.gameDetails, ...action.payload }
       };
     default:
       return state;
