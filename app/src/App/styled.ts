@@ -46,6 +46,7 @@ export const ChessBoardWrapper = styled.section`
   flex: 0 0 calc(max(65vmin, 200px));
   height: calc(max(65vmin, 200px));
   border: solid #FFF;
+  box-sizing: border-box;
   min-width: 0; /* Allow chess board to shrink on window resize */
 `
 

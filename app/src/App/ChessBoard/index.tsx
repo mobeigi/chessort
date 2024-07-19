@@ -9,7 +9,7 @@ const ChessBoard = () => <Chessboard
     arePiecesDraggable={false} 
     customDarkSquareStyle={{ backgroundColor: customDarkSquareColor }}
     customLightSquareStyle={{ backgroundColor: customLightSquareColor }}
-    customBoardStyle={{ boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5 )'}}
+    customBoardStyle={{ boxShadow: '0 5px 15px rgba(255, 255, 255, 0.1 )'}}
     customArrowColor={customArrowColor}
 />
 
