@@ -1,4 +1,4 @@
-import { PanelContainer, DescriptionWrapper, CardsWrapper } from './styled';
+import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton } from './styled';
 import {
   DndContext,
   closestCenter,
@@ -66,7 +66,7 @@ const Panel = () => {
         </DndContext>
       </CardsWrapper>
 
-      <button>Submit</button>
+      <SubmitButton>Submit</SubmitButton>
     </PanelContainer>
   );
 };
