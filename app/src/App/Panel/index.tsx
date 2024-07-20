@@ -21,7 +21,7 @@ import { useGameContext } from '../../context/gameContext';
 import { Description } from './Description';
 import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessJsUtils';
 import { MoveDetail } from '../../context/types';
-import { getNewRandomGame } from '../../common/api';
+import { getNewRandomGame, getGameSolution } from '../../common/api';
 
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
 const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) => {
@@ -51,6 +51,27 @@ const Panel = () => {
       console.error('Error fetching new game data:', error);
     }
   }, [dispatch]);
+
+  const revealSolutionForCurrentGame = useCallback(async () => {
+    if (state.isPreview) {
+      // Exit preview if we're in preview as we submit
+      dispatch({ type: 'UNPREVIEW_MOVE' });
+    }
+
+    try {
+      const data = await getGameSolution('test'); // TODO: use real id here
+
+      // Dispatch action to update state with new game data
+      dispatch({
+        type: 'UPSERT_SOLUTION',
+        payload: data,
+      });
+    } catch (error) {
+      console.error('Error getting game solution data:', error);
+    } finally {
+      dispatch({ type: 'REVEAL_MOVES' });
+    }
+  }, [dispatch, state.isPreview]);
 
   // The initial loading of the first game
   useEffect(() => {
@@ -94,14 +115,7 @@ const Panel = () => {
     }
   };
 
-  const handleSubmit = () => {
-    if (state.isPreview) {
-      // Exit preview if we're in preview as we submit
-      dispatch({ type: 'UNPREVIEW_MOVE' });
-    }
-    dispatch({ type: 'REVEAL_MOVES' });
-  };
-
+  const handleSubmit = () => revealSolutionForCurrentGame();
   const handleNextPuzzle = () => loadNewGame();
 
   const turnPlayer = getTurnPlayerColor(state.initialChessJs);

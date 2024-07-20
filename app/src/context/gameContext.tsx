@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext, ReactNode } from 'react';
-import { GameState, GameAction, Difficulty } from './types';
+import { GameState, GameAction, Difficulty, EvalResult } from './types';
 import { Chess, DEFAULT_POSITION } from 'chess.js';
 
 const initialFen = DEFAULT_POSITION;
@@ -48,6 +48,29 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
         gameDetails: { ...initialState.gameDetails, fen: fen, difficulty: difficulty },
         initialChessJs: new Chess(fen),
         curChessJs: new Chess(fen),
+      };
+    }
+    case 'UPSERT_SOLUTION': {
+      const data = action.payload;
+
+      // Create a map of uciMove to evalResult from the API response
+      const moveDetailsMap = new Map<string, EvalResult>(
+        data.moveDetails.map((detail) => [detail.uciMove, detail.evalResult]), // TODO: fix typing here
+      );
+
+      // Update moveDetails in state
+      const updatedMoveDetails = state.moveDetails.map((moveDetail) => ({
+        ...moveDetail,
+        evalResult: moveDetailsMap.get(moveDetail.uciMove) || { engineEval: '', engineOverallRank: -1 },
+      }));
+
+      // Update solutionEvals in state
+      const solutionEvals = data.moveDetails.map((detail) => detail.evalResult.engineEval); // TODO: fix typing here
+
+      return {
+        ...state,
+        moveDetails: updatedMoveDetails,
+        solutionEvals,
       };
     }
     case 'REVEAL_MOVES':

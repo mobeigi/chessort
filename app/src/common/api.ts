@@ -14,4 +14,6 @@ const fetchApi = async (url: string, options: RequestInit = {}) => {
   }
 };
 
-export const getNewRandomGame = () => fetchApi('/game/random'); // TODO: remove mock suffix
+export const getNewRandomGame = () => fetchApi('/game/random');
+
+export const getGameSolution = (id: string) => fetchApi(`/game/${id}/solution`);
