@@ -66,11 +66,23 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
         ...state,
         moveDetails: action.payload,
       };
-    case 'UPDATE_GAME':
+    case 'NEW_GAME': {
+      const fen = action.payload.fen;
+      const moveDetails = action.payload.uciMoves.map((uciMove: string, index: number) => ({
+        uciMove,
+        curRank: index + 1, // Assign rank based on the position in the array
+      }));
+
+      const difficulty = action.payload.difficulty as Difficulty;
+
       return {
-        ...state,
-        gameDetails: { ...state.gameDetails, ...action.payload },
+        ...initialState, // Reset to initial state, this will give us a fresh game state that we can update
+        moveDetails: moveDetails,
+        gameDetails: { ...initialState.gameDetails, fen: fen, difficulty: difficulty },
+        initialChessJs: new Chess(fen),
+        curChessJs: new Chess(fen),
       };
+    }
     case 'REVEAL_MOVES':
       return {
         ...state,

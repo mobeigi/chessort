@@ -21,6 +21,7 @@ import { useGameContext } from '../../context/gameContext';
 import { Description } from './Description';
 import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessJsUtils';
 import { MoveDetail } from '../../context/types';
+import { getNewRandomGame } from '../../common/api';
 
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
 const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) => {
@@ -31,6 +32,7 @@ const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) =>
 
 const Panel = () => {
   const { state, dispatch } = useGameContext();
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 4 } /* To allow onClick events */,
@@ -38,6 +40,17 @@ const Panel = () => {
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
+  );
+
+  const handleClick = useCallback(
+    (uciMove: string) => {
+      if (state.isPreview) {
+        dispatch({ type: 'UNPREVIEW_MOVE' });
+      } else {
+        dispatch({ type: 'PREVIEW_MOVE', payload: uciMove });
+      }
+    },
+    [state.isPreview, dispatch],
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -57,17 +70,6 @@ const Panel = () => {
     }
   };
 
-  const handleClick = useCallback(
-    (uciMove: string) => {
-      if (state.isPreview) {
-        dispatch({ type: 'UNPREVIEW_MOVE' });
-      } else {
-        dispatch({ type: 'PREVIEW_MOVE', payload: uciMove });
-      }
-    },
-    [state.isPreview, dispatch],
-  );
-
   const handleSubmit = () => {
     if (state.isPreview) {
       // Exit preview if we're in preview as we submit
@@ -76,8 +78,22 @@ const Panel = () => {
     dispatch({ type: 'REVEAL_MOVES' });
   };
 
-  const handleNextPuzzle = () => {
-    // TODO: dispatch NEW_GAME code
+  const handleNextPuzzle = async () => {
+    try {
+      const data = await getNewRandomGame();
+
+      // Dispatch action to update state with new game data
+      dispatch({
+        type: 'NEW_GAME',
+        payload: {
+          fen: data.fen,
+          uciMoves: data.uciMoves,
+          difficulty: data.difficulty,
+        },
+      });
+    } catch (error) {
+      console.error('Error fetching new game data:', error);
+    }
   };
 
   const turnPlayer = getTurnPlayerColor(state.initialChessJs);

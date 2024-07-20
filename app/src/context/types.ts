@@ -11,11 +11,11 @@ export interface GameState {
 }
 
 export enum Difficulty {
-  BEGINNER = 'Beginner',
-  EASY = 'Easy',
-  MEDIUM = 'Medium',
-  HARD = 'Hard',
-  MASTER = 'Master',
+  BEGINNER = 'BEGINNER',
+  EASY = 'EASY',
+  MEDIUM = 'MEDIUM',
+  HARD = 'HARD',
+  MASTER = 'MASTER',
 }
 
 export type GameDetails = {
