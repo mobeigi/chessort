@@ -35,6 +35,26 @@ const getStatusIcon = (revealed: boolean, curRank: number, correctRanks: number[
   return IncorrectIcon;
 };
 
+const getCurrentRankTooltipText = (correctRanks: number[]) => {
+  // Convert ranks to ordinal suffixes
+  const ordinalRanks = correctRanks.map((rank) => getOrdinalSuffix(rank));
+
+  // Determine the correct phrasing based on the number of positions
+  const count = ordinalRanks.length;
+  let tooltipText = '';
+
+  if (count === 1) {
+    tooltipText = `This move is correct only in the ${ordinalRanks[0]} position.`;
+  } else if (count === 2) {
+    tooltipText = `This move is correct in the ${ordinalRanks[0]} or ${ordinalRanks[1]} position.`;
+  } else if (count >= 3) {
+    const lastOrdinal = ordinalRanks.pop(); // Remove the last ordinal
+    tooltipText = `This move is correct in the ${ordinalRanks.join(', ')}, and ${lastOrdinal} position.`;
+  }
+
+  return <>{tooltipText}</>;
+};
+
 const getEngineRankTooltipText = (moveDetail: MoveDetail) => (
   <>
     This is the engine's <strong>{getOrdinalSuffix(moveDetail.evalResult!.engineOverallRank)}</strong> best move.
@@ -64,6 +84,7 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
   const transformStyle = CSS.Transform.toString(transform);
 
   const DigitGridComponent = revealed ? getDigitGrid(correctRanks.length) : OneDigitGrid;
+  const currentRankTooltipText = revealed ? getCurrentRankTooltipText(correctRanks) : null;
 
   const advantageColor = revealed ? evaluateAdvantage(moveDetail.evalResult!.engineEval) : Color.Neutral;
 
@@ -85,7 +106,10 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
       {...listeners}
       onClick={() => onClick(moveDetail.uciMove)}
     >
-      <CurrentRankWrapper>
+      <CurrentRankWrapper data-tooltip-id={`current-rank-tooltip-${moveDetail.uciMove}`}>
+        <Tooltip id={`current-rank-tooltip-${moveDetail.uciMove}`} place="top">
+          {currentRankTooltipText}
+        </Tooltip>
         <StatusIconWrapper>
           <StatusIcon />
         </StatusIconWrapper>
