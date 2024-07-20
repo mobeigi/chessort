@@ -45,7 +45,8 @@ const initialState: GameState = {
     difficulty: Difficulty.BEGINNER,
     revealed: false,
   },
-  chessJs: new Chess(initialFen),
+  initialChessJs: new Chess(initialFen),
+  curChessJs: new Chess(initialFen),
 };
 
 const GameContext = createContext<{

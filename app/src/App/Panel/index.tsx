@@ -58,7 +58,7 @@ const Panel = () => {
     dispatch({ type: 'REVEAL_MOVES' });
   };
 
-  const turnPlayer = getTurnPlayerColor(state.chessJs);
+  const turnPlayer = getTurnPlayerColor(state.curChessJs);
 
   return (
     <PanelContainer>
@@ -79,7 +79,7 @@ const Panel = () => {
                 key={moveDetail.uciMove}
                 moveDetail={moveDetail}
                 turnPlayer={turnPlayer}
-                sanMove={uciMoveToSanMove(state.chessJs, moveDetail.uciMove)!}
+                sanMove={uciMoveToSanMove(state.initialChessJs, moveDetail.uciMove)!}
                 revealed={state.gameDetails.revealed}
                 correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
               />

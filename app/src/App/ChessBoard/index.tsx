@@ -10,7 +10,7 @@ const ChessBoard = () => {
 
   return (
     <Chessboard
-      position={state.gameDetails.fen}
+      position={state.curChessJs.fen()}
       arePiecesDraggable={false}
       customDarkSquareStyle={{ backgroundColor: customDarkSquareColor }}
       customLightSquareStyle={{ backgroundColor: customLightSquareColor }}

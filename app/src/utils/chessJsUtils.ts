@@ -27,14 +27,9 @@ export const undoMove = (chess: Chess): void => {
  * @returns The move in SAN format, or null if the move could not be made.
  */
 export const uciMoveToSanMove = (chess: Chess, uciMove: string): string | null => {
-  const result = chess.move(uciMove);
-  if (result) {
-    const sanMove = result.san;
-    chess.undo();
-    return sanMove;
-  }
-
-  return null;
+  const chessCopy = new Chess(chess.fen());
+  const result = chessCopy.move(uciMove);
+  return result ? result.san : null;
 };
 
 /**
