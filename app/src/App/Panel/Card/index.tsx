@@ -56,7 +56,7 @@ const getDigitGrid = (numDigits: number) => {
   }
 };
 
-export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, onClick }: CardProps) => {
+export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, onClick, isPreviewed }: CardProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: moveDetail.uciMove,
   });
@@ -76,8 +76,9 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
   return (
     <CardContainer
       ref={setNodeRef}
-      $isDragging={isDragging}
       style={{ transform: transformStyle, transition }}
+      $isDragging={isDragging}
+      $isPreviewed={isPreviewed}
       {...attributes}
       {...listeners}
       onClick={() => onClick(moveDetail.uciMove)}

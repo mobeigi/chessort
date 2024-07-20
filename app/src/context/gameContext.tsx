@@ -48,6 +48,7 @@ const initialState: GameState = {
   initialChessJs: new Chess(initialFen),
   curChessJs: new Chess(initialFen),
   isPreview: false,
+  previewedMove: null,
 };
 
 const GameContext = createContext<{
@@ -89,6 +90,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
         return {
           ...state,
           isPreview: true,
+          previewedMove: action.payload,
           curChessJs: result ? newChessInstance : state.curChessJs, // Update only if the move was successful
         };
       }
@@ -100,6 +102,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
         return {
           ...state,
           isPreview: false,
+          previewedMove: null,
           curChessJs: state.initialChessJs /* Set to intial chess JS which is equivalent to undoing 1 move */,
         };
       }

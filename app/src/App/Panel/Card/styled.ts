@@ -4,6 +4,7 @@ import { getBaseColor, getOverlayColor } from './utils';
 
 interface CardContainerProps {
   $isDragging: boolean;
+  $isPreviewed: boolean;
 }
 
 export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging, style }) => ({
@@ -30,6 +31,13 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   > *:nth-child(2) {
     margin-left: 0.2em; /* No gap between 1st & 2nd child */
   }
+
+  ${({ $isPreviewed }) =>
+    $isPreviewed &&
+    `
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+      border-color: #fff;
+    `}
 `;
 
 export const CurrentRankWrapper = styled.span`

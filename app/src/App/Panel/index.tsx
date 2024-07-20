@@ -97,6 +97,7 @@ const Panel = () => {
                 revealed={state.gameDetails.revealed}
                 correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
                 onClick={handleClick}
+                isPreviewed={state.previewedMove === moveDetail.uciMove}
               />
             ))}
           </SortableContext>
