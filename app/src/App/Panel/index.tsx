@@ -69,6 +69,10 @@ const Panel = () => {
   );
 
   const handleSubmit = () => {
+    if (state.isPreview) {
+      // Exit preview if we're in preview as we submit
+      dispatch({ type: 'UNPREVIEW_MOVE' });
+    }
     dispatch({ type: 'REVEAL_MOVES' });
   };
 
