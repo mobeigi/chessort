@@ -1,6 +1,9 @@
+import { Chess } from 'chess.js';
+
 export interface GameState {
   gameDetails: GameDetails;
   moveDetails: MoveDetail[];
+  chessJs: Chess;
 }
 
 export enum Difficulty {
@@ -18,7 +21,6 @@ export type GameDetails = {
 
 export type MoveDetail = {
   uciMove: string;
-  sanMove: string;
   curRank: number;
   revealed: boolean;
   evalResult?: EvalResult;

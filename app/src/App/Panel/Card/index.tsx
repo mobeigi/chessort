@@ -19,6 +19,8 @@ import IncorrectIcon from '../../../assets/icons/incorrect.svg?react';
 import CurrentRankIcon from '../../../assets/icons/two-way.svg?react';
 import { evaluateAdvantage, formatEvaluation, getPieceUnicode, getOrdinalSuffix } from './utils';
 import { Tooltip } from 'react-tooltip';
+import { useGameContext } from '../../../context/gameContext';
+import { uciMoveToSanMove } from '../../../utils/chessJsUtils';
 
 const getStatusIcon = (moveDetail: MoveDetail) => {
   if (!moveDetail.revealed) {
@@ -43,6 +45,8 @@ const getEngineRankTooltipText = (moveDetail: MoveDetail) => {
 };
 
 export const Card = ({ moveDetail }: CardProps) => {
+  const { state } = useGameContext();
+
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: moveDetail.uciMove,
   });
@@ -54,7 +58,9 @@ export const Card = ({ moveDetail }: CardProps) => {
   const engineEvalValue = moveDetail.revealed ? formatEvaluation(moveDetail.evalResult!.engineEval) : '?';
 
   const StatusIcon = getStatusIcon(moveDetail);
-  const pieceChar = getPieceUnicode(moveDetail.sanMove);
+
+  const sanMove = uciMoveToSanMove(state.chessJs, moveDetail.uciMove)!;
+  const pieceChar = getPieceUnicode(sanMove);
   const turnToMove = Color.White; // TODO: This should be set from some sort of game state object that contains a FEN
 
   return (
@@ -73,7 +79,7 @@ export const Card = ({ moveDetail }: CardProps) => {
       </CurrentRankWrapper>
       <SanMoveWrapper>
         <MoveChessPiece $color={turnToMove}>{pieceChar}</MoveChessPiece>
-        <MoveNotation $color={turnToMove}>{moveDetail.sanMove}</MoveNotation>
+        <MoveNotation $color={turnToMove}>{sanMove}</MoveNotation>
       </SanMoveWrapper>
       {moveDetail.revealed && (
         <>
