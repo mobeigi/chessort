@@ -6,6 +6,7 @@ export interface GameState {
   solutionEvals: string[];
   initialChessJs: Chess /* initial reference board, should not be mutated via moves */;
   curChessJs: Chess /* initial board which can be moved and is linked to chess board */;
+  isPreview: boolean;
 }
 
 export enum Difficulty {

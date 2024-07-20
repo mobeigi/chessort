@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton } from './styled';
 import {
   DndContext,
@@ -31,7 +32,9 @@ const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) =>
 const Panel = () => {
   const { state, dispatch } = useGameContext();
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 4 } /* To allow onClick events */,
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
@@ -54,11 +57,22 @@ const Panel = () => {
     }
   };
 
+  const handleClick = useCallback(
+    (uciMove: string) => {
+      if (state.isPreview) {
+        dispatch({ type: 'UNPREVIEW_MOVE' });
+      } else {
+        dispatch({ type: 'PREVIEW_MOVE', payload: uciMove });
+      }
+    },
+    [state.isPreview, dispatch],
+  );
+
   const handleSubmit = () => {
     dispatch({ type: 'REVEAL_MOVES' });
   };
 
-  const turnPlayer = getTurnPlayerColor(state.curChessJs);
+  const turnPlayer = getTurnPlayerColor(state.initialChessJs);
 
   return (
     <PanelContainer>
@@ -82,6 +96,7 @@ const Panel = () => {
                 sanMove={uciMoveToSanMove(state.initialChessJs, moveDetail.uciMove)!}
                 revealed={state.gameDetails.revealed}
                 correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
+                onClick={handleClick}
               />
             ))}
           </SortableContext>

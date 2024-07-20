@@ -7,6 +7,7 @@ export interface CardProps {
   turnPlayer: Color;
   revealed: boolean;
   correctRanks: number[];
+  onClick: (uciMove: string) => void;
 }
 
 // Unicode characters for chess pieces in Noto Sans Symbols 2

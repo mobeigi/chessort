@@ -47,6 +47,7 @@ const initialState: GameState = {
   },
   initialChessJs: new Chess(initialFen),
   curChessJs: new Chess(initialFen),
+  isPreview: false,
 };
 
 const GameContext = createContext<{
@@ -81,6 +82,34 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
           revealed: true,
         },
       };
+    case 'PREVIEW_MOVE': {
+      if (!state.isPreview) {
+        const newChessInstance = new Chess(state.curChessJs.fen());
+        const result = newChessInstance.move(action.payload);
+        console.log(`Performing PREVIEW: ${result}`);
+        return {
+          ...state,
+          isPreview: true,
+          curChessJs: result ? newChessInstance : state.curChessJs, // Update only if the move was successful
+        };
+      }
+      return state;
+    }
+
+    case 'UNPREVIEW_MOVE': {
+      if (state.isPreview) {
+        state.curChessJs.undo();
+
+        console.log(`Performing UNPREVIEW`);
+
+        return {
+          ...state,
+          isPreview: false,
+          curChessJs: state.curChessJs, // Update only if the undo was successful
+        };
+      }
+      return state;
+    }
     default:
       return state;
   }

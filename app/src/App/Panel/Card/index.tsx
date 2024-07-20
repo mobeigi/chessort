@@ -56,7 +56,7 @@ const getDigitGrid = (numDigits: number) => {
   }
 };
 
-export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks }: CardProps) => {
+export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, onClick }: CardProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: moveDetail.uciMove,
   });
@@ -72,6 +72,7 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks }
 
   const StatusIcon = getStatusIcon(revealed, moveDetail.curRank, correctRanks);
   const pieceChar = getPieceUnicode(sanMove);
+  console.log('RENDER ');
 
   return (
     <CardContainer
@@ -80,6 +81,7 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks }
       style={{ transform: transformStyle, transition }}
       {...attributes}
       {...listeners}
+      onClick={() => onClick(moveDetail.uciMove)}
     >
       <CurrentRankWrapper>
         <StatusIconWrapper>
