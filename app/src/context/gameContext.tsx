@@ -1,45 +1,12 @@
 import React, { createContext, useReducer, useContext, ReactNode } from 'react';
 import { GameState, GameAction, Difficulty } from './types';
-import { Chess } from 'chess.js';
+import { Chess, DEFAULT_POSITION } from 'chess.js';
 
-const initialFen = '2kr3r/pp4p1/2pb2p1/4qp2/3p2P1/3Q3P/PP2PBB1/R2R2K1 w - - 0 21'; // TODO: Change back to 'start'
+const initialFen = DEFAULT_POSITION;
 
 const initialState: GameState = {
-  moveDetails: [
-    {
-      uciMove: 'd3d4',
-      curRank: 1,
-      evalResult: {
-        engineEval: '+332',
-        engineOverallRank: 1,
-      },
-    },
-    {
-      uciMove: 'd3f3',
-      curRank: 2,
-      evalResult: {
-        engineEval: '+283',
-        engineOverallRank: 2,
-      },
-    },
-    {
-      uciMove: 'd1f1',
-      curRank: 3,
-      evalResult: {
-        engineEval: '#-1',
-        engineOverallRank: 43,
-      },
-    },
-    {
-      uciMove: 'g2f1',
-      curRank: 4,
-      evalResult: {
-        engineEval: '#-1',
-        engineOverallRank: 44,
-      },
-    },
-  ],
-  solutionEvals: ['+332', '+283', '#-1', '#-1'], // TODO: reset back to empty array
+  moveDetails: [],
+  solutionEvals: [],
   gameDetails: {
     fen: initialFen,
     difficulty: Difficulty.BEGINNER,

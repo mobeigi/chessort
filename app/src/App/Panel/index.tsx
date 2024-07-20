@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton, NextButton } from './styled';
 import {
   DndContext,
@@ -32,6 +32,30 @@ const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) =>
 
 const Panel = () => {
   const { state, dispatch } = useGameContext();
+
+  // Function to load a new game
+  const loadNewGame = useCallback(async () => {
+    try {
+      const data = await getNewRandomGame();
+
+      // Dispatch action to update state with new game data
+      dispatch({
+        type: 'NEW_GAME',
+        payload: {
+          fen: data.fen,
+          uciMoves: data.uciMoves,
+          difficulty: data.difficulty,
+        },
+      });
+    } catch (error) {
+      console.error('Error fetching new game data:', error);
+    }
+  }, [dispatch]);
+
+  // The initial loading of the first game
+  useEffect(() => {
+    loadNewGame();
+  }, [loadNewGame]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -78,23 +102,7 @@ const Panel = () => {
     dispatch({ type: 'REVEAL_MOVES' });
   };
 
-  const handleNextPuzzle = async () => {
-    try {
-      const data = await getNewRandomGame();
-
-      // Dispatch action to update state with new game data
-      dispatch({
-        type: 'NEW_GAME',
-        payload: {
-          fen: data.fen,
-          uciMoves: data.uciMoves,
-          difficulty: data.difficulty,
-        },
-      });
-    } catch (error) {
-      console.error('Error fetching new game data:', error);
-    }
-  };
+  const handleNextPuzzle = () => loadNewGame();
 
   const turnPlayer = getTurnPlayerColor(state.initialChessJs);
 

@@ -1,4 +1,4 @@
-const BASE_URL = 'https://mobeigi.free.beeceptor.com'; // TODO: Replace with actual backend
+const BASE_URL = 'https://1bafbfe6-a0f5-4fbc-ac36-82eec46b7eee.mock.pstmn.io/api'; // TODO: Replace with actual backend
 
 // Utility function for making API requests
 const fetchApi = async (url: string, options: RequestInit = {}) => {
