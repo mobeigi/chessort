@@ -1,4 +1,5 @@
 import { Chess } from 'chess.js';
+import { Color } from '../common/types';
 
 /**
  * Makes a move on the chess board.
@@ -34,4 +35,14 @@ export const uciMoveToSanMove = (chess: Chess, uciMove: string): string | null =
   }
 
   return null;
+};
+
+/**
+ * Gets the current turn players color.
+ * @param chess - The Chess instance.
+ * @returns The color of the player whose turn it is.
+ */
+export const getTurnPlayerColor = (chess: Chess): 'white' | 'black' => {
+  const turn = chess.turn(); // 'w' or 'b'
+  return turn === 'w' ? Color.White : Color.Black;
 };
