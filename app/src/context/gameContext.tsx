@@ -86,7 +86,6 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       if (!state.isPreview) {
         const newChessInstance = new Chess(state.curChessJs.fen());
         const result = newChessInstance.move(action.payload);
-        console.log(`Performing PREVIEW: ${result}`);
         return {
           ...state,
           isPreview: true,
@@ -98,14 +97,10 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
 
     case 'UNPREVIEW_MOVE': {
       if (state.isPreview) {
-        state.curChessJs.undo();
-
-        console.log(`Performing UNPREVIEW`);
-
         return {
           ...state,
           isPreview: false,
-          curChessJs: state.curChessJs, // Update only if the undo was successful
+          curChessJs: state.initialChessJs /* Set to intial chess JS which is equivalent to undoing 1 move */,
         };
       }
       return state;

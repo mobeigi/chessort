@@ -2,25 +2,6 @@ import { Chess } from 'chess.js';
 import { Color } from '../common/types';
 
 /**
- * Makes a move on the chess board.
- * @param chess - The Chess instance.
- * @param uciMove - The move in UCI format.
- * @returns True if the move was successfully made, otherwise false.
- */
-export const makeMove = (chess: Chess, uciMove: string): boolean => {
-  const result = chess.move(uciMove);
-  return result !== null;
-};
-
-/**
- * Undoes the last move on the chess board.
- * @param chess - The Chess instance.
- */
-export const undoMove = (chess: Chess): void => {
-  chess.undo();
-};
-
-/**
  * Converts a UCI move to SAN format.
  * @param chess - The Chess instance.
  * @param uciMove - The move in UCI format.

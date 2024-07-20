@@ -72,7 +72,6 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
 
   const StatusIcon = getStatusIcon(revealed, moveDetail.curRank, correctRanks);
   const pieceChar = getPieceUnicode(sanMove);
-  console.log('RENDER ');
 
   return (
     <CardContainer
