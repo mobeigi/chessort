@@ -11,7 +11,7 @@ export const Description = () => {
       </p>
       <DifficultyLine>
         <strong>Difficulty: </strong>
-        <DifficultyLozenge difficulty={state.gameDetails.difficulty}>{state.gameDetails.difficulty}</DifficultyLozenge>
+        <DifficultyLozenge $difficulty={state.gameDetails.difficulty}>{state.gameDetails.difficulty}</DifficultyLozenge>
       </DifficultyLine>
     </>
   );

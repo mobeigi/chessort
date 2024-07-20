@@ -7,7 +7,7 @@ export const DifficultyLine = styled.div`
 `;
 
 interface DifficultyWrapperProps {
-  difficulty: Difficulty;
+  $difficulty: Difficulty;
 }
 
 const getBackgroundColor = (difficulty: Difficulty) => {
@@ -38,6 +38,6 @@ export const DifficultyLozenge = styled.span<DifficultyWrapperProps>`
   text-align: center;
   text-transform: uppercase;
   text-shadow: 0 0 10px #000;
-  background-color: ${({ difficulty }) => getBackgroundColor(difficulty)};
+  background-color: ${({ $difficulty }) => getBackgroundColor($difficulty)};
   white-space: nowrap;
 `;
