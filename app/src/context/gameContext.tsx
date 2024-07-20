@@ -9,9 +9,7 @@ const initialState: GameState = {
     {
       uciMove: 'd3d4',
       curRank: 1,
-      revealed: true,
       evalResult: {
-        rank: 1,
         engineEval: '+332',
         engineOverallRank: 1,
       },
@@ -19,9 +17,7 @@ const initialState: GameState = {
     {
       uciMove: 'd3f3',
       curRank: 2,
-      revealed: true,
       evalResult: {
-        rank: 2,
         engineEval: '+283',
         engineOverallRank: 2,
       },
@@ -29,9 +25,7 @@ const initialState: GameState = {
     {
       uciMove: 'd1f1',
       curRank: 3,
-      revealed: true,
       evalResult: {
-        rank: 3,
         engineEval: '#-1',
         engineOverallRank: 43,
       },
@@ -39,17 +33,17 @@ const initialState: GameState = {
     {
       uciMove: 'g2f1',
       curRank: 4,
-      revealed: true,
       evalResult: {
-        rank: 4,
         engineEval: '#-1',
         engineOverallRank: 44,
       },
     },
   ],
+  solutionEvals: ['+332', '+283', '#-1', '#-1'],
   gameDetails: {
     fen: initialFen,
     difficulty: Difficulty.BEGINNER,
+    revealed: false,
   },
   chessJs: new Chess(initialFen),
 };
@@ -73,6 +67,18 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       return {
         ...state,
         gameDetails: { ...state.gameDetails, ...action.payload },
+      };
+    case 'REVEAL_MOVES':
+      return {
+        ...state,
+        moveDetails: state.moveDetails.map((moveDetail) => ({
+          ...moveDetail,
+          revealed: true,
+        })),
+        gameDetails: {
+          ...state.gameDetails,
+          revealed: true,
+        },
       };
     default:
       return state;

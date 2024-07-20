@@ -18,6 +18,15 @@ import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { Card } from './Card';
 import { useGameContext } from '../../context/gameContext';
 import { Description } from './Description';
+import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessJsUtils';
+import { MoveDetail } from '../../context/types';
+
+// Returns all correct ranks for a card which can then be used to compute correctness in ordering
+const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) => {
+  return solutionEvals
+    .map((item, index) => (item === moveDetail.evalResult?.engineEval ? index + 1 : -1)) // offset index to start at 1
+    .filter((index) => index !== -1);
+};
 
 const Panel = () => {
   const { state, dispatch } = useGameContext();
@@ -45,6 +54,12 @@ const Panel = () => {
     }
   };
 
+  const handleSubmit = () => {
+    dispatch({ type: 'REVEAL_MOVES' });
+  };
+
+  const turnPlayer = getTurnPlayerColor(state.chessJs);
+
   return (
     <PanelContainer>
       <DescriptionWrapper>
@@ -60,13 +75,20 @@ const Panel = () => {
         >
           <SortableContext items={state.moveDetails.map((card) => card.uciMove)} strategy={verticalListSortingStrategy}>
             {state.moveDetails.map((moveDetail) => (
-              <Card key={moveDetail.uciMove} moveDetail={moveDetail} />
+              <Card
+                key={moveDetail.uciMove}
+                moveDetail={moveDetail}
+                turnPlayer={turnPlayer}
+                sanMove={uciMoveToSanMove(state.chessJs, moveDetail.uciMove)!}
+                revealed={state.gameDetails.revealed}
+                correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
+              />
             ))}
           </SortableContext>
         </DndContext>
       </CardsWrapper>
 
-      <SubmitButton>Submit</SubmitButton>
+      <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
     </PanelContainer>
   );
 };

@@ -1,6 +1,12 @@
 import { MoveDetail } from '../../../context/types';
+import { Color } from '../../../common/types';
+
 export interface CardProps {
   moveDetail: MoveDetail;
+  sanMove: string;
+  turnPlayer: Color;
+  revealed: boolean;
+  correctRanks: number[];
 }
 
 // Unicode characters for chess pieces in Noto Sans Symbols 2

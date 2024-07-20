@@ -42,7 +42,7 @@ export const uciMoveToSanMove = (chess: Chess, uciMove: string): string | null =
  * @param chess - The Chess instance.
  * @returns The color of the player whose turn it is.
  */
-export const getTurnPlayerColor = (chess: Chess): 'white' | 'black' => {
+export const getTurnPlayerColor = (chess: Chess): Color => {
   const turn = chess.turn(); // 'w' or 'b'
   return turn === 'w' ? Color.White : Color.Black;
 };

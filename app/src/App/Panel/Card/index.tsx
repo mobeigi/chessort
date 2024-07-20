@@ -19,50 +19,40 @@ import IncorrectIcon from '../../../assets/icons/incorrect.svg?react';
 import CurrentRankIcon from '../../../assets/icons/two-way.svg?react';
 import { evaluateAdvantage, formatEvaluation, getPieceUnicode, getOrdinalSuffix } from './utils';
 import { Tooltip } from 'react-tooltip';
-import { useGameContext } from '../../../context/gameContext';
-import { uciMoveToSanMove, getTurnPlayerColor } from '../../../utils/chessJsUtils';
 import { Color } from '../../../common/types';
 
-const getStatusIcon = (moveDetail: MoveDetail) => {
-  if (!moveDetail.revealed) {
+const getStatusIcon = (revealed: boolean, curRank: number, correctRanks: number[]) => {
+  if (!revealed) {
     return CurrentRankIcon;
   }
-  if (moveDetail.curRank === moveDetail.evalResult?.rank) {
+  if (correctRanks.includes(curRank)) {
     return CorrectIcon;
   }
   return IncorrectIcon;
 };
 
-const getEngineRankTooltipText = (moveDetail: MoveDetail) => {
-  if (!moveDetail.revealed) {
-    return null;
-  }
+const getEngineRankTooltipText = (moveDetail: MoveDetail) => (
+  <>
+    This is the engine's <strong>{getOrdinalSuffix(moveDetail.evalResult!.engineOverallRank)}</strong> best move.
+  </>
+);
 
-  return (
-    <>
-      This is the engine's <strong>{getOrdinalSuffix(moveDetail.evalResult!.engineOverallRank)}</strong> best move.
-    </>
-  );
-};
-
-export const Card = ({ moveDetail }: CardProps) => {
-  const { state } = useGameContext();
-
+export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks }: CardProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: moveDetail.uciMove,
   });
   const transformStyle = CSS.Transform.toString(transform);
-  const advantageColor = moveDetail.revealed ? evaluateAdvantage(moveDetail.evalResult!.engineEval) : Color.Neutral;
 
-  const engineRankTooltipText = getEngineRankTooltipText(moveDetail);
+  const displayedRank = revealed ? correctRanks.join('/') : moveDetail.curRank;
 
-  const engineEvalValue = moveDetail.revealed ? formatEvaluation(moveDetail.evalResult!.engineEval) : '?';
+  const advantageColor = revealed ? evaluateAdvantage(moveDetail.evalResult!.engineEval) : Color.Neutral;
 
-  const StatusIcon = getStatusIcon(moveDetail);
+  const engineRankTooltipText = revealed ? getEngineRankTooltipText(moveDetail) : null;
 
-  const sanMove = uciMoveToSanMove(state.chessJs, moveDetail.uciMove)!;
+  const engineEvalValue = revealed ? formatEvaluation(moveDetail.evalResult!.engineEval) : '?';
+
+  const StatusIcon = getStatusIcon(revealed, moveDetail.curRank, correctRanks);
   const pieceChar = getPieceUnicode(sanMove);
-  const turnPlayerColor = getTurnPlayerColor(state.chessJs);
 
   return (
     <CardContainer
@@ -76,13 +66,13 @@ export const Card = ({ moveDetail }: CardProps) => {
         <StatusIconWrapper>
           <StatusIcon />
         </StatusIconWrapper>
-        <CurrentRankNumber>{moveDetail.curRank}</CurrentRankNumber>
+        <CurrentRankNumber>{displayedRank}</CurrentRankNumber>
       </CurrentRankWrapper>
       <SanMoveWrapper>
-        <MoveChessPiece $color={turnPlayerColor}>{pieceChar}</MoveChessPiece>
-        <MoveNotation $color={turnPlayerColor}>{sanMove}</MoveNotation>
+        <MoveChessPiece $color={turnPlayer}>{pieceChar}</MoveChessPiece>
+        <MoveNotation $color={turnPlayer}>{sanMove}</MoveNotation>
       </SanMoveWrapper>
-      {moveDetail.revealed && (
+      {revealed && (
         <>
           <Tooltip id={`engine-rank-tooltip-${moveDetail.uciMove}`} place="top">
             {engineRankTooltipText}
