@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton, NextButton } from './styled';
 import {
   DndContext,
@@ -17,7 +17,7 @@ import {
 } from '@dnd-kit/sortable';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { Card } from './Card';
-import { useGameContext } from '../../context/gameContext';
+import { useGameContext } from '../../common/hooks';
 import { Description } from './Description';
 import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessJsUtils';
 import { MoveDetail } from '../../context/types';
@@ -35,20 +35,22 @@ const Panel = () => {
 
   // Function to load a new game
   const loadNewGame = useCallback(async () => {
+    let data;
     try {
-      const data = await getNewRandomGame();
-
-      // Dispatch action to update state with new game data
-      dispatch({
-        type: 'NEW_GAME',
-        payload: {
-          fen: data.fen,
-          uciMoves: data.uciMoves,
-          difficulty: data.difficulty,
-        },
-      });
+      data = await getNewRandomGame();
     } catch (error) {
       console.error('Error fetching new game data:', error);
+    } finally {
+      if (data !== undefined) {
+        dispatch({
+          type: 'NEW_GAME',
+          payload: {
+            fen: data.fen,
+            uciMoves: data.uciMoves,
+            difficulty: data.difficulty,
+          },
+        });
+      }
     }
   }, [dispatch]);
 
@@ -60,7 +62,6 @@ const Panel = () => {
 
     try {
       const data = await getGameSolution('test'); // TODO: use real id here
-
       // Dispatch action to update state with new game data
       dispatch({
         type: 'UPSERT_SOLUTION',

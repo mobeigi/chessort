@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext, ReactNode } from 'react';
+import React, { createContext, useReducer, ReactNode } from 'react';
 import { GameState, GameAction, Difficulty, EvalResult } from './types';
 import { Chess, DEFAULT_POSITION } from 'chess.js';
 
@@ -18,7 +18,7 @@ const initialState: GameState = {
   previewedMove: null,
 };
 
-const GameContext = createContext<{
+export const GameContext = createContext<{
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
 }>({
@@ -50,6 +50,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
         curChessJs: new Chess(fen),
       };
     }
+
     case 'UPSERT_SOLUTION': {
       const data = action.payload;
 
@@ -73,6 +74,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
         solutionEvals,
       };
     }
+
     case 'REVEAL_MOVES':
       return {
         ...state,
@@ -85,6 +87,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
           revealed: true,
         },
       };
+
     case 'PREVIEW_MOVE': {
       if (!state.isPreview) {
         const newChessInstance = new Chess(state.curChessJs.fen());
@@ -119,5 +122,3 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState);
   return <GameContext.Provider value={{ state, dispatch }}>{children}</GameContext.Provider>;
 };
-
-export const useGameContext = () => useContext(GameContext);

@@ -1,4 +1,4 @@
-import { useGameContext } from '../../../context/gameContext';
+import { useGameContext } from '../../../common/hooks';
 import { DifficultyLine, DifficultyLozenge } from './styled';
 
 export const Description = () => {
