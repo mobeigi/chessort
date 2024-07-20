@@ -41,6 +41,8 @@ export const CurrentRankWrapper = styled.span`
 const BaseDigitGrid = styled.span`
   display: grid;
   justify-items: center;
+  line-height: 1.2em;
+  width: 1em;
 `;
 
 export const OneDigitGrid = styled(BaseDigitGrid)``;
