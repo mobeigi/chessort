@@ -32,8 +32,8 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
     margin-left: 0.2em; /* No gap between 1st & 2nd child */
   }
 
-  ${({ $isPreviewed }) =>
-    $isPreviewed &&
+  ${({ $isPreviewed, $isDragging }) =>
+    ($isPreviewed || $isDragging) &&
     `
       box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
       border-color: #fff;

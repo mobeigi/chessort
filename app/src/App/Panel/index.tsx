@@ -8,6 +8,7 @@ import {
   useSensor,
   useSensors,
   DragEndEvent,
+  DragStartEvent,
 } from '@dnd-kit/core';
 import {
   arrayMove,
@@ -99,6 +100,17 @@ const Panel = () => {
     [state.isPreview, dispatch],
   );
 
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    const moveDetail = state.moveDetails.find((card) => card.uciMove === active.id);
+
+    // Unpreview other moves
+    if (state.isPreview) {
+      dispatch({ type: 'UNPREVIEW_MOVE' });
+    }
+    dispatch({ type: 'PREVIEW_MOVE', payload: moveDetail?.uciMove });
+  };
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
@@ -131,6 +143,7 @@ const Panel = () => {
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
           modifiers={[restrictToParentElement]}
         >
