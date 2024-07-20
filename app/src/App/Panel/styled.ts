@@ -57,3 +57,7 @@ export const SubmitButton = styled.button`
     box-shadow: 0 0 0 0.25em rgba(76, 175, 80, 0.5);
   }
 `;
+
+export const NextButton = styled.button`
+  width: 90%;
+`;

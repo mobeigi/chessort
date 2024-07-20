@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton } from './styled';
+import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton, NextButton } from './styled';
 import {
   DndContext,
   closestCenter,
@@ -76,6 +76,10 @@ const Panel = () => {
     dispatch({ type: 'REVEAL_MOVES' });
   };
 
+  const handleNextPuzzle = () => {
+    // TODO: dispatch NEW_GAME code
+  };
+
   const turnPlayer = getTurnPlayerColor(state.initialChessJs);
 
   return (
@@ -107,8 +111,11 @@ const Panel = () => {
           </SortableContext>
         </DndContext>
       </CardsWrapper>
-
-      <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+      {state.gameDetails.revealed ? (
+        <NextButton onClick={handleNextPuzzle}>Next Puzzle</NextButton>
+      ) : (
+        <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+      )}
     </PanelContainer>
   );
 };
