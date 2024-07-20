@@ -3,7 +3,7 @@ import { CSS } from '@dnd-kit/utilities';
 import {
   CardContainer,
   CurrentRankWrapper,
-  CurrentRankNumber,
+  CurrentRankNumberWrapper,
   StatusIconWrapper,
   SanMoveWrapper,
   MoveChessPiece,
@@ -11,6 +11,10 @@ import {
   EngineRankWrapper,
   EngineRank,
   EngineEvalWrapper,
+  OneDigitGrid,
+  TwoDigitGrid,
+  ThreeDigitGrid,
+  FourDigitGrid,
 } from './styled';
 import { CardProps } from './types';
 import { MoveDetail } from '../../../context/types';
@@ -37,13 +41,28 @@ const getEngineRankTooltipText = (moveDetail: MoveDetail) => (
   </>
 );
 
+const getDigitGrid = (numDigits: number) => {
+  switch (numDigits) {
+    case 1:
+      return OneDigitGrid;
+    case 2:
+      return TwoDigitGrid;
+    case 3:
+      return ThreeDigitGrid;
+    case 4:
+      return FourDigitGrid;
+    default:
+      throw new Error('Invalid number of digits. Must be between 1 and 4.');
+  }
+};
+
 export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks }: CardProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: moveDetail.uciMove,
   });
   const transformStyle = CSS.Transform.toString(transform);
 
-  const displayedRank = revealed ? correctRanks.join('/') : moveDetail.curRank;
+  const DigitGridComponent = revealed ? getDigitGrid(correctRanks.length) : OneDigitGrid;
 
   const advantageColor = revealed ? evaluateAdvantage(moveDetail.evalResult!.engineEval) : Color.Neutral;
 
@@ -66,7 +85,15 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks }
         <StatusIconWrapper>
           <StatusIcon />
         </StatusIconWrapper>
-        <CurrentRankNumber>{displayedRank}</CurrentRankNumber>
+        <CurrentRankNumberWrapper>
+          <DigitGridComponent>
+            {revealed ? (
+              correctRanks.map((digit, index) => <span key={index}>{digit}</span>)
+            ) : (
+              <span>{moveDetail.curRank}</span>
+            )}
+          </DigitGridComponent>
+        </CurrentRankNumberWrapper>
       </CurrentRankWrapper>
       <SanMoveWrapper>
         <MoveChessPiece $color={turnPlayer}>{pieceChar}</MoveChessPiece>

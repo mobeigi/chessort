@@ -39,7 +39,7 @@ const initialState: GameState = {
       },
     },
   ],
-  solutionEvals: ['+332', '+283', '#-1', '#-1'],
+  solutionEvals: ['+332', '+283', '#-1', '#-1'], // TODO: reset back to empty array
   gameDetails: {
     fen: initialFen,
     difficulty: Difficulty.BEGINNER,

@@ -38,6 +38,29 @@ export const CurrentRankWrapper = styled.span`
   gap: 0.2em;
 `;
 
+const BaseDigitGrid = styled.span`
+  display: grid;
+  justify-items: center;
+`;
+
+export const OneDigitGrid = styled(BaseDigitGrid)``;
+
+export const TwoDigitGrid = styled(BaseDigitGrid)`
+  grid-template-columns: repeat(1, 1fr);
+`;
+
+export const ThreeDigitGrid = styled(BaseDigitGrid)`
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+
+  :nth-child(1) {
+    grid-column: span 2;
+  }
+`;
+export const FourDigitGrid = styled(BaseDigitGrid)`
+  grid-template-columns: repeat(2, 1fr);
+`;
+
 export const StatusIconWrapper = styled.span`
   display: flex;
 
@@ -47,7 +70,7 @@ export const StatusIconWrapper = styled.span`
   }
 `;
 
-export const CurrentRankNumber = styled.span`
+export const CurrentRankNumberWrapper = styled.span`
   font-weight: bold;
 `;
 
