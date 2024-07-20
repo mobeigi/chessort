@@ -5,6 +5,7 @@ import { getBaseColor, getOverlayColor } from './utils';
 interface CardContainerProps {
   $isDragging: boolean;
   $isPreviewed: boolean;
+  $revealed: boolean;
 }
 
 export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging, style }) => ({
@@ -21,7 +22,6 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   height: 28px; /* To support tallest element in children */
   border: 2px solid #242424;
   border-radius: 0.2em;
-  cursor: grab;
   align-items: center;
 
   > *:not(:first-child) {
@@ -38,6 +38,8 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
       box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
       border-color: #fff;
     `}
+
+  ${({ $revealed }) => ($revealed ? `cursor: auto;` : `cursor: grab;`)}
 `;
 
 export const CurrentRankWrapper = styled.span`
