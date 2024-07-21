@@ -14,13 +14,13 @@ Requirements:
 Ensure the Stockfish engine path is correctly set in the 'STOCKFISH_PATH' environment variable. 
 
 Configuration Parameters:
-- NUM_OF_MOVES_TO_EVALUATE: Number of top moves to evaluate for each FEN.
-- MIN_DISTINCT_MOVE_BUCKETS: Minimum number of distinct move evaluations required to include the FEN.
 - STOCKFISH_PATH: Path to the Stockfish executable.
 - LICHESS_PUZZLE_FILE: Path to the input Lichess puzzle CSV file (relative to current directory).
 - BASE_OUTPUT_FILE_PATH: Base path to the output CSV file (relative to current directory).
+- MIN_MOVES_REQUIRED: Minimum number of moves required to process this result.
 - LICHESS_PUZZLE_FILE_OFFSET: Line offset to start processing from in the Lichess puzzle file.
 - LICHESS_PUZZLE_FILE_LIMIT: Number of lines to process from the Lichess puzzle file.
+- MULTI_PV: Number of top moves to evaluate for each FEN.
 - EVALUATION_DEPTH: Depth to which Stockfish engine evaluates the positions.
 - MAX_WORKERS: Number of worker processes to use.
 - STOCKFISH_THREADS_PER_ENGINE: Number of threads per Stockfish engine instance.
@@ -38,7 +38,6 @@ Metadata JSON format:
 - limit: Number of lines processed.
 - evaluationDepth: Depth to which Stockfish evaluated the positions.
 - multipv: Number of top moves evaluated.
-- minimumDistinctMoveBuckets: Minimum number of distinct move evaluations required.
 - inputLichessFileSha256: SHA-256 hash of the input Lichess puzzle file.
 - outputFileSha256: SHA-256 hash of the generated output CSV file.
 """
@@ -56,10 +55,11 @@ STOCKFISH_PATH = os.getenv('STOCKFISH_PATH', '/usr/local/bin/stockfish')
 LICHESS_PUZZLE_FILE = os.path.join(os.getcwd(), 'lichess-data', 'lichess_db_puzzle.csv')
 BASE_OUTPUT_FILE_PATH = os.path.join(os.getcwd(), 'out', 'chessort')
 
-NUM_OF_MOVES_TO_EVALUATE = 50
-MIN_DISTINCT_MOVE_BUCKETS = 8
+MIN_MOVES_REQUIRED = 4
 LICHESS_PUZZLE_FILE_OFFSET = 100000
 LICHESS_PUZZLE_FILE_LIMIT = 5
+
+MULTI_PV = 50
 EVALUATION_DEPTH = 22
 
 MAX_WORKERS = 24
@@ -95,17 +95,6 @@ def analyze_top_moves(fen, top_n, depth):
             
     return moves
 
-def count_min_distinct_move_buckets(moves):
-    # Extract the distinct evaluations
-    distinct_evaluations = set()
-    for move, score in moves:
-        if score.is_mate():
-            eval_str = f"mate{score.mate()}"
-        else:
-            eval_str = f"cp{score.score()}"
-        distinct_evaluations.add(eval_str)
-    return len(distinct_evaluations)
-
 # Process an FEN
 def process_puzzle(puzzle):
     lichess_puzzle_id = puzzle['PuzzleId']
@@ -115,12 +104,11 @@ def process_puzzle(puzzle):
     print(f"[{lichess_puzzle_id}] Processing...")
 
     # Generate top moves
-    top_moves = analyze_top_moves(fen, top_n=NUM_OF_MOVES_TO_EVALUATE, depth=EVALUATION_DEPTH)
-    puzzle_min_buckets = count_min_distinct_move_buckets(top_moves)
+    top_moves = analyze_top_moves(fen, top_n=MULTI_PV, depth=EVALUATION_DEPTH)
     
-    # Ensure we have the minimum number of top moves desired to make interesting puzzles
-    if puzzle_min_buckets < MIN_DISTINCT_MOVE_BUCKETS:
-        print(f"[{lichess_puzzle_id}] Skipped. Not enough distinct move buckets. Found: {puzzle_min_buckets}. Need: {MIN_DISTINCT_MOVE_BUCKETS}.")
+    # Ensure we have the minimum number of total moves
+    if len(top_moves) < MIN_MOVES_REQUIRED:
+        print(f"[{lichess_puzzle_id}] Skipped. Not enough total moves. Found: {len(top_moves)}. Need: {MIN_MOVES_REQUIRED}.")
         return None
 
     # Create a comma-separated list of moves with evaluations
@@ -162,8 +150,8 @@ def process_input_file(file_path, offset=0, limit=10):
         "offset": offset,
         "limit": limit,
         "evaluationDepth": EVALUATION_DEPTH,
-        "multipv": NUM_OF_MOVES_TO_EVALUATE,
-        "minimumDistinctMoveBuckets": MIN_DISTINCT_MOVE_BUCKETS,
+        "multipv": MULTI_PV,
+        "minimumMovesRequired": MIN_MOVES_REQUIRED,
         "inputLichessFileSha256": input_lichess_file_sha256,
         "outputFileSha256": output_file_sha256
     }

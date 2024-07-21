@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a helper script designed to pre-generate Chessort games from FEN strings using the Stockfish engine. It retrieves the top N moves, filters out positions that do not meet a minimum number of distinct move evaluations, and saves the results to CSV files along with metadata.
+This is a helper script designed to pre-generate Chessort games from FEN strings using the Stockfish engine. It retrieves the top N moves, filters out positions that do not meet a minimum number of moves, and saves the results to CSV files along with metadata.
 
 ## Folder Structure
 
@@ -20,7 +20,7 @@ The `generate.py` script processes chess positions from the Lichess puzzle CSV f
 
 - Analyzes chess positions from FEN strings using Stockfish.
 - Retrieves the top N moves for each position.
-- Filters out positions that do not meet a minimum number of distinct move evaluations.
+- Filters out positions that do not meet a minimum number of moves.
 - Saves the results to CSV files.
 - Generates metadata for each chunk of processed data.
 
@@ -67,7 +67,7 @@ LichessPuzzleId,FEN,Rating,Moves
     "limit": 5,
     "evaluationDepth": 22,
     "multipv": 10,
-    "minimumDistinctMoveBuckets": 8,
+    "minimumMovesRequired": 4,
     "inputLichessFileSha256": "a480b5c25389d653800889bcf223d32a622249bd3d6ba3e210b8c75bc8092300",
     "outputFileSha256": "db30fcec7a15277dfa365bdb5ee6dd068f328fdcc151783771dc08109c8c3919"
 }
