@@ -1,3 +1,20 @@
+"""
+Script to ingest chessort puzzle data from a pre-generated CSV file into a MySQL database.
+
+This script reads a pre-generated CSV file, parses the data,
+and inserts it into the MySQL database. The database schema includes a Puzzles table and a
+Moves table with necessary relationships and indexes for efficient querying.
+
+The script expects the following environment variables to be set for database connection:
+- DB_USER
+- DB_PASSWORD
+- DB_HOST
+- DB_DATABASE
+
+Usage:
+    python ingestion.py <csv_file_path>
+"""
+
 import csv
 import mysql.connector
 from mysql.connector import Error
