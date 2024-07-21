@@ -18,6 +18,32 @@ DATABASE_URL = f"mysql+pymysql://{username}:{password}@{host}/{database}"
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 
+def get_puzzle_and_move_ids(fen, uci_moves):
+    """
+    Retrieve the puzzle ID and move IDs based on the FEN and UCI moves.
+    """
+    session = Session()
+    
+    puzzle = session.query(Puzzle).filter_by(FEN=fen).first()
+    if not puzzle:
+        session.close()
+        return None, None
+
+    puzzle_id = puzzle.ID
+
+    move_ids = []
+    for uci_move in uci_moves:
+        move = session.query(Move).filter_by(PuzzleID=puzzle_id, UciMove=uci_move).first()
+        if move:
+            move_ids.append(move.ID)
+        else:
+            session.close()
+            return None, None
+    
+    session.close()
+    return puzzle_id, move_ids
+
+
 def get_random_puzzle():
     """ Get a random puzzle from the database """
     session = Session()
