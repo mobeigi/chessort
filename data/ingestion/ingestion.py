@@ -70,7 +70,7 @@ def parse_moves(moves_str, turn_player):
     """ Parse the moves string into a list of tuples (uci_move, engine_eval, engine_overall_rank) """
     moves = moves_str.split(',')
     parsed_moves = []
-    for engine_overall_rank, move in enumerate(moves):
+    for engine_overall_rank, move in enumerate(moves, start=1):
         uci_move, engine_eval = move.split(' ')
         engine_eval = convert_to_global_eval(engine_eval, turn_player)
         parsed_moves.append((uci_move, engine_eval, engine_overall_rank))
