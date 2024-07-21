@@ -112,7 +112,7 @@ def process_puzzle(puzzle):
         return None
 
     # Create a comma-separated list of moves with evaluations
-    moves_str = ', '.join([f"{move} {score}" for move, score in top_moves])
+    moves_str = ','.join([f"{move} {score}" for move, score in top_moves])
 
     return {
         'LichessPuzzleId': lichess_puzzle_id,
