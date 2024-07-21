@@ -1,6 +1,7 @@
 
 import argparse
 from flask import Flask
+from flask_cors import CORS
 from waitress import serve
 from .routes import app as blueprints
 from .logger import Logger
@@ -19,6 +20,9 @@ def main():
     # Log startup
     logger = Logger('chessort-server')
     logger.getLogger().info(f"Starting Chessort Server v{__version__}")
+
+    if args.debug:
+        CORS(app)
 
     if args.debug:
         app.run(host='0.0.0.0', port=16111, debug=True)
