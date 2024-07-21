@@ -16,11 +16,11 @@ CREATE TABLE IF NOT EXISTS Moves (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     PuzzleID INT,
     UciMove VARCHAR(10) NOT NULL,
-    Eval VARCHAR(10) NOT NULL,
-    Rank INT,
+    EngineEval VARCHAR(10) NOT NULL,
+    EngineOverallRank INT,
     FOREIGN KEY (PuzzleID) REFERENCES Puzzles(ID)
 );
 
 -- Create indexes for optimizing queries
 CREATE INDEX idx_moves_puzzleid ON Moves(PuzzleID);
-CREATE INDEX idx_moves_eval ON Moves(Eval);
+CREATE INDEX idx_moves_eval ON Moves(EngineEval);
