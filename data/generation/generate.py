@@ -20,7 +20,7 @@ Configuration Parameters:
 - LICHESS_PUZZLE_FILE: Path to the input Lichess puzzle CSV file (relative to current directory).
 - BASE_OUTPUT_FILE_PATH: Base path to the output CSV file (relative to current directory).
 - LICHESS_PUZZLE_FILE_OFFSET: Line offset to start processing from in the Lichess puzzle file.
-- LICHESS_PUZZLE_FILE_NUM_TO_PROCESS: Number of lines to process from the Lichess puzzle file.
+- LICHESS_PUZZLE_FILE_LIMIT: Number of lines to process from the Lichess puzzle file.
 - EVALUATION_DEPTH: Depth to which Stockfish engine evaluates the positions.
 - MAX_WORKERS: Number of worker processes to use.
 - STOCKFISH_THREADS_PER_ENGINE: Number of threads per Stockfish engine instance.
@@ -59,7 +59,7 @@ BASE_OUTPUT_FILE_PATH = os.path.join(os.getcwd(), 'out', 'chessort')
 NUM_OF_MOVES_TO_EVALUATE = 50
 MIN_DISTINCT_MOVE_BUCKETS = 8
 LICHESS_PUZZLE_FILE_OFFSET = 100000
-LICHESS_PUZZLE_FILE_NUM_TO_PROCESS = 5
+LICHESS_PUZZLE_FILE_LIMIT = 5
 EVALUATION_DEPTH = 22
 
 MAX_WORKERS = 24
@@ -177,7 +177,7 @@ def main():
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    process_input_file(LICHESS_PUZZLE_FILE, LICHESS_PUZZLE_FILE_OFFSET, LICHESS_PUZZLE_FILE_NUM_TO_PROCESS)
+    process_input_file(LICHESS_PUZZLE_FILE, LICHESS_PUZZLE_FILE_OFFSET, LICHESS_PUZZLE_FILE_LIMIT)
 
 
 if __name__ == "__main__":
