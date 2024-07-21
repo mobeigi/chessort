@@ -1,8 +1,43 @@
+"""
+Chessort - Generate data for the game
+=============================================
+
+This script analyzes chess positions from FEN strings using Stockfish and retrieves the top N moves.
+It filters out positions that do not meet a minimum number of distinct move evaluations and saves the
+results to a CSV file.
+
+Requirements:
+- Python 3.x
+- python-chess library
+- Stockfish engine
+
+Ensure the Stockfish engine path is correctly set in the 'STOCKFISH_PATH' environment variable. 
+
+Configuration Parameters:
+- NUM_OF_MOVES_TO_EVALUATE: Number of top moves to evaluate for each FEN.
+- MIN_DISTINCT_MOVE_BUCKETS: Minimum number of distinct move evaluations required to include the FEN.
+- STOCKFISH_PATH: Path to the Stockfish executable.
+- LICHESS_PUZZLE_FILE: Path to the input Lichess puzzle CSV file (relative to current directory).
+- CSV_OUTPUT_FILE_PATH: Path to the output CSV file (relative to current directory).
+- LICHESS_PUZZLE_FILE_OFFSET: Line offset to start processing from in the Lichess puzzle file.
+- LICHESS_PUZZLE_FILE_NUM_TO_PROCESS: Number of lines to process from the Lichess puzzle file.
+- EVALUATION_DEPTH: Depth to which Stockfish engine evaluates the positions.
+- MAX_WORKERS: Number of worker processes to use.
+- STOCKFISH_THREADS_PER_ENGINE: Number of threads per Stockfish engine instance.
+- HASH_SIZE: Size of the hash table for the Stockfish engine in MB.
+
+Output CSV format:
+- LichessPuzzleId: ID of the puzzle.
+- FEN: FEN string of the position.
+- Rating: Rating of the puzzle.
+- Moves: Comma-separated list of moves in UCI format followed by their evaluation.
+"""
+
 import os
 import csv
 import chess
 import chess.engine
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 # Configuration
 NUM_OF_MOVES_TO_EVALUATE = 50
@@ -13,11 +48,15 @@ CSV_OUTPUT_FILE_PATH = os.path.join(os.getcwd(), 'out', 'chessort.csv')
 LICHESS_PUZZLE_FILE_OFFSET = 100000
 LICHESS_PUZZLE_FILE_NUM_TO_PROCESS = 10
 EVALUATION_DEPTH = 22
-MAX_WORKERS = 4
+MAX_WORKERS = 24
+STOCKFISH_THREADS_PER_ENGINE = 1
+HASH_SIZE = 1875
 
 # Analyze the top moves for a given FEN
 def analyze_top_moves(fen, top_n, depth):
     with chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH) as engine:
+        engine.configure({"Threads": STOCKFISH_THREADS_PER_ENGINE, "Hash": HASH_SIZE})
+
         board = chess.Board(fen)
         result = engine.analyse(board, chess.engine.Limit(depth=depth), multipv=top_n)
         moves = []
@@ -72,7 +111,7 @@ def process_puzzle(puzzle):
 def process_input_file(file_path, writer, offset=0, num_lines=10):
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
-        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        with ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
             futures = {executor.submit(process_puzzle, row): row for i, row in enumerate(reader) if i >= offset and i < offset + num_lines}
             for future in as_completed(futures):
                 result = future.result()
