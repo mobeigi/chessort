@@ -94,13 +94,17 @@ const Panel = () => {
 
   const handleClick = useCallback(
     (uciMove: string) => {
+      // If any move is currently previewed, unpreview it
       if (state.isPreview) {
         dispatch({ type: 'UNPREVIEW_MOVE' });
-      } else {
+      }
+      // Preview the clicked move if it is not the same as the current previewed move
+      // If the clicked move is the same as the current previewed move, it will be unpreviewed in the prior action
+      if (state.previewedMove !== uciMove) {
         dispatch({ type: 'PREVIEW_MOVE', payload: uciMove });
       }
     },
-    [state.isPreview, dispatch],
+    [state.isPreview, state.previewedMove, dispatch],
   );
 
   const handleDragStart = (event: DragStartEvent) => {
