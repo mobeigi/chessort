@@ -1,0 +1,2 @@
+# Contains sensitive database information
+.env
