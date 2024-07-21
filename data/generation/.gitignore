@@ -1,3 +1,9 @@
+# Output folder
 out/
-lichess_db_puzzle.csv
-lichess_db_puzzle.csv.zst
+
+# Raw lichess binaries
+lichess-data/lichess_db_puzzle.csv
+lichess-data/lichess_db_puzzle.csv.zst
+
+# Virtual environment
+venv/
