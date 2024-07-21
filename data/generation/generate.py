@@ -31,6 +31,16 @@ Output CSV format:
 - FEN: FEN string of the position.
 - Rating: Rating of the puzzle.
 - Moves: Comma-separated list of moves in UCI format followed by their evaluation.
+
+Metadata JSON format:
+- stockfishVersion: Version of the Stockfish engine used.
+- offset: Line offset in the input file from which processing started.
+- limit: Number of lines processed.
+- evaluationDepth: Depth to which Stockfish evaluated the positions.
+- multipv: Number of top moves evaluated.
+- minimumDistinctMoveBuckets: Minimum number of distinct move evaluations required.
+- inputLichessFileSha256: SHA-256 hash of the input Lichess puzzle file.
+- outputFileSha256: SHA-256 hash of the generated output CSV file.
 """
 
 import os
@@ -38,6 +48,8 @@ import csv
 import chess
 import chess.engine
 from concurrent.futures import ProcessPoolExecutor, as_completed
+import hashlib
+import json
 
 # Configuration
 STOCKFISH_PATH = os.getenv('STOCKFISH_PATH', '/usr/local/bin/stockfish')
@@ -53,6 +65,18 @@ EVALUATION_DEPTH = 22
 MAX_WORKERS = 24
 STOCKFISH_THREADS_PER_ENGINE = 1
 HASH_SIZE = 1875
+
+def get_stockfish_version():
+    with chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH) as engine:
+        version_info = engine.protocol.id.get("name", "Unknown Version")
+    return version_info
+
+def sha256sum(filename):
+    h = hashlib.sha256()
+    with open(filename, 'rb') as file:
+        while chunk := file.read(8192):
+            h.update(chunk)
+    return h.hexdigest()
 
 # Analyze the top moves for a given FEN
 def analyze_top_moves(fen, top_n, depth):
@@ -112,6 +136,11 @@ def process_puzzle(puzzle):
 # Process input file into a puzzle
 def process_input_file(file_path, offset=0, limit=10):
     output_file_path = f"{BASE_OUTPUT_FILE_PATH}-{offset}-{limit}.csv"
+    metadata_file_path = f"{BASE_OUTPUT_FILE_PATH}-{offset}-{limit}.metadata.json"
+    
+    stockfish_version = get_stockfish_version()
+    input_lichess_file_sha256 = sha256sum(file_path)
+
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         with ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
@@ -125,6 +154,22 @@ def process_input_file(file_path, offset=0, limit=10):
                     if result:
                         writer.writerow(result)
                         print(f"[{result['LichessPuzzleId']}] Successfully processed.")
+
+    # Generate and store meta data file
+    output_file_sha256 = sha256sum(output_file_path)
+    metadata = {
+        "stockfishVersion": stockfish_version,
+        "offset": offset,
+        "limit": limit,
+        "evaluationDepth": EVALUATION_DEPTH,
+        "multipv": NUM_OF_MOVES_TO_EVALUATE,
+        "minimumDistinctMoveBuckets": MIN_DISTINCT_MOVE_BUCKETS,
+        "inputLichessFileSha256": input_lichess_file_sha256,
+        "outputFileSha256": output_file_sha256
+    }
+
+    with open(metadata_file_path, 'w') as metafile:
+        json.dump(metadata, metafile, indent=4)
 
 def main():
     # Create directory if it doesn't exist
