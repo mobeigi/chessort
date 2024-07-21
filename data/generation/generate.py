@@ -11,18 +11,20 @@ Requirements:
 - python-chess library
 - Stockfish engine
 
-Ensure the Stockfish engine path is correctly set in the 'STOCKFISH_PATH' environment variable.
+Ensure the Stockfish engine path is correctly set in the 'STOCKFISH_PATH' variable or the 'STOCKFISH_EXECUTABLE' 
+environment variable. 
 
 Constants:
 - NUM_OF_MOVES_TO_EVALUATE: Number of top moves to evaluate for each FEN.
 - MIN_DISTINCT_MOVE_BUCKETS: Minimum number of distinct move evaluations required to include the FEN.
-- LICHESS_PUZZLE_FILE: Path to the input Lichess puzzle CSV file.
-- CSV_OUTPUT_FILE_PATH: Path to the output CSV file.
+- LICHESS_PUZZLE_FILE: Path to the input Lichess puzzle CSV file (relative to current directory).
+- CSV_OUTPUT_FILE_PATH: Path to the output CSV file (relative to current directory).
 - LICHESS_PUZZLE_FILE_OFFSET: Line offset to start processing from in the Lichess puzzle file.
 - LICHESS_PUZZLE_FILE_NUM_TO_PROCESS: Number of lines to process from the Lichess puzzle file.
+- EVALUATION_DEPTH: Depth to which Stockfish engine evaluates the positions.
 
 Output CSV format:
-- PuzzleId: ID of the puzzle.
+- LichessPuzzleId: ID of the puzzle.
 - FEN: FEN string of the position.
 - Rating: Rating of the puzzle.
 - Moves: Comma-separated list of moves in UCI format followed by their evaluation.
@@ -41,12 +43,13 @@ LICHESS_PUZZLE_FILE = os.path.join(os.getcwd(), 'lichess-data', 'lichess_db_puzz
 CSV_OUTPUT_FILE_PATH = os.path.join(os.getcwd(), 'out', 'chessort.csv')
 LICHESS_PUZZLE_FILE_OFFSET = 100000
 LICHESS_PUZZLE_FILE_NUM_TO_PROCESS = 10
+EVALUATION_DEPTH = 22
 
 # Analyze the top moves for a given FEN
-def analyze_top_moves(fen, top_n):
+def analyze_top_moves(fen, top_n, depth):
     with chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH) as engine:
         board = chess.Board(fen)
-        result = engine.analyse(board, chess.engine.Limit(time=2), multipv=top_n)
+        result = engine.analyse(board, chess.engine.Limit(depth=depth), multipv=top_n)
         moves = []
         
         for info in result:
@@ -92,7 +95,7 @@ def process_puzzle(puzzle, writer):
     print(f"Processing Puzzle ID: {puzzle_id}, FEN: {fen}")
 
     # Generate top moves
-    top_moves = analyze_top_moves(fen, top_n=NUM_OF_MOVES_TO_EVALUATE)
+    top_moves = analyze_top_moves(fen, top_n=NUM_OF_MOVES_TO_EVALUATE, depth=EVALUATION_DEPTH)
     puzzle_min_buckets = count_min_distinct_move_buckets(top_moves)
     
     # Ensure we have the minimum number of top moves desired to make interesting puzzles
