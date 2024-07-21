@@ -11,7 +11,7 @@ Requirements:
 - python-chess library
 - Stockfish engine
 
-Ensure the Stockfish engine path is correctly set in the 'STOCKFISH_PATH' variable.
+Ensure the Stockfish engine path is correctly set in the 'STOCKFISH_PATH' environment variable.
 
 Constants:
 - NUM_OF_MOVES_TO_EVALUATE: Number of top moves to evaluate for each FEN.
