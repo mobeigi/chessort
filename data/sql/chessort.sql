@@ -1,7 +1,10 @@
 -- Sets up Chessort DB schema for puzzles and moves with necessary indexes.
 
+CREATE DATABASE IF NOT EXISTS chessort;
+USE chessort;
+
 -- Create the Puzzles table
-CREATE TABLE Puzzles (
+CREATE TABLE IF NOT EXISTS Puzzles (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     LichessPuzzleId VARCHAR(10) NOT NULL,
     FEN TEXT NOT NULL,
@@ -9,7 +12,7 @@ CREATE TABLE Puzzles (
 );
 
 -- Create the Moves table
-CREATE TABLE Moves (
+CREATE TABLE IF NOT EXISTS Moves (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     PuzzleID INT,
     UciMove VARCHAR(10) NOT NULL,
