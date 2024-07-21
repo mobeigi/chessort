@@ -1,3 +1,6 @@
+# Contains sensitive database information
+.env
+
 # Logs
 logs/
 
