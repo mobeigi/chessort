@@ -21,6 +21,7 @@ def main():
     logger = Logger('chessort-server')
     logger.getLogger().info(f"Starting Chessort Server v{__version__}")
 
+    # Disable CORS during local development
     if args.debug:
         CORS(app)
 
