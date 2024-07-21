@@ -3,7 +3,13 @@ const BASE_URL = 'http://localhost:16111/api'; // TODO: Replace with actual back
 // Utility function for making API requests
 const fetchApi = async (url: string, options: RequestInit = {}) => {
   try {
-    const response = await fetch(`${BASE_URL}${url}`, options);
+    const response = await fetch(`${BASE_URL}${url}`, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -16,4 +22,13 @@ const fetchApi = async (url: string, options: RequestInit = {}) => {
 
 export const getNewRandomGame = () => fetchApi('/game/random');
 
-export const getGameSolution = (id: string) => fetchApi(`/game/${id}/solution`);
+export const getGameSolution = (fen: string, uciMoves: string[]) => {
+  const data = {
+    fen,
+    uciMoves,
+  };
+  return fetchApi('/solution', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+};
