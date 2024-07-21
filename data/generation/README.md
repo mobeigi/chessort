@@ -62,7 +62,7 @@ LichessPuzzleId,FEN,Rating,Moves
 #### chessort-100000-5.metadata.json
 ```json
 {
-    "stockfishVersion": "Stockfish 16.1",
+    "stockfishVersion": "16.1",
     "offset": 100000,
     "limit": 5,
     "evaluationDepth": 22,

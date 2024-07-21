@@ -69,7 +69,7 @@ HASH_SIZE = 1875
 def get_stockfish_version():
     with chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH) as engine:
         version_info = engine.protocol.id.get("name", "Unknown Version")
-    return version_info
+    return version_info.replace('Stockfish ', '')
 
 def sha256sum(filename):
     h = hashlib.sha256()
