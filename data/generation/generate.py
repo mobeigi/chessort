@@ -36,9 +36,9 @@ import chess.engine
 # Configuration
 NUM_OF_MOVES_TO_EVALUATE = 50
 MIN_DISTINCT_MOVE_BUCKETS = 8
-STOCKFISH_PATH = r"C:\Program Files\stockfish\stockfish-windows-x86-64-avx2.exe"
-LICHESS_PUZZLE_FILE = r"C:\Git\chessort\data-generation\lichess_db_puzzle.csv"
-CSV_OUTPUT_FILE_PATH= r"C:\Git\chessort\data-generation\out\chessort.csv"
+STOCKFISH_PATH = os.getenv('STOCKFISH_PATH', '/usr/local/bin/stockfish')
+LICHESS_PUZZLE_FILE = os.path.join(os.getcwd(), 'lichess-data', 'lichess_db_puzzle.csv')
+CSV_OUTPUT_FILE_PATH = os.path.join(os.getcwd(), 'out', 'chessort.csv')
 LICHESS_PUZZLE_FILE_OFFSET = 100000
 LICHESS_PUZZLE_FILE_NUM_TO_PROCESS = 10
 
@@ -105,7 +105,7 @@ def process_puzzle(puzzle, writer):
 
     # Write the result to the CSV file
     writer.writerow({
-        'PuzzleId': puzzle_id,
+        'LichessPuzzleId': puzzle_id,
         'FEN': fen,
         'Rating': rating,
         'Moves': moves_str
@@ -121,7 +121,7 @@ def main():
     
     # Open output file for writing
     with open(CSV_OUTPUT_FILE_PATH, 'w', newline='') as csvfile:
-        fieldnames = ['PuzzleId', 'FEN', 'Rating', 'Moves']
+        fieldnames = ['LichessPuzzleId', 'FEN', 'Rating', 'Moves']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         # Write the header only if the file is empty
@@ -131,5 +131,5 @@ def main():
         process_input_file(LICHESS_PUZZLE_FILE, writer, LICHESS_PUZZLE_FILE_OFFSET, LICHESS_PUZZLE_FILE_NUM_TO_PROCESS)
 
 
-if __name__=="__main__": 
-    main() 
+if __name__ == "__main__":
+    main()
