@@ -40,14 +40,16 @@ import chess.engine
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 # Configuration
-NUM_OF_MOVES_TO_EVALUATE = 50
-MIN_DISTINCT_MOVE_BUCKETS = 8
 STOCKFISH_PATH = os.getenv('STOCKFISH_PATH', '/usr/local/bin/stockfish')
 LICHESS_PUZZLE_FILE = os.path.join(os.getcwd(), 'lichess-data', 'lichess_db_puzzle.csv')
 BASE_OUTPUT_FILE_PATH = os.path.join(os.getcwd(), 'out', 'chessort')
+
+NUM_OF_MOVES_TO_EVALUATE = 50
+MIN_DISTINCT_MOVE_BUCKETS = 8
 LICHESS_PUZZLE_FILE_OFFSET = 100000
 LICHESS_PUZZLE_FILE_NUM_TO_PROCESS = 5
 EVALUATION_DEPTH = 22
+
 MAX_WORKERS = 24
 STOCKFISH_THREADS_PER_ENGINE = 1
 HASH_SIZE = 1875
@@ -108,12 +110,12 @@ def process_puzzle(puzzle):
     }
 
 # Process input file into a puzzle
-def process_input_file(file_path, offset=0, num_lines=10):
-    output_file_path = f"{BASE_OUTPUT_FILE_PATH}-{offset}-{num_lines}.csv"
+def process_input_file(file_path, offset=0, limit=10):
+    output_file_path = f"{BASE_OUTPUT_FILE_PATH}-{offset}-{limit}.csv"
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         with ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
-            futures = {executor.submit(process_puzzle, row): row for i, row in enumerate(reader) if i >= offset and i < offset + num_lines}
+            futures = {executor.submit(process_puzzle, row): row for i, row in enumerate(reader) if i >= offset and i < offset + limit}
             with open(output_file_path, 'w', newline='') as csvfile:
                 fieldnames = ['LichessPuzzleId', 'FEN', 'Rating', 'Moves']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
