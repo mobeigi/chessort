@@ -1,2 +1,5 @@
 # Contains sensitive database information
 .env
+
+# Virtual environment
+venv/
