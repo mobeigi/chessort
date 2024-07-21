@@ -62,7 +62,10 @@ const Panel = () => {
     }
 
     try {
-      const data = await getGameSolution('test'); // TODO: use real id here
+      const data = await getGameSolution(
+        state.gameDetails.fen,
+        state.moveDetails.map((moveDetail) => moveDetail.uciMove),
+      );
       // Dispatch action to update state with new game data
       dispatch({
         type: 'UPSERT_SOLUTION',
@@ -73,7 +76,7 @@ const Panel = () => {
     } finally {
       dispatch({ type: 'REVEAL_MOVES' });
     }
-  }, [dispatch, state.isPreview]);
+  }, [dispatch, state.gameDetails.fen, state.isPreview, state.moveDetails]);
 
   // The initial loading of the first game
   useEffect(() => {

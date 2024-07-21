@@ -1,5 +1,4 @@
 import os
-import random
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
@@ -33,3 +32,39 @@ def get_random_puzzle():
     session.close()
 
     return puzzle, moves
+
+def get_game_solution(fen, uci_moves):
+    """ Get the solution for a game """
+    session = Session()
+    
+    puzzle = session.query(Puzzle).filter_by(FEN=fen).first()
+    
+    if not puzzle:
+        session.close()
+        return None
+
+    moves = session.query(Move).filter(
+        Move.PuzzleID == puzzle.ID,
+        Move.UciMove.in_(uci_moves)
+    ).all()
+
+    if len(moves) != len(uci_moves):
+        session.close()
+        return None
+
+    solution = [
+        {
+            'uciMove': move.UciMove,
+            'evalResult': {
+                'engineEval': move.EngineEval,
+                'engineOverallRank': move.EngineOverallRank
+            }
+        }
+        for move in moves
+    ]
+    
+    solution = sorted(solution, key=lambda x: x['evalResult']['engineOverallRank'])
+
+    session.close()
+
+    return solution

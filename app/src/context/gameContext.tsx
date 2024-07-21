@@ -56,7 +56,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
 
       // Create a map of uciMove to evalResult from the API response
       const moveDetailsMap = new Map<string, EvalResult>(
-        data.moveDetails.map((detail) => [detail.uciMove, detail.evalResult]), // TODO: fix typing here
+        data.solution.map((detail: { uciMove: string; evalResult: EvalResult }) => [detail.uciMove, detail.evalResult]),
       );
 
       // Update moveDetails in state
@@ -66,7 +66,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       }));
 
       // Update solutionEvals in state
-      const solutionEvals = data.moveDetails.map((detail) => detail.evalResult.engineEval); // TODO: fix typing here
+      const solutionEvals = data.solution.map((detail: { evalResult: EvalResult }) => detail.evalResult.engineEval);
 
       return {
         ...state,
