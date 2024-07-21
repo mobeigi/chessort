@@ -18,7 +18,7 @@ Configuration Parameters:
 - MIN_DISTINCT_MOVE_BUCKETS: Minimum number of distinct move evaluations required to include the FEN.
 - STOCKFISH_PATH: Path to the Stockfish executable.
 - LICHESS_PUZZLE_FILE: Path to the input Lichess puzzle CSV file (relative to current directory).
-- CSV_OUTPUT_FILE_PATH: Path to the output CSV file (relative to current directory).
+- BASE_OUTPUT_FILE_PATH: Base path to the output CSV file (relative to current directory).
 - LICHESS_PUZZLE_FILE_OFFSET: Line offset to start processing from in the Lichess puzzle file.
 - LICHESS_PUZZLE_FILE_NUM_TO_PROCESS: Number of lines to process from the Lichess puzzle file.
 - EVALUATION_DEPTH: Depth to which Stockfish engine evaluates the positions.
@@ -44,9 +44,9 @@ NUM_OF_MOVES_TO_EVALUATE = 50
 MIN_DISTINCT_MOVE_BUCKETS = 8
 STOCKFISH_PATH = os.getenv('STOCKFISH_PATH', '/usr/local/bin/stockfish')
 LICHESS_PUZZLE_FILE = os.path.join(os.getcwd(), 'lichess-data', 'lichess_db_puzzle.csv')
-CSV_OUTPUT_FILE_PATH = os.path.join(os.getcwd(), 'out', 'chessort.csv')
+BASE_OUTPUT_FILE_PATH = os.path.join(os.getcwd(), 'out', 'chessort')
 LICHESS_PUZZLE_FILE_OFFSET = 100000
-LICHESS_PUZZLE_FILE_NUM_TO_PROCESS = 10
+LICHESS_PUZZLE_FILE_NUM_TO_PROCESS = 5
 EVALUATION_DEPTH = 22
 MAX_WORKERS = 24
 STOCKFISH_THREADS_PER_ENGINE = 1
@@ -108,33 +108,29 @@ def process_puzzle(puzzle):
     }
 
 # Process input file into a puzzle
-def process_input_file(file_path, writer, offset=0, num_lines=10):
+def process_input_file(file_path, offset=0, num_lines=10):
+    output_file_path = f"{BASE_OUTPUT_FILE_PATH}-{offset}-{num_lines}.csv"
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         with ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
             futures = {executor.submit(process_puzzle, row): row for i, row in enumerate(reader) if i >= offset and i < offset + num_lines}
-            for future in as_completed(futures):
-                result = future.result()
-                if result:
-                    writer.writerow(result)
-                    print(f"[{result['LichessPuzzleId']}] Successfully processed.")
+            with open(output_file_path, 'w', newline='') as csvfile:
+                fieldnames = ['LichessPuzzleId', 'FEN', 'Rating', 'Moves']
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
+                for future in as_completed(futures):
+                    result = future.result()
+                    if result:
+                        writer.writerow(result)
+                        print(f"[{result['LichessPuzzleId']}] Successfully processed.")
 
 def main():
     # Create directory if it doesn't exist
-    output_dir = os.path.dirname(CSV_OUTPUT_FILE_PATH)
+    output_dir = os.path.dirname(BASE_OUTPUT_FILE_PATH)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    
-    # Open output file for writing
-    with open(CSV_OUTPUT_FILE_PATH, 'w', newline='') as csvfile:
-        fieldnames = ['LichessPuzzleId', 'FEN', 'Rating', 'Moves']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        
-        # Write the header only if the file is empty
-        if os.stat(CSV_OUTPUT_FILE_PATH).st_size == 0:
-            writer.writeheader()
-        
-        process_input_file(LICHESS_PUZZLE_FILE, writer, LICHESS_PUZZLE_FILE_OFFSET, LICHESS_PUZZLE_FILE_NUM_TO_PROCESS)
+
+    process_input_file(LICHESS_PUZZLE_FILE, LICHESS_PUZZLE_FILE_OFFSET, LICHESS_PUZZLE_FILE_NUM_TO_PROCESS)
 
 
 if __name__ == "__main__":
