@@ -34,18 +34,18 @@ def insert_puzzle(cursor, lichess_puzzle_id, fen, rating):
     cursor.execute(query, (lichess_puzzle_id, fen, rating))
     return cursor.lastrowid
 
-def insert_move(cursor, puzzle_id, uci_move, eval, rank):
+def insert_move(cursor, puzzle_id, uci_move, engine_eval, engine_overall_rank):
     """ Insert a move into the Moves table """
-    query = "INSERT INTO Moves (PuzzleID, UciMove, Eval, Rank) VALUES (%s, %s, %s, %s)"
-    cursor.execute(query, (puzzle_id, uci_move, eval, rank))
+    query = "INSERT INTO Moves (PuzzleID, UciMove, EngineEval, EngineOverallRank) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query, (puzzle_id, uci_move, engine_eval, engine_overall_rank))
 
 def parse_moves(moves_str):
-    """ Parse the moves string into a list of tuples (uci_move, eval, rank) """
+    """ Parse the moves string into a list of tuples (uci_move, engine_eval, engine_overall_rank) """
     moves = moves_str.split(',')
     parsed_moves = []
-    for rank, move in enumerate(moves):
-        uci_move, eval = move.split(' ')
-        parsed_moves.append((uci_move, eval, rank))
+    for engine_overall_rank, move in enumerate(moves):
+        uci_move, engine_eval = move.split(' ')
+        parsed_moves.append((uci_move, engine_eval, engine_overall_rank))
     return parsed_moves
 
 def process_csv(file_path):
@@ -69,8 +69,8 @@ def process_csv(file_path):
 
             # Parse moves and insert them
             moves = parse_moves(moves_str)
-            for uci_move, eval, rank in moves:
-                insert_move(cursor, puzzle_id, uci_move, eval, rank)
+            for uci_move, engine_eval, engine_overall_rank in moves:
+                insert_move(cursor, puzzle_id, uci_move, engine_eval, engine_overall_rank)
 
     connection.commit()
     cursor.close()
