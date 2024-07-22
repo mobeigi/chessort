@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton, NextButton } from './styled';
 import {
   DndContext,
@@ -36,6 +36,7 @@ const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) =>
 
 export const Panel = () => {
   const { state, dispatch } = useGameContext();
+  const navigate = useNavigate();
   const { gameId } = useParams<{ gameId?: string }>();
 
   // Function to load a new game
@@ -62,10 +63,13 @@ export const Panel = () => {
           });
         }
 
+        // Populate URL and browser history
+        navigate(`/puzzle/${data.gameId}`);
+
         dispatch({ type: 'SET_LOADING_GAME', payload: false });
       }
     },
-    [dispatch],
+    [dispatch, navigate],
   );
 
   const revealSolutionForCurrentGame = useCallback(async () => {
