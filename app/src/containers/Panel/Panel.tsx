@@ -18,11 +18,11 @@ import {
 } from '@dnd-kit/sortable';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { Card } from './Card';
-import { useGameContext } from '../../common/hooks';
+import { useGameContext } from '../../hooks/useGameContext';
 import { Description } from './Description';
 import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessJsUtils';
-import { MoveDetail } from '../../context/types';
-import { getNewRandomGame, getGameSolution } from '../../common/api';
+import { MoveDetail } from '../../context/gameContext/types';
+import { getNewRandomGame, getGameSolution } from '../../services';
 
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
 const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) => {
@@ -31,7 +31,7 @@ const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) =>
     .filter((index) => index !== -1);
 };
 
-const Panel = () => {
+export const Panel = () => {
   const { state, dispatch } = useGameContext();
 
   // Function to load a new game
@@ -184,5 +184,3 @@ const Panel = () => {
     </PanelContainer>
   );
 };
-
-export default Panel;

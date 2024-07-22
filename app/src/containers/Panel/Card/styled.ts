@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Color } from './../../../common/types';
+import { Color } from '../../../types/color';
 import { getBaseColor, getOverlayColor } from './utils';
 
 interface CardContainerProps {

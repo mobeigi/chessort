@@ -1,5 +1,5 @@
 import { Chessboard } from 'react-chessboard';
-import { useGameContext } from '../../common/hooks';
+import { useGameContext } from '../../hooks/useGameContext';
 
 const customDarkSquareColor = '#b58b69';
 const customLightSquareColor = '#f1dec2';

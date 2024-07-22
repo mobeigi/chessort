@@ -1,8 +1,8 @@
 import LogoSvg from '/logo.svg';
 import { Header, Logo, Title, GameWrapper, ChessBoardWrapper, PanelWrapper, Footer } from './styled';
-import ChessBoard from './ChessBoard';
-import Panel from './Panel';
-import { GameProvider } from '../context/gameContext';
+import ChessBoard from '../../components/ChessBoard';
+import Panel from '../Panel';
+import { GameProvider } from '../../context/gameContext';
 
 const App = () => {
   return (

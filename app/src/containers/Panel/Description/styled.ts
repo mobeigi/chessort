@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { Difficulty } from '../../../context/types';
+import { Difficulty } from '../../../types/difficulty';
 
 export const DifficultyLine = styled.div`
   display: flex;

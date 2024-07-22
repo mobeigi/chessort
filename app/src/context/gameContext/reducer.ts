@@ -1,32 +1,8 @@
-import React, { createContext, useReducer, ReactNode } from 'react';
-import { GameState, GameAction, Difficulty, EvalResult } from './types';
-import { Chess, DEFAULT_POSITION } from 'chess.js';
-
-const initialFen = DEFAULT_POSITION;
-
-const initialState: GameState = {
-  moveDetails: [],
-  solutionEvals: [],
-  gameDetails: {
-    fen: initialFen,
-    difficulty: Difficulty.BEGINNER,
-  },
-  initialChessJs: new Chess(initialFen),
-  curChessJs: new Chess(initialFen),
-  isPreview: false,
-  previewedMove: null,
-  revealed: false,
-  isLoadingGame: true,
-  isLoadingSolution: false,
-};
-
-export const GameContext = createContext<{
-  state: GameState;
-  dispatch: React.Dispatch<GameAction>;
-}>({
-  state: initialState,
-  dispatch: () => null,
-});
+import { Difficulty } from '../../types/difficulty';
+import { GameState, GameAction } from './types';
+import initialState from './initialState';
+import { Chess } from 'chess.js';
+import { EvalResult } from '../../services/chessortServer';
 
 const gameReducer = (state: GameState, action: GameAction): GameState => {
   switch (action.type) {
@@ -126,7 +102,4 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
   }
 };
 
-export const GameProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(gameReducer, initialState);
-  return <GameContext.Provider value={{ state, dispatch }}>{children}</GameContext.Provider>;
-};
+export default gameReducer;

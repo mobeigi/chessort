@@ -1,5 +1,5 @@
 import { Chess } from 'chess.js';
-import { Color } from '../common/types';
+import { Color } from '../types/color';
 
 /**
  * Converts a UCI move to SAN format.

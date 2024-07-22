@@ -1,5 +1,5 @@
-import { MoveDetail } from '../../../context/types';
-import { Color } from '../../../common/types';
+import { MoveDetail } from '../../../context/gameContext/types';
+import { Color } from '../../../types/color';
 
 export interface CardProps {
   moveDetail: MoveDetail;

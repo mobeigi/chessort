@@ -17,13 +17,13 @@ import {
   FourDigitGrid,
 } from './styled';
 import { CardProps } from './types';
-import { MoveDetail } from '../../../context/types';
+import { MoveDetail } from '../../../context/gameContext/types';
 import CorrectIcon from '../../../assets/icons/correct.svg?react';
 import IncorrectIcon from '../../../assets/icons/incorrect.svg?react';
 import CurrentRankIcon from '../../../assets/icons/two-way.svg?react';
 import { evaluateAdvantage, formatEvaluation, getPieceUnicode, getOrdinalSuffix } from './utils';
 import { Tooltip } from 'react-tooltip';
-import { Color } from '../../../common/types';
+import { Color } from '../../../types/color';
 
 const getStatusIcon = (revealed: boolean, curRank: number, correctRanks: number[]) => {
   if (!revealed) {

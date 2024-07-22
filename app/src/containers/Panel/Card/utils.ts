@@ -1,6 +1,6 @@
 import { PieceChar } from './types';
 import { BLACK_PIECES } from './constants';
-import { Color } from '../../../common/types';
+import { Color } from '../../../types/color';
 
 /**
  * Evaluates the given chess engine evaluation string and determines the advantage.
