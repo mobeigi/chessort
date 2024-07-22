@@ -86,7 +86,6 @@ const getDigitGrid = (numDigits: number) => {
 export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, onClick, isPreviewed }: CardProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: moveDetail.uciMove,
-    disabled: revealed,
   });
   const transformStyle = CSS.Transform.toString(transform);
 

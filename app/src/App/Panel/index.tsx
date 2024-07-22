@@ -62,11 +62,6 @@ const Panel = () => {
   const revealSolutionForCurrentGame = useCallback(async () => {
     dispatch({ type: 'SET_LOADING_SOLUTION', payload: true });
 
-    if (state.isPreview) {
-      // Exit preview if we're in preview as we submit
-      dispatch({ type: 'UNPREVIEW_MOVE' });
-    }
-
     try {
       const data = await getGameSolution(
         state.gameDetails.fen,
@@ -80,9 +75,10 @@ const Panel = () => {
     } catch (error) {
       console.error('Error getting game solution data:', error);
     } finally {
+      dispatch({ type: 'UNPREVIEW_MOVE' });
       dispatch({ type: 'REVEAL_MOVES' });
     }
-  }, [dispatch, state.gameDetails.fen, state.isPreview, state.moveDetails]);
+  }, [dispatch, state.gameDetails.fen, state.moveDetails]);
 
   // The initial loading of the first game
   useEffect(() => {
@@ -100,17 +96,15 @@ const Panel = () => {
 
   const handleClick = useCallback(
     (uciMove: string) => {
-      // If any move is currently previewed, unpreview it
-      if (state.isPreview) {
-        dispatch({ type: 'UNPREVIEW_MOVE' });
-      }
+      dispatch({ type: 'UNPREVIEW_MOVE' });
+
       // Preview the clicked move if it is not the same as the current previewed move
       // If the clicked move is the same as the current previewed move, it will be unpreviewed in the prior action
       if (state.previewedMove !== uciMove) {
         dispatch({ type: 'PREVIEW_MOVE', payload: uciMove });
       }
     },
-    [state.isPreview, state.previewedMove, dispatch],
+    [state.previewedMove, dispatch],
   );
 
   const handleDragStart = (event: DragStartEvent) => {
@@ -118,9 +112,7 @@ const Panel = () => {
     const moveDetail = state.moveDetails.find((card) => card.uciMove === active.id);
 
     // Unpreview other moves
-    if (state.isPreview) {
-      dispatch({ type: 'UNPREVIEW_MOVE' });
-    }
+    dispatch({ type: 'UNPREVIEW_MOVE' });
     dispatch({ type: 'PREVIEW_MOVE', payload: moveDetail?.uciMove });
   };
 
@@ -160,7 +152,11 @@ const Panel = () => {
           onDragEnd={handleDragEnd}
           modifiers={[restrictToParentElement]}
         >
-          <SortableContext items={state.moveDetails.map((card) => card.uciMove)} strategy={verticalListSortingStrategy}>
+          <SortableContext
+            items={state.moveDetails.map((card) => card.uciMove)}
+            strategy={verticalListSortingStrategy}
+            disabled={state.isLoadingSolution || state.revealed}
+          >
             {state.moveDetails.map((moveDetail) => (
               <Card
                 key={moveDetail.uciMove}
