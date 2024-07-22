@@ -120,6 +120,12 @@ export const MoveNotation = styled.span<SanMovePieceProps>`
 export const EngineRankWrapper = styled.span`
   display: flex;
   filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25)); // Need to add the drop shadow here so it affects clip-path in child
+
+  // Highlight effect on hover
+  opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 interface EngineRankProps {
@@ -132,7 +138,6 @@ export const EngineRank = styled.span<EngineRankProps>`
   height: 24px;
   font-size: 0.7em;
   font-weight: 600;
-  opacity: 0.8;
   padding: 2px;
 
   &::before {
