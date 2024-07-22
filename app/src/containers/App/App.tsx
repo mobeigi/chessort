@@ -1,9 +1,10 @@
 import LogoSvg from '/logo.svg';
-import { Header, Logo, Title, GameWrapper, ChessBoardWrapper, PanelWrapper, Footer } from './styled';
+import { Header, Logo, Title, GameWrapper, ChessBoardWrapper, PanelWrapper } from './styled';
 import ChessBoard from '../../components/ChessBoard';
 import Panel from '../Panel';
 import { GameProvider } from '../../context/gameContext';
 import { useGameContext } from '../../hooks/useGameContext';
+import Footer from './Footer';
 
 const ChessBoardContainer = () => {
   const { state } = useGameContext();
@@ -29,7 +30,7 @@ export const App = () => {
         </GameProvider>
       </GameWrapper>
 
-      <Footer>FOOTER</Footer>
+      <Footer />
     </>
   );
 };

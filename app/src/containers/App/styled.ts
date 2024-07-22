@@ -59,7 +59,4 @@ export const PanelWrapper = styled.section`
 export const Footer = styled.footer`
   display: flex;
   min-height: 85px;
-
-  justify-content: center;
-  align-items: center;
 `;
