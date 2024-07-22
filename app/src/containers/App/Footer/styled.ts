@@ -8,7 +8,6 @@ export const FooterWrapper = styled.footer`
   align-items: center;
 
   font-size: 0.8em;
-  font-family: Verdana;
 `;
 
 export const CreatedByWrapper = styled.div`
