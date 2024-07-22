@@ -17,9 +17,9 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
-import { Card } from './Card';
+import Card from './Card';
 import { useGameContext } from '../../hooks/useGameContext';
-import { Description } from './Description';
+import Description from './Description';
 import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessJsUtils';
 import { MoveDetail } from '../../context/gameContext/types';
 import { getNewRandomGame, getGameSolution } from '../../services';
@@ -141,7 +141,7 @@ export const Panel = () => {
   return (
     <PanelContainer>
       <DescriptionWrapper>
-        <Description />
+        <Description difficulty={state.gameDetails.difficulty} />
       </DescriptionWrapper>
 
       <CardsWrapper>
