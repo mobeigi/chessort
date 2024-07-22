@@ -5,7 +5,7 @@ import { Square } from 'chess.js';
 
 const customDarkSquareColor = '#b58b69';
 const customLightSquareColor = '#f1dec2';
-const customArrowColor = '#0f8ca8';
+const customArrowColor = '#459949';
 
 const selectedSquareColor = 'rgba(90, 167, 204, 0.6)'; // #5aa7cc
 const selectedSquareStyle = { backgroundColor: selectedSquareColor };
