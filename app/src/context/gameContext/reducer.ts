@@ -11,6 +11,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
         ...state,
         moveDetails: action.payload,
       };
+
     case 'NEW_GAME': {
       const fen = action.payload.fen;
       const moveDetails = action.payload.uciMoves.map((uciMove: string, index: number) => ({
@@ -65,7 +66,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       };
     }
 
-    case 'REVEAL_MOVES':
+    case 'REVEAL_SOLUTION':
       return {
         ...state,
         isLoadingSolution: false,

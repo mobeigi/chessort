@@ -77,7 +77,7 @@ export const Panel = () => {
       console.error('Error getting game solution data:', error);
     } finally {
       dispatch({ type: 'UNPREVIEW_MOVE' });
-      dispatch({ type: 'REVEAL_MOVES' });
+      dispatch({ type: 'REVEAL_SOLUTION' });
     }
   }, [dispatch, state.gameDetails.fen, state.moveDetails]);
 
