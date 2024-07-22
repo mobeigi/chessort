@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { SuccessButton, PrimaryButton } from '../../styles/button';
 
 export const PanelContainer = styled.div`
   display: flex;
@@ -39,25 +40,10 @@ export const CardsWrapper = styled.div`
   -ms-user-select: none;
 `;
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled(SuccessButton)`
   width: 90%;
-
-  background-color: #4caf50;
-
-  &:hover {
-    background-color: #60d065;
-  }
-
-  &:active {
-    background-color: #4caf50;
-  }
-
-  &:focus,
-  &:focus-visible {
-    box-shadow: 0 0 0 0.25em rgba(76, 175, 80, 0.5);
-  }
 `;
 
-export const NextButton = styled.button`
+export const NextButton = styled(PrimaryButton)`
   width: 90%;
 `;
