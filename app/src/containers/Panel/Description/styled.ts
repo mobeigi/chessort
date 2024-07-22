@@ -1,6 +1,12 @@
 import { styled } from 'styled-components';
 import { Difficulty } from '../../../types/difficulty';
 
+export const PuzzleLine = styled.div``;
+
+export const GameId = styled.span`
+  font-family: 'Roboto Mono', monospace;
+`;
+
 export const DifficultyLine = styled.div`
   display: flex;
   gap: 0.5em;

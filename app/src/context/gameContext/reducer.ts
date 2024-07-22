@@ -13,6 +13,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       };
 
     case 'NEW_GAME': {
+      const gameId = action.payload.gameId;
       const fen = action.payload.fen;
       const moveDetails = action.payload.uciMoves.map((uciMove: string, index: number) => ({
         uciMove,
@@ -24,7 +25,7 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       return {
         ...initialState, // Reset to initial state, this will give us a fresh game state that we can update
         moveDetails: moveDetails,
-        gameDetails: { ...initialState.gameDetails, fen: fen, difficulty: difficulty },
+        gameDetails: { ...initialState.gameDetails, gameId: gameId, fen: fen, difficulty: difficulty },
         initialChessJs: new Chess(fen),
         curChessJs: new Chess(fen),
       };

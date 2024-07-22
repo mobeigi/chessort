@@ -16,6 +16,7 @@ export interface GameState {
 }
 
 export type GameDetails = {
+  gameId: string;
   fen: string;
   difficulty: Difficulty;
 };

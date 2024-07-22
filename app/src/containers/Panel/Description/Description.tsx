@@ -1,12 +1,16 @@
-import { DifficultyLine, DifficultyLozenge } from './styled';
+import { PuzzleLine, GameId, DifficultyLine, DifficultyLozenge } from './styled';
 import { DescriptionProps } from './types';
 
-export const Description = ({ difficulty }: DescriptionProps) => {
+export const Description = ({ gameId, difficulty }: DescriptionProps) => {
+  const puzzleLink = `/puzzle/${gameId}`;
   return (
     <>
-      <p>
-        <strong>Puzzle: </strong> TODO
-      </p>
+      <PuzzleLine>
+        <strong>Puzzle: </strong>
+        <GameId>
+          <a href={puzzleLink}>{gameId}</a>
+        </GameId>
+      </PuzzleLine>
       <DifficultyLine>
         <strong>Difficulty: </strong>
         <DifficultyLozenge $difficulty={difficulty}>{difficulty}</DifficultyLozenge>

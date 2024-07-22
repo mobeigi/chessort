@@ -48,11 +48,7 @@ export const Panel = () => {
       if (data !== undefined) {
         dispatch({
           type: 'NEW_GAME',
-          payload: {
-            fen: data.fen,
-            uciMoves: data.uciMoves,
-            difficulty: data.difficulty,
-          },
+          payload: data,
         });
       }
 
@@ -142,7 +138,7 @@ export const Panel = () => {
   return (
     <PanelContainer>
       <DescriptionWrapper>
-        <Description difficulty={state.gameDetails.difficulty} />
+        <Description gameId={state.gameDetails.gameId} difficulty={state.gameDetails.difficulty} />
       </DescriptionWrapper>
 
       <CardsWrapper>
