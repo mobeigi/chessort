@@ -5,6 +5,7 @@ import Panel from '../Panel';
 import { GameProvider } from '../../context/gameContext';
 import { useGameContext } from '../../hooks/useGameContext';
 import Footer from './Footer';
+import GlobalStyle from '../../styles/GlobalStyle';
 
 const ChessBoardContainer = () => {
   const { state } = useGameContext();
@@ -14,6 +15,7 @@ const ChessBoardContainer = () => {
 export const App = () => {
   return (
     <>
+      <GlobalStyle />
       <Header>
         <Logo src={LogoSvg} alt="Chessort Logo" />
         <Title>Chessort</Title>
