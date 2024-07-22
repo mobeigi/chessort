@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Chessboard } from 'react-chessboard';
 import { ChessBoardProps, SelectedSquares } from './types';
 import { Square } from 'chess.js';
@@ -42,6 +42,11 @@ export const ChessBoard = ({ fen, lastMoveFrom, lastMoveTo }: ChessBoardProps) =
       [lastMoveTo]: lastMoveSquareHighlightStyle,
     }),
   };
+
+  // Reset selected squares if fen changes (change made to board position)
+  useEffect(() => {
+    setSelectedSquares({});
+  }, [fen]);
 
   return (
     <Chessboard
