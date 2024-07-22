@@ -1,6 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  /* Links */
+  a {
+    color: #4e95c7;
+    text-decoration: inherit;
+  }
+  a:hover {
+    color: #5aa7cc;
+  }
+
   /* Buttons */
   button {
     border-radius: 4px;
