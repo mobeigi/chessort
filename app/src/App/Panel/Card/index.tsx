@@ -35,6 +35,13 @@ const getStatusIcon = (revealed: boolean, curRank: number, correctRanks: number[
   return IncorrectIcon;
 };
 
+function removeCheckAndMateSymbols(sanMove: string): string {
+  if (sanMove.endsWith('#') || sanMove.endsWith('+')) {
+    return sanMove.slice(0, -1);
+  }
+  return sanMove;
+}
+
 const getCurrentRankTooltipText = (correctRanks: number[]) => {
   // Convert ranks to ordinal suffixes
   const ordinalRanks = correctRanks.map((rank) => getOrdinalSuffix(rank));
@@ -88,6 +95,8 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
 
   const advantageColor = revealed ? evaluateAdvantage(moveDetail.evalResult!.engineEval) : Color.Neutral;
 
+  const formattedSanMove = revealed ? sanMove : removeCheckAndMateSymbols(sanMove);
+
   const engineRankTooltipText = revealed ? getEngineRankTooltipText(moveDetail) : null;
 
   const engineEvalValue = revealed ? formatEvaluation(moveDetail.evalResult!.engineEval) : '?';
@@ -125,7 +134,7 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
       </CurrentRankWrapper>
       <SanMoveWrapper>
         <MoveChessPiece $color={turnPlayer}>{pieceChar}</MoveChessPiece>
-        <MoveNotation $color={turnPlayer}>{sanMove}</MoveNotation>
+        <MoveNotation $color={turnPlayer}>{formattedSanMove}</MoveNotation>
       </SanMoveWrapper>
       {revealed && (
         <>
