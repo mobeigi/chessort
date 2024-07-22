@@ -8,6 +8,9 @@ export interface GameState {
   curChessJs: Chess /* initial board which can be moved and is linked to chess board */;
   isPreview: boolean;
   previewedMove: string | null;
+  revealed: boolean;
+  isLoadingGame: boolean;
+  isLoadingSolution: boolean;
 }
 
 export enum Difficulty {
@@ -21,7 +24,6 @@ export enum Difficulty {
 export type GameDetails = {
   fen: string;
   difficulty: Difficulty;
-  revealed: boolean;
 };
 
 export type MoveDetail = {

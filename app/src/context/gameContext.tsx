@@ -10,12 +10,14 @@ const initialState: GameState = {
   gameDetails: {
     fen: initialFen,
     difficulty: Difficulty.BEGINNER,
-    revealed: false,
   },
   initialChessJs: new Chess(initialFen),
   curChessJs: new Chess(initialFen),
   isPreview: false,
   previewedMove: null,
+  revealed: false,
+  isLoadingGame: true,
+  isLoadingSolution: false,
 };
 
 export const GameContext = createContext<{
@@ -51,6 +53,18 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       };
     }
 
+    case 'SET_LOADING_GAME':
+      return {
+        ...state,
+        isLoadingGame: action.payload,
+      };
+
+    case 'SET_LOADING_SOLUTION':
+      return {
+        ...state,
+        isLoadingSolution: action.payload,
+      };
+
     case 'UPSERT_SOLUTION': {
       const data = action.payload;
 
@@ -78,14 +92,8 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
     case 'REVEAL_MOVES':
       return {
         ...state,
-        moveDetails: state.moveDetails.map((moveDetail) => ({
-          ...moveDetail,
-          revealed: true,
-        })),
-        gameDetails: {
-          ...state.gameDetails,
-          revealed: true,
-        },
+        isLoadingSolution: false,
+        revealed: true,
       };
 
     case 'PREVIEW_MOVE': {

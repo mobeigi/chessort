@@ -36,6 +36,8 @@ const Panel = () => {
 
   // Function to load a new game
   const loadNewGame = useCallback(async () => {
+    dispatch({ type: 'SET_LOADING_GAME', payload: true });
+
     let data;
     try {
       data = await getNewRandomGame();
@@ -52,10 +54,14 @@ const Panel = () => {
           },
         });
       }
+
+      dispatch({ type: 'SET_LOADING_GAME', payload: false });
     }
   }, [dispatch]);
 
   const revealSolutionForCurrentGame = useCallback(async () => {
+    dispatch({ type: 'SET_LOADING_SOLUTION', payload: true });
+
     if (state.isPreview) {
       // Exit preview if we're in preview as we submit
       dispatch({ type: 'UNPREVIEW_MOVE' });
@@ -161,7 +167,7 @@ const Panel = () => {
                 moveDetail={moveDetail}
                 turnPlayer={turnPlayer}
                 sanMove={uciMoveToSanMove(state.initialChessJs, moveDetail.uciMove)!}
-                revealed={state.gameDetails.revealed}
+                revealed={state.revealed}
                 correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
                 onClick={handleClick}
                 isPreviewed={state.previewedMove === moveDetail.uciMove}
@@ -170,10 +176,14 @@ const Panel = () => {
           </SortableContext>
         </DndContext>
       </CardsWrapper>
-      {state.gameDetails.revealed ? (
-        <NextButton onClick={handleNextPuzzle}>Next Puzzle</NextButton>
+      {state.revealed ? (
+        <NextButton onClick={handleNextPuzzle} disabled={state.isLoadingGame}>
+          Next Puzzle
+        </NextButton>
       ) : (
-        <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+        <SubmitButton onClick={handleSubmit} disabled={state.isLoadingSolution}>
+          Submit
+        </SubmitButton>
       )}
     </PanelContainer>
   );
