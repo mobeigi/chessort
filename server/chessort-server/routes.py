@@ -1,9 +1,36 @@
 from flask import Blueprint, request, jsonify
-from .db_client import get_random_puzzle, get_game_solution, get_puzzle_and_move_ids
-from .utils import generate_game_id
+from .db_client import get_random_puzzle, get_game_solution, get_puzzle_and_move_ids, get_puzzle_and_moves_by_ids
+from .utils import generate_game_id, decode_game_id
 import random
 
 app = Blueprint('app', __name__)
+
+@app.route('/api/game/<gameId>', methods=['GET'])
+def get_game(gameId):
+    decoded_ids = decode_game_id(gameId)
+
+    if len(decoded_ids) != 5:
+        return jsonify({'error': 'Invalid game id.'}), 404
+
+    puzzle_id = decoded_ids[0]
+    move_ids = decoded_ids[1:]
+
+    puzzle, moves = get_puzzle_and_moves_by_ids(puzzle_id, move_ids)
+
+    if not puzzle or len(moves) != 4:
+        return jsonify({'error': 'Puzzle or moves not found'}), 404
+
+    uci_moves = [move.UciMove for move in moves]
+
+    # Shuffle the moves for the response
+    random.shuffle(uci_moves)
+
+    return jsonify({
+        'fen': puzzle.FEN,
+        'uciMoves': uci_moves,
+        'difficulty': 'BEGINNER',
+        'gameId': gameId
+    })
 
 @app.route('/api/game/random', methods=['GET'])
 def get_random_game():

@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton, NextButton } from './styled';
 import {
   DndContext,
@@ -23,6 +24,7 @@ import Description from './Description';
 import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessJsUtils';
 import { MoveDetail } from '../../context/gameContext/types';
 import { getNewRandomGame, getGameSolution } from '../../services';
+import { getGameByGameId } from '../../services/chessortServer/api';
 
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
 // A card can have 1 or many correct ranks depending on if the number of equivilanet solution evaluations
@@ -34,27 +36,37 @@ const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) =>
 
 export const Panel = () => {
   const { state, dispatch } = useGameContext();
+  const { gameId } = useParams<{ gameId?: string }>();
 
   // Function to load a new game
-  const loadNewGame = useCallback(async () => {
-    dispatch({ type: 'SET_LOADING_GAME', payload: true });
+  const loadNewGame = useCallback(
+    async (gameId?: string) => {
+      dispatch({ type: 'SET_LOADING_GAME', payload: true });
 
-    let data;
-    try {
-      data = await getNewRandomGame();
-    } catch (error) {
-      console.error('Error fetching new game data:', error);
-    } finally {
-      if (data !== undefined) {
-        dispatch({
-          type: 'NEW_GAME',
-          payload: data,
-        });
+      let data;
+      try {
+        // Fetch a specific game if one is requested
+        // Otherwise, get a random game
+        if (gameId) {
+          data = await getGameByGameId(gameId);
+        } else {
+          data = await getNewRandomGame();
+        }
+      } catch (error) {
+        console.error('Error fetching new game data:', error);
+      } finally {
+        if (data !== undefined) {
+          dispatch({
+            type: 'NEW_GAME',
+            payload: data,
+          });
+        }
+
+        dispatch({ type: 'SET_LOADING_GAME', payload: false });
       }
-
-      dispatch({ type: 'SET_LOADING_GAME', payload: false });
-    }
-  }, [dispatch]);
+    },
+    [dispatch],
+  );
 
   const revealSolutionForCurrentGame = useCallback(async () => {
     dispatch({ type: 'SET_LOADING_SOLUTION', payload: true });
@@ -79,8 +91,8 @@ export const Panel = () => {
 
   // The initial loading of the first game
   useEffect(() => {
-    loadNewGame();
-  }, [loadNewGame]);
+    loadNewGame(gameId);
+  }, [gameId, loadNewGame]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

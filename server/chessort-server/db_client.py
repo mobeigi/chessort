@@ -43,6 +43,19 @@ def get_puzzle_and_move_ids(fen, uci_moves):
     session.close()
     return puzzle_id, move_ids
 
+def get_puzzle_and_moves_by_ids(puzzle_id, move_ids):
+    """ Retrieve the puzzle and moves by their IDs """
+    session = Session()
+
+    puzzle = session.query(Puzzle).filter_by(ID=puzzle_id).first()
+    if not puzzle:
+        session.close()
+        return None, []
+
+    moves = session.query(Move).filter(Move.ID.in_(move_ids)).all()
+    session.close()
+
+    return puzzle, moves
 
 def get_random_puzzle():
     """ Get a random puzzle from the database """
