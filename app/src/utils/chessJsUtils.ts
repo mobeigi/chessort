@@ -8,9 +8,13 @@ import { Color } from '../types/color';
  * @returns The move in SAN format, or null if the move could not be made.
  */
 export const uciMoveToSanMove = (chess: Chess, uciMove: string): string | null => {
-  const chessCopy = new Chess(chess.fen());
-  const result = chessCopy.move(uciMove);
-  return result ? result.san : null;
+  try {
+    const chessCopy = new Chess(chess.fen());
+    const result = chessCopy.move(uciMove);
+    return result ? result.san : null;
+  } catch {
+    return null;
+  }
 };
 
 /**

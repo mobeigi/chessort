@@ -40,7 +40,7 @@ export const Panel = () => {
   const { gameId } = useParams<{ gameId?: string }>();
 
   // Function to load a new game
-  const loadNewGame = useCallback(
+  const loadGame = useCallback(
     async (gameId?: string) => {
       dispatch({ type: 'SET_LOADING_GAME', payload: true });
 
@@ -95,8 +95,14 @@ export const Panel = () => {
 
   // The initial loading of the first game
   useEffect(() => {
-    loadNewGame(gameId);
-  }, [gameId, loadNewGame]);
+    if (!state.isInitialLoadCompleted) {
+      const loadGameAndSetInitialLoadCompleted = async () => {
+        await loadGame(gameId);
+        dispatch({ type: 'SET_INITIAL_LOAD_COMPLETED', payload: true });
+      };
+      loadGameAndSetInitialLoadCompleted();
+    }
+  }, [dispatch, gameId, loadGame, state.isInitialLoadCompleted]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -147,9 +153,18 @@ export const Panel = () => {
   };
 
   const handleSubmit = () => revealSolutionForCurrentGame();
-  const handleNextPuzzle = () => loadNewGame();
+  const handleNextPuzzle = () => loadGame();
 
   const turnPlayer = getTurnPlayerColor(state.initialChessJs);
+
+  // Loading state for initial load
+  if (!state.isInitialLoadCompleted) {
+    return (
+      <PanelContainer>
+        <div>SPINNER!</div>
+      </PanelContainer>
+    );
+  }
 
   return (
     <PanelContainer>
@@ -175,7 +190,7 @@ export const Panel = () => {
                 key={moveDetail.uciMove}
                 moveDetail={moveDetail}
                 turnPlayer={turnPlayer}
-                sanMove={uciMoveToSanMove(state.initialChessJs, moveDetail.uciMove)!}
+                sanMove={uciMoveToSanMove(state.initialChessJs, moveDetail.uciMove) ?? ''}
                 revealed={state.revealed}
                 correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
                 onClick={handleClick}

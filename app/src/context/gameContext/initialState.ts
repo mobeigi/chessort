@@ -1,21 +1,30 @@
-import { Chess, DEFAULT_POSITION } from 'chess.js';
+import { Chess } from 'chess.js';
 import { GameState } from './types';
 import { Difficulty } from '../../types/difficulty';
 
-const initialFen = DEFAULT_POSITION;
+const emptyBoardFen = '8/8/8/8/8/8/8/8 w - - 0 1';
+
+// Create some empty (cleared) boards as inital load placeholders
+// This make first load animations smoother than using the DEFAULT_POSITION
+const initialChessJs = new Chess();
+initialChessJs.clear();
+const curChessJs = new Chess();
+curChessJs.clear();
 
 const initialState: GameState = {
   moveDetails: [],
   solutionEvals: [],
   gameDetails: {
-    fen: initialFen,
+    gameId: '',
+    fen: emptyBoardFen,
     difficulty: Difficulty.BEGINNER,
   },
-  initialChessJs: new Chess(initialFen),
-  curChessJs: new Chess(initialFen),
+  initialChessJs: initialChessJs,
+  curChessJs: curChessJs,
   isPreview: false,
   previewedMove: null,
   revealed: false,
+  isInitialLoadCompleted: false,
   isLoadingGame: true,
   isLoadingSolution: false,
 };

@@ -24,12 +24,19 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
 
       return {
         ...initialState, // Reset to initial state, this will give us a fresh game state that we can update
+        isInitialLoadCompleted: true,
         moveDetails: moveDetails,
         gameDetails: { ...initialState.gameDetails, gameId: gameId, fen: fen, difficulty: difficulty },
         initialChessJs: new Chess(fen),
         curChessJs: new Chess(fen),
       };
     }
+
+    case 'SET_INITIAL_LOAD_COMPLETED':
+      return {
+        ...state,
+        isInitialLoadCompleted: action.payload,
+      };
 
     case 'SET_LOADING_GAME':
       return {
