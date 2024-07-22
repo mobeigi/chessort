@@ -10,7 +10,7 @@ const ChessBoardContainer = () => {
   return <ChessBoard fen={state.curChessJs.fen()} />;
 };
 
-const App = () => {
+export const App = () => {
   return (
     <>
       <Header>
@@ -33,5 +33,3 @@ const App = () => {
     </>
   );
 };
-
-export default App;
