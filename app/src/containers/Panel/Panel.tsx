@@ -25,6 +25,7 @@ import { MoveDetail } from '../../context/gameContext/types';
 import { getNewRandomGame, getGameSolution } from '../../services';
 
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
+// A card can have 1 or many correct ranks depending on if the number of equivilanet solution evaluations
 const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) => {
   return solutionEvals
     .map((item, index) => (item === moveDetail.evalResult?.engineEval ? index + 1 : -1)) // offset index to start at 1
