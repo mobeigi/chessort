@@ -1,16 +1,14 @@
 import { Chessboard } from 'react-chessboard';
-import { useGameContext } from '../../hooks/useGameContext';
+import { ChessBoardProps } from './types';
 
 const customDarkSquareColor = '#b58b69';
 const customLightSquareColor = '#f1dec2';
 const customArrowColor = '#0f8ca8';
 
-const ChessBoard = () => {
-  const { state } = useGameContext();
-
+export const ChessBoard = ({ fen }: ChessBoardProps) => {
   return (
     <Chessboard
-      position={state.curChessJs.fen()}
+      position={fen}
       arePiecesDraggable={false}
       customDarkSquareStyle={{ backgroundColor: customDarkSquareColor }}
       customLightSquareStyle={{ backgroundColor: customLightSquareColor }}
@@ -19,5 +17,3 @@ const ChessBoard = () => {
     />
   );
 };
-
-export default ChessBoard;

@@ -3,6 +3,12 @@ import { Header, Logo, Title, GameWrapper, ChessBoardWrapper, PanelWrapper, Foot
 import ChessBoard from '../../components/ChessBoard';
 import Panel from '../Panel';
 import { GameProvider } from '../../context/gameContext';
+import { useGameContext } from '../../hooks/useGameContext';
+
+const ChessBoardContainer = () => {
+  const { state } = useGameContext();
+  return <ChessBoard fen={state.curChessJs.fen()} />;
+};
 
 const App = () => {
   return (
@@ -15,7 +21,7 @@ const App = () => {
       <GameWrapper>
         <GameProvider>
           <ChessBoardWrapper>
-            <ChessBoard />
+            <ChessBoardContainer />
           </ChessBoardWrapper>
           <PanelWrapper>
             <Panel />
