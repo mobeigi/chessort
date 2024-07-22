@@ -1,14 +1,39 @@
+import { useState } from 'react';
 import { Chessboard } from 'react-chessboard';
-import { ChessBoardProps } from './types';
+import { ChessBoardProps, SelectedSquares } from './types';
+import { Square } from 'chess.js';
 
 const customDarkSquareColor = '#b58b69';
 const customLightSquareColor = '#f1dec2';
 const customArrowColor = '#0f8ca8';
 
+const selectedSquareColor = 'rgba(90, 167, 204, 0.6)'; // #5aa7cc
+const selectedSquareStyle = { backgroundColor: selectedSquareColor };
+
 const lastMoveSquareHighlightColor = 'rgba(213, 180, 93, 0.6)'; // #d5b45d
 const lastMoveSquareHighlightStyle = { backgroundColor: lastMoveSquareHighlightColor };
 
 export const ChessBoard = ({ fen, lastMoveFrom, lastMoveTo }: ChessBoardProps) => {
+  const [selectedSquares, setSelectedSquares] = useState<SelectedSquares>({});
+
+  const onSquareClick = () => {
+    setSelectedSquares({});
+  };
+
+  const onSquareRightClick = (square: Square) => {
+    setSelectedSquares((prevSelectedSquares) => {
+      const newSelectedSquares = { ...prevSelectedSquares };
+
+      if (newSelectedSquares[square]) {
+        delete newSelectedSquares[square];
+      } else {
+        newSelectedSquares[square] = selectedSquareStyle;
+      }
+
+      return newSelectedSquares;
+    });
+  };
+
   const moveSquares = {
     ...(lastMoveFrom && {
       [lastMoveFrom]: lastMoveSquareHighlightStyle,
@@ -28,7 +53,10 @@ export const ChessBoard = ({ fen, lastMoveFrom, lastMoveTo }: ChessBoardProps) =
       customArrowColor={customArrowColor}
       customSquareStyles={{
         ...moveSquares,
+        ...selectedSquares,
       }}
+      onSquareClick={onSquareClick}
+      onSquareRightClick={onSquareRightClick}
     />
   );
 };

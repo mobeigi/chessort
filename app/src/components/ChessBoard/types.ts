@@ -4,3 +4,6 @@ export interface ChessBoardProps {
   lastMoveFrom?: Square;
   lastMoveTo?: Square;
 }
+export type SelectedSquares = {
+  [key: string]: React.CSSProperties | undefined;
+};
