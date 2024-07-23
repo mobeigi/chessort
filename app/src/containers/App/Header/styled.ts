@@ -35,6 +35,13 @@ export const Title = styled.h1`
   font-size: 4.5em;
   line-height: 1em;
 
+  color: #e3e3e3;
+
+  &:hover,
+  &:focus {
+    color: #f5f5f5;
+  }
+
   /* mobile */
   @media (max-width: 800px) {
     font-size: 3.5em;
