@@ -104,48 +104,50 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
   const pieceChar = getPieceUnicode(sanMove);
 
   return (
-    <CardContainer
-      ref={setNodeRef}
-      style={{ transform: transformStyle, transition }}
-      $isDragging={isDragging}
-      $isPreviewed={isPreviewed}
-      $revealed={revealed}
-      {...attributes}
-      {...listeners}
-      onClick={() => onClick(moveDetail.uciMove)}
-    >
-      <CurrentRankWrapper data-tooltip-id={`current-rank-tooltip-${moveDetail.uciMove}`}>
-        <Tooltip id={`current-rank-tooltip-${moveDetail.uciMove}`} place="top">
-          {currentRankTooltipText}
-        </Tooltip>
-        <StatusIconWrapper>
-          <StatusIcon />
-        </StatusIconWrapper>
-        <CurrentRankNumberWrapper>
-          <DigitGridComponent>
-            {revealed ? (
-              correctRanks.map((digit, index) => <span key={index}>{digit}</span>)
-            ) : (
-              <span>{moveDetail.curRank}</span>
-            )}
-          </DigitGridComponent>
-        </CurrentRankNumberWrapper>
-      </CurrentRankWrapper>
-      <SanMoveWrapper>
-        <MoveChessPiece $color={turnPlayer}>{pieceChar}</MoveChessPiece>
-        <MoveNotation $color={turnPlayer}>{formattedSanMove}</MoveNotation>
-      </SanMoveWrapper>
-      {revealed && (
-        <>
-          <Tooltip id={`engine-rank-tooltip-${moveDetail.uciMove}`} place="top">
-            {engineRankTooltipText}
-          </Tooltip>
+    <>
+      <CardContainer
+        ref={setNodeRef}
+        style={{ transform: transformStyle, transition }}
+        $isDragging={isDragging}
+        $isPreviewed={isPreviewed}
+        $revealed={revealed}
+        {...attributes}
+        {...listeners}
+        onClick={() => onClick(moveDetail.uciMove)}
+      >
+        <CurrentRankWrapper data-tooltip-id={`current-rank-tooltip-${moveDetail.uciMove}`}>
+          <StatusIconWrapper>
+            <StatusIcon />
+          </StatusIconWrapper>
+          <CurrentRankNumberWrapper>
+            <DigitGridComponent>
+              {revealed ? (
+                correctRanks.map((digit, index) => <span key={index}>{digit}</span>)
+              ) : (
+                <span>{moveDetail.curRank}</span>
+              )}
+            </DigitGridComponent>
+          </CurrentRankNumberWrapper>
+        </CurrentRankWrapper>
+        <SanMoveWrapper>
+          <MoveChessPiece $color={turnPlayer}>{pieceChar}</MoveChessPiece>
+          <MoveNotation $color={turnPlayer}>{formattedSanMove}</MoveNotation>
+        </SanMoveWrapper>
+        {revealed && (
           <EngineRankWrapper data-tooltip-id={`engine-rank-tooltip-${moveDetail.uciMove}`}>
             <EngineRank $rank={moveDetail.evalResult!.engineOverallRank}></EngineRank>
           </EngineRankWrapper>
-        </>
-      )}
-      <EngineEvalWrapper $advantageFor={advantageColor}>{engineEvalValue}</EngineEvalWrapper>
-    </CardContainer>
+        )}
+        <EngineEvalWrapper $advantageFor={advantageColor}>{engineEvalValue}</EngineEvalWrapper>
+      </CardContainer>
+
+      {/* Tooltips - Rendered at the end so they show on top and we avoid explicitly setting z-index */}
+      <Tooltip id={`current-rank-tooltip-${moveDetail.uciMove}`} place="top">
+        {currentRankTooltipText}
+      </Tooltip>
+      <Tooltip id={`engine-rank-tooltip-${moveDetail.uciMove}`} place="top">
+        {engineRankTooltipText}
+      </Tooltip>
+    </>
   );
 };
