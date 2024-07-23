@@ -210,6 +210,5 @@ export const EngineEvalWrapper = styled.span<EngineEvalWrapperProps>`
   box-sizing: border-box;
   font-size: 0.8em;
   font-weight: bold;
-  font-family: Helvetica;
-  letter-spacing: 0.5px; // improve eval readability
+  letter-spacing: 0.25px; // improve eval readability
 `;

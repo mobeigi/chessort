@@ -8,6 +8,7 @@ export const FooterWrapper = styled.footer`
   justify-content: center;
   align-items: center;
 
+  font-family: 'Roboto Mono', monospace;
   font-size: 0.8em;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
@@ -50,5 +51,4 @@ export const CopyrightDisclaimer = styled.div`
 
   justify-content: center;
   align-items: center;
-  font-size: 0.85em;
 `;
