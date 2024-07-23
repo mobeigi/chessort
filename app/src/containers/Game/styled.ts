@@ -8,7 +8,6 @@ export const GameWrapper = styled.section`
 
   /* mobile */
   @media (max-width: 800px) {
-    // TODO: MORE MOBILE TESTING
     flex-direction: column;
   }
 `;
@@ -34,7 +33,6 @@ export const ChessBoardWrapper = styled.section`
 
   /* mobile */
   @media (max-width: 800px) {
-    // TODO: MORE MOBILE TESTING
     width: 80vw;
     height: 80vw;
   }
@@ -47,14 +45,13 @@ export const PanelWrapper = styled.section`
 
   max-width: 100%; /* Avoid overflow */
 
-  min-width: calc((300px / 65) * 30); /* Maintains ratio split based on ChessBoardWrapper's min-width */
+  min-width: 230px; // Or else panel doesn't quite fit everything with high vw/low vh viewports
   min-height: 300px;
 
   border: 1px solid #ccc;
 
   /* mobile */
   @media (max-width: 800px) {
-    // TODO: MORE MOBILE TESTING
     width: 80vw;
     height: auto;
   }

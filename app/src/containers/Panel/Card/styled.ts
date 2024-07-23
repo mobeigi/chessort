@@ -40,6 +40,14 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
     `}
 
   ${({ $revealed }) => ($revealed ? `cursor: auto;` : `cursor: grab;`)}
+
+  @media (max-width: 1200px), (max-height: 800px) {
+    padding: 0.8em 0.4em;
+  }
+
+  @media (max-width: 800px), (max-height: 600px) {
+    padding: 0.2em 0.8em;
+  }
 `;
 
 export const CurrentRankWrapper = styled.span`
@@ -136,9 +144,9 @@ export const EngineRank = styled.span<EngineRankProps>`
   display: inline-flex;
   width: 24px;
   height: 24px;
-  font-size: 0.7em;
+  font-size: 0.75em;
   font-weight: 600;
-  padding: 2px;
+  padding: 0.2em;
 
   &::before {
     content: '${(props) => props.$rank}';
@@ -196,6 +204,7 @@ export const EngineEvalWrapper = styled.span<EngineEvalWrapperProps>`
   color: ${(props) => getOverlayColor(props.$advantageFor)};
   border-radius: 0.2em;
   padding: 0.2em 0.3em;
+  box-sizing: border-box;
   font-size: 0.8em;
   font-weight: bold;
   font-family: Helvetica;
