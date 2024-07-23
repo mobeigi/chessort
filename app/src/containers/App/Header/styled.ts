@@ -16,7 +16,7 @@ export const HeaderWrapper = styled.header`
 `;
 
 export const Logo = styled.img`
-  height: 6em;
+  height: calc(4.5em * 1.33); /* Refer to font size of Title */
 
   user-drag: none;
   -webkit-user-drag: none;
@@ -24,9 +24,19 @@ export const Logo = styled.img`
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+
+  /* mobile */
+  @media (max-width: 800px) {
+    height: calc(3.5em * 1.33); /* Refer to font size of Title */
+  }
 `;
 
 export const Title = styled.h1`
   font-size: 4.5em;
   line-height: 1em;
+
+  /* mobile */
+  @media (max-width: 800px) {
+    font-size: 3.5em;
+  }
 `;
