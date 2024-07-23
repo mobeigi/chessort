@@ -2,25 +2,60 @@ import styled from 'styled-components';
 
 export const GameWrapper = styled.section`
   display: flex;
+  flex-direction: row;
   justify-content: center;
   gap: 0.5em;
+
+  /* mobile */
+  @media (max-width: 800px) {
+    // TODO: MORE MOBILE TESTING
+    flex-direction: column;
+  }
 `;
 
 export const ChessBoardWrapper = styled.section`
   display: flex;
+
   /* Hack below to ensure chessboard looks good on any viewport.
-   * This is because the board's height/width is set based on parent elements width.
-   * We set width/height to square based on vmin with an enforced minimum pixel amount.
+   * This is because the board's height/width is set based on parent elements width (and we cant control this).
+   * Therefore, we set the width to either a percentage of either the vw or vh depending on which is smaller.
+   * This ensures the board will fit on the screen even on weird viewports that don't have a squarish aspect ratio. 
   */
-  flex: 0 0 calc(max(65vmin, 200px));
-  height: calc(max(65vmin, 200px));
+  width: calc(min(65vw, 65vh));
+  height: calc(
+    min(65vw, 65vh)
+  ); // We also set height explicitly to the same 'width' to allow other styling to fit child element (i.e. borders)
+
+  min-width: 300px; /* A value for min-width is always required to allow shrinking on window resize in a flexbox */
+  min-height: 300px;
+
   border: 1px solid #ccc;
   box-sizing: border-box;
-  min-width: 0; /* Allow chess board to shrink on window resize */
+
+  /* mobile */
+  @media (max-width: 800px) {
+    // TODO: MORE MOBILE TESTING
+    width: 80vw;
+    height: 80vw;
+  }
 `;
 
 export const PanelWrapper = styled.section`
   display: flex;
-  flex: 0 0 calc(30vmin); /* 30% of the smaller viewport dimension */
+  width: calc(min(30vw, 30vh));
+  height: calc(min(65vw, 65vh));
+
+  max-width: 100%; /* Avoid overflow */
+
+  min-width: calc((300px / 65) * 30); /* Maintains ratio split based on ChessBoardWrapper's min-width */
+  min-height: 300px;
+
   border: 1px solid #ccc;
+
+  /* mobile */
+  @media (max-width: 800px) {
+    // TODO: MORE MOBILE TESTING
+    width: 80vw;
+    height: auto;
+  }
 `;
