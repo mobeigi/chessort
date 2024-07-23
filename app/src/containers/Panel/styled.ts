@@ -5,6 +5,8 @@ export const PanelContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding: 0.5em;
+  box-sizing: border-box;
   align-items: center;
   justify-content: center;
   gap: 1em;
@@ -31,7 +33,6 @@ export const CardsWrapper = styled.div`
   justify-content: center;
   gap: 0.4em;
   padding: 0.5em 0.5em;
-  box-sizing: border-box; /* Ensure padding is included in element so you can slightly drag upwards/outwards at first/last dragables */
 
   user-select: none;
   -moz-user-select: none;
@@ -43,12 +44,12 @@ export const SubmitButton = styled(SuccessButton)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
 `;
 
 export const NextButton = styled(PrimaryButton)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
 `;
