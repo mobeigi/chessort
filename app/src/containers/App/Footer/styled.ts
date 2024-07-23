@@ -5,6 +5,7 @@ export const FooterWrapper = styled.footer`
   flex-direction: row;
 
   margin-top: 1em;
+  margin-bottom: 0.5em;
   justify-content: center;
   align-items: center;
 
@@ -26,7 +27,6 @@ export const CreatedByWrapper = styled.div`
 
   justify-content: center;
   align-items: center;
-  line-height: 1.2em;
 
   a {
     text-decoration: none;
@@ -34,11 +34,12 @@ export const CreatedByWrapper = styled.div`
 `;
 
 export const PieceWrapper = styled.span`
+  display: inline-flex;
   font-size: 1.3em;
+  height: 1.4em; /* Fine tune alignment of font */
   font-family: 'Noto Sans Symbols 2', sans-serif;
-  margin-bottom: -0.35em; /* Fine-tune alignment between both fonts */
-  margin-left: 0.2em;
-  line-height: 1.2em;
+  justify-content: center;
+  align-items: baseline;
 `;
 
 export const CopyrightDisclaimer = styled.div`

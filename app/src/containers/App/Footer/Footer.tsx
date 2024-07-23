@@ -11,7 +11,7 @@ export const Footer = () => {
         <a href={authorUrl} rel="external">
           {authorName}
         </a>
-        ,&nbsp;by sacrificing the <PieceWrapper>♖</PieceWrapper>!!
+        ,&nbsp;by sacrificing the&nbsp;<PieceWrapper>♖</PieceWrapper>!!
       </CreatedByWrapper>
       <CopyrightDisclaimer>Copyright &copy; {currentYear}</CopyrightDisclaimer>
     </FooterWrapper>

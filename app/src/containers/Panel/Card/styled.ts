@@ -112,10 +112,13 @@ interface SanMovePieceProps {
 }
 
 export const MoveChessPiece = styled.span<SanMovePieceProps>`
+  display: inline-flex;
   font-size: 1.3em;
+  height: 1.4em; /* Fine tune alignment of font */
   font-family: 'Noto Sans Symbols 2', sans-serif;
-  margin-bottom: -0.35em; /* Fine-tune alignment between both fonts */
-  line-height: 1.2em;
+  justify-content: center;
+  align-items: center;
+
   color: ${(props) => getBaseColor(props.$color)};
   text-shadow: 0px 0px 4px ${(props) => getOverlayColor(props.$color)};
 `;

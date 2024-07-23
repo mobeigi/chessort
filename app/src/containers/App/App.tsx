@@ -1,5 +1,6 @@
 import Header from './Header';
 import Footer from './Footer';
+import NotFoundPage from './NotFoundPage';
 import theme from '../../styles/theme';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from '../../styles/GlobalStyle';
@@ -18,6 +19,7 @@ export const App = () => {
             <Routes>
               <Route path="/" element={<Game />} />
               <Route path="/puzzle/:gameId" element={<Game />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <Footer />
           </GameProvider>
