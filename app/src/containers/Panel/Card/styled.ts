@@ -196,7 +196,6 @@ interface EngineEvalWrapperProps {
 
 export const EngineEvalWrapper = styled.span<EngineEvalWrapperProps>`
   display: flex;
-  width: 3em;
   justify-content: center;
   background-color: ${(props) => getBaseColor(props.$advantageFor)};
   color: ${(props) => getOverlayColor(props.$advantageFor)};
