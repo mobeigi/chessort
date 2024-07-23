@@ -1,6 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  /* Media Queries */
+  /* mobile */
+  @media (max-width: 800px) {
+  }
+
   /* Links */
   a {
     color: #4e95c7;

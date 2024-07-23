@@ -172,11 +172,11 @@ export const Panel = () => {
       </CardsWrapper>
       {state.revealed ? (
         <NextButton onClick={handleNextPuzzle} disabled={state.isLoadingGame}>
-          {state.isLoadingGame ? <ClipLoader color="#666666" size={20} /> : <span>Next Puzzle</span>}
+          {state.isLoadingGame ? <ClipLoader color="#666666" size={'1em'} /> : <span>Next Puzzle</span>}
         </NextButton>
       ) : (
         <SubmitButton onClick={handleSubmit} disabled={state.isLoadingSolution}>
-          {state.isLoadingSolution ? <ClipLoader color="#666666" size={20} /> : <span>Submit</span>}
+          {state.isLoadingSolution ? <ClipLoader color="#666666" size={'1em'} /> : <span>Submit</span>}
         </SubmitButton>
       )}
     </PanelContainer>
