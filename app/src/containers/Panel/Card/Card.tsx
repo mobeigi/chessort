@@ -6,7 +6,7 @@ import {
   CurrentRankNumberWrapper,
   StatusIconWrapper,
   SanMoveWrapper,
-  MoveChessPiece,
+  MovePieceIcon,
   MoveNotation,
   EngineRankWrapper,
   EngineRank,
@@ -21,9 +21,10 @@ import { MoveDetail } from '../../../context/gameContext/types';
 import CorrectIcon from '../../../assets/icons/correct.svg?react';
 import IncorrectIcon from '../../../assets/icons/incorrect.svg?react';
 import CurrentRankIcon from '../../../assets/icons/two-way.svg?react';
-import { evaluateAdvantage, formatEvaluation, getPieceUnicode, getOrdinalSuffix } from './utils';
+import { evaluateAdvantage, formatEvaluation, getOrdinalSuffix } from './utils';
 import { Tooltip } from 'react-tooltip';
 import { Color } from '../../../types/color';
+import { getPieceSvgBySan } from '../../../utils/chessUtils';
 
 const getStatusIcon = (revealed: boolean, curRank: number, correctRanks: number[]) => {
   if (!revealed) {
@@ -101,7 +102,7 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
   const engineEvalValue = revealed ? formatEvaluation(moveDetail.evalResult!.engineEval) : '?';
 
   const StatusIcon = getStatusIcon(revealed, moveDetail.curRank, correctRanks);
-  const pieceChar = getPieceUnicode(sanMove);
+  const movePieceSvg = getPieceSvgBySan(sanMove, turnPlayer);
 
   return (
     <>
@@ -130,7 +131,7 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
           </CurrentRankNumberWrapper>
         </CurrentRankWrapper>
         <SanMoveWrapper>
-          <MoveChessPiece $color={turnPlayer}>{pieceChar}</MoveChessPiece>
+          <MovePieceIcon src={movePieceSvg} />
           <MoveNotation $color={turnPlayer}>{formattedSanMove}</MoveNotation>
         </SanMoveWrapper>
         {revealed && (

@@ -33,13 +33,8 @@ export const CreatedByWrapper = styled.div`
   }
 `;
 
-export const PieceWrapper = styled.span`
-  display: inline-flex;
-  font-size: 1.3em;
-  height: 1.4em; /* Fine tune alignment of font */
-  font-family: 'Noto Sans Symbols 2', sans-serif;
-  justify-content: center;
-  align-items: baseline;
+export const PieceWrapper = styled.img`
+  height: 1.2em;
 `;
 
 export const CopyrightDisclaimer = styled.div`

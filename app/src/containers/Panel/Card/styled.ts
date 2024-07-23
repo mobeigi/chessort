@@ -107,21 +107,13 @@ export const SanMoveWrapper = styled.span`
   padding-left: 0.6em;
 `;
 
+export const MovePieceIcon = styled.img`
+  height: 2em;
+`;
+
 interface SanMovePieceProps {
   $color: Color;
 }
-
-export const MoveChessPiece = styled.span<SanMovePieceProps>`
-  display: inline-flex;
-  font-size: 1.3em;
-  height: 1.4em; /* Fine tune alignment of font */
-  font-family: 'Noto Sans Symbols 2', sans-serif;
-  justify-content: center;
-  align-items: center;
-
-  color: ${(props) => getBaseColor(props.$color)};
-  text-shadow: 0px 0px 4px ${(props) => getOverlayColor(props.$color)};
-`;
 
 export const MoveNotation = styled.span<SanMovePieceProps>`
   font-weight: bold;

@@ -1,5 +1,3 @@
-import { PieceChar } from './types';
-import { BLACK_PIECES } from './constants';
 import { Color } from '../../../types/color';
 
 /**
@@ -55,31 +53,6 @@ const determineSign = (centipawnValue: number): string => {
     return '';
   }
   return centipawnValue > 0 ? '+' : '-';
-};
-
-/**
- * Returns the Unicode character for the black piece being moved in SAN notation.
- *
- * @param san - The SAN notation of the move.
- *              This can be in the form of a piece move (e.g., "Nf3" for knight move)
- *              or a pawn move (e.g., "e5").
- * @returns The Unicode character for the black piece being moved.
- *          Uses black piece symbols from the "Noto Sans Symbols 2" font.
- */
-export const getPieceUnicode = (san: string): string => {
-  // Determine the piece from the SAN notation
-  const pieceChar = san[0] as PieceChar;
-  let pieceUnicode = '';
-
-  if (pieceChar >= 'A' && pieceChar <= 'Z') {
-    // If the first character is an uppercase letter, it's a piece other than a pawn
-    pieceUnicode = BLACK_PIECES[pieceChar];
-  } else {
-    // If the first character is not an uppercase letter, it's a pawn move
-    pieceUnicode = BLACK_PIECES['P'];
-  }
-
-  return pieceUnicode;
 };
 
 /**

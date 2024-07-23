@@ -21,7 +21,7 @@ import { restrictToParentElement } from '@dnd-kit/modifiers';
 import Card from './Card';
 import { useGameContext } from '../../hooks/useGameContext';
 import Description from './Description';
-import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessJsUtils';
+import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessUtils';
 import { MoveDetail } from '../../context/gameContext/types';
 import { useLoadGame } from '../../hooks/useLoadGame';
 import { useRevealSolution } from '../../hooks/useRevealSolution';

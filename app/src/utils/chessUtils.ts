@@ -1,0 +1,65 @@
+import { Chess } from 'chess.js';
+import { Color } from '../types/color';
+import { SVG_PIECES, PieceChar } from '../types/chess';
+
+/**
+ * Converts a UCI move to SAN format.
+ * @param chess - The Chess instance.
+ * @param uciMove - The move in UCI format.
+ * @returns The move in SAN format, or null if the move could not be made.
+ */
+export const uciMoveToSanMove = (chess: Chess, uciMove: string): string | null => {
+  try {
+    const chessCopy = new Chess(chess.fen());
+    const result = chessCopy.move(uciMove);
+    return result ? result.san : null;
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * Gets the current turn players color.
+ * @param chess - The Chess instance.
+ * @returns The color of the player whose turn it is.
+ */
+export const getTurnPlayerColor = (chess: Chess): Color => {
+  const turn = chess.turn(); // 'w' or 'b'
+  return turn === 'w' ? Color.White : Color.Black;
+};
+
+/**
+ * Returns the SVG icon for the given piece character and color.
+ *
+ * @param pieceChar - The character representing the piece (e.g., 'K' for king, 'Q' for queen).
+ * @param color - The color of the piece.
+ * @returns The SVG icon for the specified piece and color.
+ */
+export const getPieceSvg = (pieceChar: PieceChar, color: Color): string => {
+  if (color === Color.Neutral) {
+    throw new Error('Neutral color does not have associated piece SVGs.');
+  }
+
+  // Construct the SVG file name
+  const colorCode = color === Color.White ? 'w' : 'b';
+  const pieceKey = `${colorCode}${pieceChar}` as keyof typeof SVG_PIECES;
+
+  // Return the corresponding SVG icon
+  return SVG_PIECES[pieceKey];
+};
+
+/**
+ * Returns the SVG icon for the piece being moved in SAN notation.
+ *
+ * @param san - The SAN notation of the move.
+ *              This can be in the form of a piece move (e.g., "Nf3" for knight move)
+ *              or a pawn move (e.g., "e5").
+ * @param color - The color of the piece
+ * @returns The SVG icon for the piece being moved.
+ */
+export const getPieceSvgBySan = (san: string, color: Color): string => {
+  // Determine the piece from the SAN notation
+  const pieceChar: PieceChar = san[0] >= 'A' && san[0] <= 'Z' ? (san[0] as PieceChar) : 'P';
+
+  return getPieceSvg(pieceChar, color);
+};
