@@ -1,11 +1,24 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  /* Media Queries */
-  /* mobile */
-  @media (max-width: 800px) {
+  /* Base font size */
+  html {
+    font-size: 16px;
   }
 
+  /* Adjust font size for different screen sizes */
+  @media (max-width: 1200px) {
+    html {
+      font-size: 15px;
+    }
+  }
+
+  @media (max-width: 800px) {
+    html {
+      font-size: 14px;
+    }
+  }
+    
   /* Links */
   a {
     color: #4e95c7;
