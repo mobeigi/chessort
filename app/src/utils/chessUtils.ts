@@ -52,12 +52,26 @@ export const getPieceSvg = (pieceChar: PieceChar, color: Color): string => {
  * Returns the SVG icon for the piece being moved in SAN notation.
  *
  * @param san - The SAN notation of the move.
- *              This can be in the form of a piece move (e.g., "Nf3" for knight move)
- *              or a pawn move (e.g., "e5").
- * @param color - The color of the piece
+ *              This can be in the form of a piece move (e.g., "Nf3" for knight move),
+ *              a pawn move (e.g., "e5"), or castling move (e.g., "O-O" or "O-O-O").
+ * @param color - The color of the piece.
+ *                Must be either Color.White or Color.Black.
+ *                Color.Neutral is not supported and will throw an error.
  * @returns The SVG icon for the piece being moved.
+ *          For castling, it returns the SVG icon for the king.
+ *          For all other moves, it returns the SVG icon for the piece specified in the SAN notation.
  */
 export const getPieceSvgBySan = (san: string, color: Color): string => {
+  if (color === Color.Neutral) {
+    throw new Error('Neutral color does not have associated piece SVGs.');
+  }
+
+  // Handle castling
+  if (san === 'O-O' || san === 'O-O-O') {
+    const kingSvg = getPieceSvg('K', color);
+    return kingSvg;
+  }
+
   // Determine the piece from the SAN notation
   const pieceChar: PieceChar = san[0] >= 'A' && san[0] <= 'Z' ? (san[0] as PieceChar) : 'P';
 
