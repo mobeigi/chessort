@@ -41,11 +41,14 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
 
   ${({ $revealed }) => ($revealed ? `cursor: auto;` : `cursor: grab;`)}
 
-  @media (max-width: 1200px), (max-height: 800px) {
+  /* Here we also tweak padding based on height to make sure it fits nicely on viewports with high vw and low vh */  
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.maxWidth}px), (max-height: ${({ theme }) =>
+    theme.breakpoints.tablet.maxHeight}px) {
     padding: 0.8em 0.4em;
   }
 
-  @media (max-width: 800px), (max-height: 600px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px),
+    (max-height: ${({ theme }) => theme.breakpoints.mobile.maxHeight}px) {
     padding: 0.2em 0.8em;
   }
 `;

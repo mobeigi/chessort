@@ -10,8 +10,7 @@ export const FooterWrapper = styled.footer`
 
   font-size: 0.8em;
 
-  /* mobile */
-  @media (max-width: 800px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     flex-direction: column;
     gap: 0.5em;
   }

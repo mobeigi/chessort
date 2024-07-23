@@ -25,8 +25,7 @@ export const Logo = styled.img`
   -webkit-user-select: none;
   -ms-user-select: none;
 
-  /* mobile */
-  @media (max-width: 800px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     height: calc(3.5em * 1.33); /* Refer to font size of Title */
   }
 `;
@@ -42,8 +41,7 @@ export const Title = styled.h1`
     color: #f5f5f5;
   }
 
-  /* mobile */
-  @media (max-width: 800px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     font-size: 3.5em;
   }
 `;

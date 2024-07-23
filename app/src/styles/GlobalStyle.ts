@@ -7,18 +7,18 @@ const GlobalStyle = createGlobalStyle`
   }
 
   /* Adjust font size for different screen sizes */
-  @media (max-width: 1200px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.maxWidth}px) {
     html {
       font-size: 15px;
     }
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     html {
       font-size: 14px;
     }
   }
-    
+  
   /* Links */
   a {
     color: #4e95c7;

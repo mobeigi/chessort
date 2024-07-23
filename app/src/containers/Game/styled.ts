@@ -6,8 +6,7 @@ export const GameWrapper = styled.section`
   justify-content: center;
   gap: 0.5em;
 
-  /* mobile */
-  @media (max-width: 800px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     flex-direction: column;
   }
 `;
@@ -31,8 +30,7 @@ export const ChessBoardWrapper = styled.section`
   border: 1px solid #ccc;
   box-sizing: border-box;
 
-  /* mobile */
-  @media (max-width: 800px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     width: 80vw;
     height: 80vw;
   }
@@ -50,8 +48,7 @@ export const PanelWrapper = styled.section`
 
   border: 1px solid #ccc;
 
-  /* mobile */
-  @media (max-width: 800px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     width: 80vw;
     height: auto;
   }
