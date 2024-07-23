@@ -25,6 +25,8 @@ import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessJsUtils';
 import { MoveDetail } from '../../context/gameContext/types';
 import { useLoadGame } from '../../hooks/useLoadGame';
 import { useRevealSolution } from '../../hooks/useRevealSolution';
+import { useNavigate } from 'react-router-dom';
+import { GameApiResponse } from '../../services/chessortServer';
 
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
 // A card can have 1 or many correct ranks depending on if the number of equivilanet solution evaluations
@@ -36,9 +38,29 @@ const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) =>
 
 export const Panel = () => {
   const { state, dispatch } = useGameContext();
+  const navigate = useNavigate();
   const { gameId } = useParams<{ gameId?: string }>();
-  const { loadGame } = useLoadGame();
-  const { revealSolution } = useRevealSolution();
+
+  const onLoadGameSuccess = useCallback(
+    (game: GameApiResponse) => {
+      // Populate browser navigation history
+      navigate(`/puzzle/${game.gameId}`);
+    },
+    [navigate],
+  );
+
+  const onRevealSolutionSuccess = useCallback(() => {
+    // Unpreview upon revealing the solution
+    dispatch({ type: 'UNPREVIEW_MOVE' });
+  }, [dispatch]);
+
+  const { loadGame } = useLoadGame({
+    onSuccess: onLoadGameSuccess,
+  });
+
+  const { revealSolution } = useRevealSolution({
+    onSuccess: onRevealSolutionSuccess,
+  });
 
   // The initial loading of the first game
   useEffect(() => {

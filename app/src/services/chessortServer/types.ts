@@ -1,6 +1,6 @@
 import { Difficulty } from '../../types/difficulty';
 
-export type RandomGameApiResponse = {
+export type GameApiResponse = {
   difficulty: Difficulty;
   fen: string;
   gameId: string;
