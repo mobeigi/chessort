@@ -1,6 +1,6 @@
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 
-export const Header = styled.header`
+export const HeaderWrapper = styled.header`
   display: flex;
   min-height: 125px;
   align-items: center;
@@ -29,9 +29,4 @@ export const Logo = styled.img`
 export const Title = styled.h1`
   font-size: 4.5em;
   line-height: 1em;
-`;
-
-export const Footer = styled.footer`
-  display: flex;
-  min-height: 85px;
 `;

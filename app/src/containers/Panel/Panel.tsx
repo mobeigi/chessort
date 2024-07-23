@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton, NextButton } from './styled';
 import {
   DndContext,
@@ -23,8 +23,8 @@ import { useGameContext } from '../../hooks/useGameContext';
 import Description from './Description';
 import { uciMoveToSanMove, getTurnPlayerColor } from '../../utils/chessJsUtils';
 import { MoveDetail } from '../../context/gameContext/types';
-import { getNewRandomGame, getGameSolution } from '../../services';
-import { getGameByGameId } from '../../services/chessortServer/api';
+import { useLoadGame } from '../../hooks/useLoadGame';
+import { useRevealSolution } from '../../hooks/useRevealSolution';
 
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
 // A card can have 1 or many correct ranks depending on if the number of equivilanet solution evaluations
@@ -36,62 +36,9 @@ const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) =>
 
 export const Panel = () => {
   const { state, dispatch } = useGameContext();
-  const navigate = useNavigate();
   const { gameId } = useParams<{ gameId?: string }>();
-
-  // Function to load a new game
-  const loadGame = useCallback(
-    async (gameId?: string) => {
-      dispatch({ type: 'SET_LOADING_GAME', payload: true });
-
-      let data;
-      try {
-        // Fetch a specific game if one is requested
-        // Otherwise, get a random game
-        if (gameId) {
-          data = await getGameByGameId(gameId);
-        } else {
-          data = await getNewRandomGame();
-        }
-      } catch (error) {
-        console.error('Error fetching new game data:', error);
-      } finally {
-        if (data !== undefined) {
-          dispatch({
-            type: 'NEW_GAME',
-            payload: data,
-          });
-        }
-
-        // Populate URL and browser history
-        navigate(`/puzzle/${data.gameId}`);
-
-        dispatch({ type: 'SET_LOADING_GAME', payload: false });
-      }
-    },
-    [dispatch, navigate],
-  );
-
-  const revealSolutionForCurrentGame = useCallback(async () => {
-    dispatch({ type: 'SET_LOADING_SOLUTION', payload: true });
-
-    try {
-      const data = await getGameSolution(
-        state.gameDetails.fen,
-        state.moveDetails.map((moveDetail) => moveDetail.uciMove),
-      );
-      // Dispatch action to update state with new game data
-      dispatch({
-        type: 'UPSERT_SOLUTION',
-        payload: data,
-      });
-    } catch (error) {
-      console.error('Error getting game solution data:', error);
-    } finally {
-      dispatch({ type: 'UNPREVIEW_MOVE' });
-      dispatch({ type: 'REVEAL_SOLUTION' });
-    }
-  }, [dispatch, state.gameDetails.fen, state.moveDetails]);
+  const { loadGame } = useLoadGame();
+  const { revealSolution } = useRevealSolution();
 
   // The initial loading of the first game
   useEffect(() => {
@@ -113,7 +60,7 @@ export const Panel = () => {
     }),
   );
 
-  const handleClick = useCallback(
+  const handleCardClick = useCallback(
     (uciMove: string) => {
       dispatch({ type: 'UNPREVIEW_MOVE' });
 
@@ -126,7 +73,7 @@ export const Panel = () => {
     [state.previewedMove, dispatch],
   );
 
-  const handleDragStart = (event: DragStartEvent) => {
+  const handleCardDragStart = (event: DragStartEvent) => {
     const { active } = event;
     const moveDetail = state.moveDetails.find((card) => card.uciMove === active.id);
 
@@ -135,7 +82,7 @@ export const Panel = () => {
     dispatch({ type: 'PREVIEW_MOVE', payload: moveDetail?.uciMove });
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleCardDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (active.id !== over?.id) {
@@ -152,7 +99,7 @@ export const Panel = () => {
     }
   };
 
-  const handleSubmit = () => revealSolutionForCurrentGame();
+  const handleSubmit = () => revealSolution();
   const handleNextPuzzle = () => loadGame();
 
   const turnPlayer = getTurnPlayerColor(state.initialChessJs);
@@ -176,8 +123,8 @@ export const Panel = () => {
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
+          onDragStart={handleCardDragStart}
+          onDragEnd={handleCardDragEnd}
           modifiers={[restrictToParentElement]}
         >
           <SortableContext
@@ -193,7 +140,7 @@ export const Panel = () => {
                 sanMove={uciMoveToSanMove(state.initialChessJs, moveDetail.uciMove) ?? ''}
                 revealed={state.revealed}
                 correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
-                onClick={handleClick}
+                onClick={handleCardClick}
                 isPreviewed={state.previewedMove === moveDetail.uciMove}
               />
             ))}
