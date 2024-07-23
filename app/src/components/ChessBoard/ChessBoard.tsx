@@ -13,7 +13,7 @@ const selectedSquareStyle = { backgroundColor: selectedSquareColor };
 const lastMoveSquareHighlightColor = 'rgba(213, 180, 93, 0.6)'; // #d5b45d
 const lastMoveSquareHighlightStyle = { backgroundColor: lastMoveSquareHighlightColor };
 
-export const ChessBoard = ({ fen, lastMoveFrom, lastMoveTo }: ChessBoardProps) => {
+export const ChessBoard = ({ fen, lastMoveFrom, lastMoveTo, customPieces }: ChessBoardProps) => {
   const [selectedSquares, setSelectedSquares] = useState<SelectedSquares>({});
 
   const onSquareClick = () => {
@@ -60,6 +60,7 @@ export const ChessBoard = ({ fen, lastMoveFrom, lastMoveTo }: ChessBoardProps) =
         ...moveSquares,
         ...selectedSquares,
       }}
+      customPieces={customPieces}
       onSquareClick={onSquareClick}
       onSquareRightClick={onSquareRightClick}
     />

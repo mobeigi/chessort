@@ -53,3 +53,5 @@ export const PanelWrapper = styled.section`
     height: auto;
   }
 `;
+
+export const CustomPieceIcon = styled.img``;
