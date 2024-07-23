@@ -41,9 +41,17 @@ export const CardsWrapper = styled.div`
 `;
 
 export const SubmitButton = styled(SuccessButton)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 90%;
+  min-height: 50px;
 `;
 
 export const NextButton = styled(PrimaryButton)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 90%;
+  min-height: 50px;
 `;

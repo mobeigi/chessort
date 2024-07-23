@@ -27,6 +27,7 @@ import { useLoadGame } from '../../hooks/useLoadGame';
 import { useRevealSolution } from '../../hooks/useRevealSolution';
 import { useNavigate } from 'react-router-dom';
 import { GameApiResponse } from '../../services/chessortServer';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
 // A card can have 1 or many correct ranks depending on if the number of equivilanet solution evaluations
@@ -130,7 +131,7 @@ export const Panel = () => {
   if (!state.isInitialLoadCompleted) {
     return (
       <PanelContainer>
-        <div>SPINNER!</div>
+        <ClipLoader color="#ccc" />
       </PanelContainer>
     );
   }
@@ -171,11 +172,11 @@ export const Panel = () => {
       </CardsWrapper>
       {state.revealed ? (
         <NextButton onClick={handleNextPuzzle} disabled={state.isLoadingGame}>
-          Next Puzzle
+          {state.isLoadingGame ? <ClipLoader color="#666666" size={20} /> : <span>Next Puzzle</span>}
         </NextButton>
       ) : (
         <SubmitButton onClick={handleSubmit} disabled={state.isLoadingSolution}>
-          Submit
+          {state.isLoadingSolution ? <ClipLoader color="#666666" size={20} /> : <span>Submit</span>}
         </SubmitButton>
       )}
     </PanelContainer>
