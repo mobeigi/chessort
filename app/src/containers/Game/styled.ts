@@ -15,16 +15,15 @@ export const ChessBoardWrapper = styled.section`
   display: flex;
 
   /* Hack below to ensure chessboard looks good on any viewport.
-   * This is because the board's height/width is set based on parent elements width (and we cant control this).
-   * Therefore, we set the width to either a percentage of either the vw or vh depending on which is smaller.
-   * This ensures the board will fit on the screen even on weird viewports that don't have a squarish aspect ratio. 
+   * This ensures the board will fit on the screen even on weird viewports that don't have a squarish aspect ratio.
+   * TODO: Its possible this can be refactored now to remove the calc() calls and generally be improved.
   */
   width: calc(min(65vw, 65vh));
   height: calc(
     min(65vw, 65vh)
   ); // We also set height explicitly to the same 'width' to allow other styling to fit child element (i.e. borders)
 
-  min-width: 300px; /* A value for min-width is always required to allow shrinking on window resize in a flexbox */
+  // min-width: 300px;
   min-height: 300px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
@@ -50,5 +49,3 @@ export const PanelWrapper = styled.section`
     height: auto;
   }
 `;
-
-export const CustomPieceIcon = styled.img``;
