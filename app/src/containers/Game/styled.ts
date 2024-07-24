@@ -42,7 +42,8 @@ export const PanelWrapper = styled.section`
   min-width: 230px; // Or else panel doesn't quite fit everything with high vw/low vh viewports
   min-height: 300px;
 
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0em 0.4em 0.4em 0em;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     width: 80vw;

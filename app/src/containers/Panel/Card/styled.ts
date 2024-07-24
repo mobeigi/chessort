@@ -20,8 +20,8 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   color: #323232;
   padding: 1.2em 0.8em;
   height: 28px; /* To support tallest element in children */
-  border: 2px solid #242424;
-  border-radius: 0.2em;
+  border: 0.15em solid transparent;
+  border-radius: 0.4em;
   align-items: center;
 
   > *:not(:first-child) {
@@ -35,8 +35,8 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   ${({ $isPreviewed, $isDragging }) =>
     ($isPreviewed || $isDragging) &&
     `
-      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
-      border-color: #fff;
+      border: 0.15em solid #ffe3c7;
+      box-shadow: 0 0 5px 0px rgba(255, 255, 255, 0.5);
     `}
 
   ${({ $revealed }) => ($revealed ? `cursor: auto;` : `cursor: grab;`)}

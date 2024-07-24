@@ -18,6 +18,11 @@ const GlobalStyle = createGlobalStyle`
       font-size: 14px;
     }
   }
+
+  /* Root styling */
+  #root {
+    background: linear-gradient(180deg, #242424, #36454f);
+  }
   
   /* Links */
   a {
