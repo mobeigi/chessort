@@ -6,7 +6,7 @@ cg-board {
 
 /** Interactive board square colors */
 cg-board square.last-move {
-  background-color: rgba(213, 180, 93, 0.6);
+  background-color: rgba(246, 235, 114, 0.6);
 }
 cg-board square.selected {
   background-color: rgba(90, 167, 204, 0.6);
