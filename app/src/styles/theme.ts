@@ -41,8 +41,8 @@ const theme = {
       text: {
         base: '#404040',
         baseHighlight: '#525252',
-        link: '#6ab7ee',
-        linkHighlight: '#93d2ff',
+        link: '#4e95c7',
+        linkHighlight: '#5aa7cc',
       },
       status: {
         primary: {
