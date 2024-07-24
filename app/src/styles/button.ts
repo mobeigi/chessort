@@ -17,6 +17,6 @@ export const SuccessButton = styled(BaseButton)`
 
   &:focus,
   &:focus-visible {
-    box-shadow: 0 0 0 0.25em rgba(76, 175, 80, 0.5);
+    box-shadow: 0 0 0 0.25em rgba(76, 175, 80, 0.5); // TODO, use theme colour
   }
 `;

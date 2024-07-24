@@ -47,6 +47,7 @@ export const SubmitButton = styled(SuccessButton)`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 3em;
 `;
 
 export const NextButton = styled(PrimaryButton)`
@@ -54,4 +55,5 @@ export const NextButton = styled(PrimaryButton)`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 3em;
 `;
