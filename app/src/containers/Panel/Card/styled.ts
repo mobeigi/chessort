@@ -35,7 +35,8 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   ${({ $isPreviewed, $isDragging, theme }) =>
     ($isPreviewed || $isDragging) &&
     `
-      border: 0.15em solid ${theme.mode === 'dark' ? '#ffe3c7' : '#794d2c'};
+      background-color: #d4a27c;
+      border: 0.15em solid ${theme.mode === 'dark' ? '#ffe3c7' : '#946b4c'};
       box-shadow: 0 0 5px 0px ${theme.mode === 'dark' ? 'rgba(255, 227, 199, 0.5)' : 'rgba(121, 77, 44, 0.5)'}; /* Above border color at 0.5 opacity */
     `}
 

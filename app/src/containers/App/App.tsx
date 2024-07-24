@@ -11,7 +11,7 @@ import { GameProvider } from '../../context/gameContext';
 import Game from '../Game';
 
 export const App = () => {
-  const [isDarkMode] = useState(true);
+  const [isDarkMode] = useState(false);
   const currentTheme = isDarkMode ? theme.colors.dark : theme.colors.light;
   const mode: THEME_MODE = isDarkMode ? 'dark' : 'light';
 
