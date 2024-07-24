@@ -15,9 +15,13 @@ const AppContainer = () => {
   const { mode } = useThemeMode();
   const currentTheme = mode === ThemeMode.Dark ? theme.colors.dark : theme.colors.light;
 
+  // Provide current theme and mode for convenience
+  const extraThemeArguments = { colors: currentTheme, mode };
+
   return (
     <>
-      <StyledThemeProvider theme={{ ...theme, colors: currentTheme, mode }}>
+      {/* Provide  */}
+      <StyledThemeProvider theme={{ ...theme, ...extraThemeArguments }}>
         <GlobalStyle />
         <Header />
         <Routes>
