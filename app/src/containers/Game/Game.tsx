@@ -1,5 +1,6 @@
 import { GameWrapper, ChessBoardWrapper, PanelWrapper, CustomPieceIcon } from './styled';
-import ChessBoard from '../../components/ChessBoard';
+import ChessGroundBoard from '../../components/ChessgroundBoard';
+import ChessBoard from '../../components/ChessBoardOld';
 import Panel from '../Panel';
 import { useGameContext } from '../../hooks/useGameContext';
 import { Square, CustomPieces, CustomPieceFn, CustomPieceFnArgs } from 'react-chessboard/dist/chessboard/types';
@@ -21,8 +22,14 @@ const createCustomPiece = (piece: PieceChar, color: Color): CustomPieceFn => {
 export const Game = () => {
   const { state } = useGameContext();
 
+  // Todo improve this:
   const lastMoveFrom = state.previewedMove?.slice(0, 2) as Square;
   const lastMoveTo = state.previewedMove?.slice(2, 4) as Square;
+
+  let lastMove = [];
+  if (lastMoveFrom && lastMoveTo) {
+    lastMove = [lastMoveFrom, lastMoveTo];
+  }
 
   const customPieces: CustomPieces = {
     wP: createCustomPiece('P', Color.White),
@@ -42,12 +49,14 @@ export const Game = () => {
   return (
     <GameWrapper>
       <ChessBoardWrapper>
-        <ChessBoard
+        {/* <ChessBoard
           fen={state.curChessJs.fen()}
           lastMoveFrom={lastMoveFrom}
           lastMoveTo={lastMoveTo}
           customPieces={customPieces}
-        />
+        /> */}
+
+        <ChessGroundBoard fen={state.curChessJs.fen()} lastMove={lastMove} />
       </ChessBoardWrapper>
       <PanelWrapper>
         <Panel />

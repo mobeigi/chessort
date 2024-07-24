@@ -27,9 +27,6 @@ export const ChessBoardWrapper = styled.section`
   min-width: 300px; /* A value for min-width is always required to allow shrinking on window resize in a flexbox */
   min-height: 300px;
 
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     width: 80vw;
     height: 80vw;

@@ -1,0 +1,46 @@
+/** Colored board squares as an embedded SVG */
+cg-board {
+  background-color: #e2ae83; /* Background color matching the light square*/
+  /* svg that sets both light / dark squares */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4PSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIgogICAgIHZpZXdCb3g9IjAgMCA4IDgiIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+CjxnIGlkPSJhIj4KICA8ZyBpZD0iYiI+CiAgICA8ZyBpZD0iYyI+CiAgICAgIDxnIGlkPSJkIj4KICAgICAgICA8cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBpZD0iZSIgZmlsbD0iI2YxZGVjMiIvPgogICAgICAgIDx1c2UgeD0iMSIgeT0iMSIgaHJlZj0iI2UiIHg6aHJlZj0iI2UiLz4KICAgICAgICA8cmVjdCB5PSIxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBpZD0iZiIgZmlsbD0iI2I1OGI2OSIvPgogICAgICAgIDx1c2UgeD0iMSIgeT0iLTEiIGhyZWY9IiNmIiB4OmhyZWY9IiNmIi8+CiAgICAgIDwvZz4KICAgICAgPHVzZSB4PSIyIiBocmVmPSIjZCIgeDpocmVmPSIjZCIvPgogICAgPC9nPgogICAgPHVzZSB4PSI0IiBocmVmPSIjYyIgeDpocmVmPSIjYyIvPgogIDwvZz4KICA8dXNlIHk9IjIiIGhyZWY9IiNiIiB4OmhyZWY9IiNiIi8+CjwvZz4KPHVzZSB5PSI0IiBocmVmPSIjYSIgeDpocmVmPSIjYSIvPgo8L3N2Zz4K');
+}
+
+/** Interactive board square colors */
+cg-board square.last-move {
+  background-color: rgba(213, 180, 93, 0.6);
+}
+cg-board square.selected {
+  background-color: rgba(90, 167, 204, 0.6);
+}
+
+/** Alternating colors in rank/file/square labels */
+.cg-wrap coords:nth-child(odd) coord:nth-child(even),
+.cg-wrap coords.squares:nth-child(even) coord:nth-child(odd),
+.cg-wrap.orientation-black coords.files:nth-child(even) coord:nth-child(odd),
+.cg-wrap coords.files:nth-child(even) coord:nth-child(even) {
+  color: rgba(72, 72, 72, 0.8);
+}
+
+.cg-wrap coords:nth-child(odd) coord:nth-child(odd),
+.cg-wrap coords.squares:nth-child(even) coord:nth-child(even),
+.cg-wrap.orientation-black coords.files:nth-child(even) coord:nth-child(even),
+.cg-wrap coords.files:nth-child(even) coord:nth-child(odd) {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Styling */
+.cg-wrap coords.files {
+  font-weight: bold;
+  text-transform: lowercase;
+}
+
+/* Fix offsets so they always fit even on tiny boards */
+.cg-wrap coords.ranks {
+  left: 0.75%;
+  top: -3.5%;
+}
+
+.cg-wrap coords.files {
+  bottom: -0.5%;
+  left: 5%;
+}

@@ -1,15 +1,15 @@
-import bK from '../assets/pieces/maestro/bK.svg';
-import bQ from '../assets/pieces/maestro/bQ.svg';
-import bR from '../assets/pieces/maestro/bR.svg';
-import bB from '../assets/pieces/maestro/bB.svg';
-import bN from '../assets/pieces/maestro/bN.svg';
-import bP from '../assets/pieces/maestro/bP.svg';
-import wK from '../assets/pieces/maestro/wK.svg';
-import wQ from '../assets/pieces/maestro/wQ.svg';
-import wR from '../assets/pieces/maestro/wR.svg';
-import wB from '../assets/pieces/maestro/wB.svg';
-import wN from '../assets/pieces/maestro/wN.svg';
-import wP from '../assets/pieces/maestro/wP.svg';
+import bK from '../assets/pieces/maestro/svg/bK.svg';
+import bQ from '../assets/pieces/maestro/svg/bQ.svg';
+import bR from '../assets/pieces/maestro/svg/bR.svg';
+import bB from '../assets/pieces/maestro/svg/bB.svg';
+import bN from '../assets/pieces/maestro/svg/bN.svg';
+import bP from '../assets/pieces/maestro/svg/bP.svg';
+import wK from '../assets/pieces/maestro/svg/wK.svg';
+import wQ from '../assets/pieces/maestro/svg/wQ.svg';
+import wR from '../assets/pieces/maestro/svg/wR.svg';
+import wB from '../assets/pieces/maestro/svg/wB.svg';
+import wN from '../assets/pieces/maestro/svg/wN.svg';
+import wP from '../assets/pieces/maestro/svg/wP.svg';
 
 export const SVG_PIECES = {
   bK,
