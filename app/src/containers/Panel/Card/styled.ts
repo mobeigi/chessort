@@ -32,11 +32,11 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
     margin-left: 0.2em; /* No gap between 1st & 2nd child */
   }
 
-  ${({ $isPreviewed, $isDragging }) =>
+  ${({ $isPreviewed, $isDragging, theme }) =>
     ($isPreviewed || $isDragging) &&
     `
-      border: 0.15em solid #ffe3c7;
-      box-shadow: 0 0 5px 0px rgba(255, 255, 255, 0.5);
+      border: 0.15em solid ${theme.mode === 'dark' ? '#ffe3c7' : '#794d2c'};
+      box-shadow: 0 0 5px 0px ${theme.mode === 'dark' ? 'rgba(255, 227, 199, 0.5)' : 'rgba(121, 77, 44, 0.5)'}; /* Above border color at 0.5 opacity */
     `}
 
   ${({ $revealed }) => ($revealed ? `cursor: auto;` : `cursor: grab;`)}
