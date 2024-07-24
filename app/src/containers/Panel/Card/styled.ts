@@ -87,6 +87,7 @@ export const FourDigitGrid = styled(BaseDigitGrid)`
 
 export const StatusIconWrapper = styled.span`
   display: flex;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
 
   svg {
     width: 16px;
