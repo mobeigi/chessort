@@ -27,6 +27,11 @@ export const ChessBoardWrapper = styled.section`
   min-width: 300px;
   min-height: 300px;
 
+  // Slight border for chessboard
+  cg-board {
+    border-radius: 0.4em;
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     width: 80vw;
     height: 80vw;
@@ -43,9 +48,9 @@ export const PanelWrapper = styled.section`
   min-width: 230px; // Or else panel doesn't quite fit everything with high vw/low vh viewports
   min-height: 300px;
 
+  // Slight border for panel
   border: 1px solid ${({ theme }) => hexToRgba(theme.colors.container.accent, 0.2)};
-
-  border-radius: 0em 0.4em 0.4em 0em; // TODO: not showing, needs to be moved, dont use overflow hidden
+  border-radius: 0.4em;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     width: 80vw;
