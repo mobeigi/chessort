@@ -10,7 +10,8 @@ export const PanelContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1em;
-  background: #302e2b;
+  color: ${({ theme }) => theme.colors.text.base};
+  background: ${({ theme }) => theme.colors.container.background};
 `;
 
 export const DescriptionWrapper = styled.main`

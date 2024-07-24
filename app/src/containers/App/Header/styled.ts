@@ -34,11 +34,11 @@ export const Title = styled.h1`
   font-size: 4.5em;
   line-height: 1em;
 
-  color: #e3e3e3;
+  color: ${({ theme }) => theme.colors.text.base};
 
   &:hover,
   &:focus {
-    color: #f5f5f5;
+    color: ${({ theme }) => theme.colors.text.baseHighlight};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {

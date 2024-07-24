@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import NotFoundPage from './NotFoundPage';
@@ -9,10 +10,13 @@ import { GameProvider } from '../../context/gameContext';
 import Game from '../Game';
 
 export const App = () => {
+  const [isDarkMode] = useState(false);
+  const currentTheme = isDarkMode ? theme.colors.dark : theme.colors.light;
+
   return (
     <>
       <Router>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={{ ...theme, colors: currentTheme }}>
           <GlobalStyle />
           <GameProvider>
             <Header />

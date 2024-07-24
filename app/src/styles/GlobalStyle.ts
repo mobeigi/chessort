@@ -21,16 +21,19 @@ const GlobalStyle = createGlobalStyle`
 
   /* Root styling */
   #root {
-    background: linear-gradient(180deg, #242424, #36454f);
+    background-color: ${({ theme }) => theme.colors.background};
+    background: linear-gradient(180deg, ${({ theme }) => theme.colors.background}, ${({ theme }) => theme.colors.backgroundBlend});
+
+    color: ${({ theme }) => theme.colors.text.base};
   }
-  
+
   /* Links */
   a {
-    color: #4e95c7;
+    color: ${({ theme }) => theme.colors.text.link};
     text-decoration: inherit;
   }
   a:hover {
-    color: #5aa7cc;
+    color: ${({ theme }) => theme.colors.text.linkHighlight};
   }
 
   /* Buttons */
@@ -42,8 +45,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 500;
     font-family: inherit;
     cursor: pointer;
-    color: #fff;
-    background-color: #2b76a3;
+    background-color: ${({ theme }) => theme.colors.status.primary.base};
     transition:
         border-color 0.25s,
         background-color 0.3s ease,
@@ -51,11 +53,11 @@ const GlobalStyle = createGlobalStyle`
   }
   
   button:hover {
-    background-color: #5aa7cc;
+    background-color: ${({ theme }) => theme.colors.status.primary.baseHighlight};
   }
 
   button:active {
-    background-color: #2b76a3;
+    background-color: ${({ theme }) => theme.colors.status.primary.base};
   }
 
   button:focus,
@@ -64,14 +66,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button:disabled {
-    background-color: #cccccc;
+    background-color: ${({ theme }) => theme.colors.status.disabled.base};
     cursor: not-allowed;
-    color: #666666;
-    border-color: #999999;
+    color: ${({ theme }) => theme.colors.status.disabled.baseHighlight};
+    border-color: ${({ theme }) => theme.colors.status.disabled.accent};
   }
 
   button:disabled:hover {
-    background-color: #cccccc;
+    background-color: ${({ theme }) => theme.colors.status.disabled.base};
   }
 `;
 

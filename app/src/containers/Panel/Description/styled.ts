@@ -43,7 +43,7 @@ export const DifficultyLozenge = styled.span<DifficultyWrapperProps>`
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
-  text-shadow: 0 0 10px #000;
+  color: #ececec;
   background-color: ${({ $difficulty }) => getBackgroundColor($difficulty)};
   white-space: nowrap;
 `;

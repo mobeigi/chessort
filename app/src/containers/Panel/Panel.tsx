@@ -28,6 +28,7 @@ import { useRevealSolution } from '../../hooks/useRevealSolution';
 import { useNavigate } from 'react-router-dom';
 import { GameApiResponse } from '../../services/chessortServer';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { useTheme } from 'styled-components';
 
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
 // A card can have 1 or many correct ranks depending on if the number of equivilanet solution evaluations
@@ -40,6 +41,7 @@ const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) =>
 export const Panel = () => {
   const { state, dispatch } = useGameContext();
   const navigate = useNavigate();
+  const theme = useTheme();
   const { gameId } = useParams<{ gameId?: string }>();
 
   const onLoadGameSuccess = useCallback(
@@ -131,7 +133,7 @@ export const Panel = () => {
   if (!state.isInitialLoadCompleted) {
     return (
       <PanelContainer>
-        <ClipLoader color="#ccc" />
+        <ClipLoader color={theme.colors.status.disabled.baseHighlight} />
       </PanelContainer>
     );
   }
@@ -172,11 +174,19 @@ export const Panel = () => {
       </CardsWrapper>
       {state.revealed ? (
         <NextButton onClick={handleNextPuzzle} disabled={state.isLoadingGame}>
-          {state.isLoadingGame ? <ClipLoader color="#666666" size={'1em'} /> : <span>Next Puzzle</span>}
+          {state.isLoadingGame ? (
+            <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
+          ) : (
+            <span>Next Puzzle</span>
+          )}
         </NextButton>
       ) : (
         <SubmitButton onClick={handleSubmit} disabled={state.isLoadingSolution}>
-          {state.isLoadingSolution ? <ClipLoader color="#666666" size={'1em'} /> : <span>Submit</span>}
+          {state.isLoadingSolution ? (
+            <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
+          ) : (
+            <span>Submit</span>
+          )}
         </SubmitButton>
       )}
     </PanelContainer>

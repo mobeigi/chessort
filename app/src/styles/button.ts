@@ -5,14 +5,14 @@ const BaseButton = styled.button``;
 export const PrimaryButton = styled(BaseButton)``;
 
 export const SuccessButton = styled(BaseButton)`
-  background-color: #4caf50;
+  background-color: ${({ theme }) => theme.colors.status.success.base};
 
   &:hover {
-    background-color: #60d065;
+    background-color: ${({ theme }) => theme.colors.status.success.baseHighlight};
   }
 
   &:active {
-    background-color: #4caf50;
+    background-color: ${({ theme }) => theme.colors.status.success.base};
   }
 
   &:focus,
