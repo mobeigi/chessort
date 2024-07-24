@@ -1,36 +1,44 @@
-import { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import NotFoundPage from './NotFoundPage';
 import theme from '../../styles/theme';
-import { THEME_MODE } from '../../types/theme';
-import { ThemeProvider } from 'styled-components';
+import { ThemeMode } from '../../types/theme';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import GlobalStyle from '../../styles/GlobalStyle';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { GameProvider } from '../../context/gameContext';
 import Game from '../Game';
+import { ThemeModeProvider } from '../../context/themeModeContext';
+import useThemeMode from '../../hooks/useThemeMode';
 
-export const App = () => {
-  const [isDarkMode] = useState(false);
-  const currentTheme = isDarkMode ? theme.colors.dark : theme.colors.light;
-  const mode: THEME_MODE = isDarkMode ? 'dark' : 'light';
+const AppContainer = () => {
+  const { mode } = useThemeMode();
+  const currentTheme = mode === ThemeMode.Dark ? theme.colors.dark : theme.colors.light;
 
   return (
     <>
-      <Router>
-        <ThemeProvider theme={{ ...theme, colors: currentTheme, mode }}>
-          <GlobalStyle />
-          <GameProvider>
-            <Header />
-            <Routes>
-              <Route path="/" element={<Game />} />
-              <Route path="/puzzle/:gameId" element={<Game />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-            <Footer />
-          </GameProvider>
-        </ThemeProvider>
-      </Router>
+      <StyledThemeProvider theme={{ ...theme, colors: currentTheme, mode }}>
+        <GlobalStyle />
+        <Header />
+        <Routes>
+          <Route path="/" element={<Game />} />
+          <Route path="/puzzle/:gameId" element={<Game />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+        <Footer />
+      </StyledThemeProvider>
     </>
   );
 };
+
+export const App = () => (
+  <>
+    <Router>
+      <ThemeModeProvider>
+        <GameProvider>
+          <AppContainer />
+        </GameProvider>
+      </ThemeModeProvider>
+    </Router>
+  </>
+);
