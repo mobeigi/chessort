@@ -16,7 +16,7 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   },
 }))<CardContainerProps>`
   display: flex;
-  background-color: #b58b69;
+  background-color: #b88762;
   color: #323232;
   padding: 1.2em 0.8em;
   height: 28px; /* To support tallest element in children */
