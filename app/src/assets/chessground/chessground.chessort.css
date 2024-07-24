@@ -17,29 +17,31 @@ cg-board square.selected {
 .cg-wrap coords.squares:nth-child(even) coord:nth-child(odd),
 .cg-wrap.orientation-black coords.files:nth-child(even) coord:nth-child(odd),
 .cg-wrap coords.files:nth-child(even) coord:nth-child(even) {
-  color: rgba(72, 72, 72, 0.8);
+  color: #b88762;
 }
 
 .cg-wrap coords:nth-child(odd) coord:nth-child(odd),
 .cg-wrap coords.squares:nth-child(even) coord:nth-child(even),
 .cg-wrap.orientation-black coords.files:nth-child(even) coord:nth-child(even),
 .cg-wrap coords.files:nth-child(even) coord:nth-child(odd) {
-  color: rgba(255, 255, 255, 0.8);
+  color: #edd6b0;
 }
 
 /* Styling */
-.cg-wrap coords.files {
+.cg-wrap coords.files,
+coords.ranks {
   font-weight: bold;
   text-transform: lowercase;
+  font-size: 0.8rem;
 }
 
 /* Fix offsets so they always fit even on tiny boards */
 .cg-wrap coords.ranks {
   left: 0.75%;
-  top: -3.5%;
+  top: -3.75%;
 }
 
 .cg-wrap coords.files {
-  bottom: -0.5%;
-  left: 5%;
+  bottom: 0%;
+  left: 4.8%;
 }
