@@ -23,7 +23,7 @@ export const ChessBoardWrapper = styled.section`
     min(65vw, 65vh)
   ); // We also set height explicitly to the same 'width' to allow other styling to fit child element (i.e. borders)
 
-  // min-width: 300px;
+  min-width: 300px;
   min-height: 300px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
