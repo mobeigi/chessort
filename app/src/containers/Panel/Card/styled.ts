@@ -57,7 +57,7 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
 export const CurrentRankWrapper = styled.span`
   display: flex;
   align-items: center;
-  gap: 0.1em;
+  gap: 0.2em;
 `;
 
 const BaseDigitGrid = styled.span`
