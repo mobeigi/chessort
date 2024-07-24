@@ -28,6 +28,7 @@ export const CreatedByWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  text-wrap: nowrap;
   a {
     text-decoration: none;
   }
