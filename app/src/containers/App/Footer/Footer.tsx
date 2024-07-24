@@ -1,13 +1,17 @@
 import { Color } from '../../../types/color';
 import { getPieceSvg } from '../../../utils/chessUtils';
 import { FooterWrapper, CopyrightDisclaimer, CreatedByWrapper, PieceWrapper } from './styled';
+import { useTheme } from 'styled-components';
+import { ThemeMode } from '../../../types/theme';
 
 export const Footer = () => {
+  const theme = useTheme();
+
   const authorName = 'Mo Beigi';
   const authorUrl = 'https://mobeigi.com';
   const currentYear = new Date().getFullYear();
 
-  const theROOOOOK = getPieceSvg('R', Color.White);
+  const theROOOOOK = getPieceSvg('R', theme.mode == ThemeMode.Dark ? Color.White : Color.Black);
 
   return (
     <FooterWrapper>
