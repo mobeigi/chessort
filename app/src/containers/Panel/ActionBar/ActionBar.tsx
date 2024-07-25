@@ -7,7 +7,7 @@ import { Tooltip } from 'react-tooltip';
 import { ActionBarProps } from './types';
 import { toast, TypeOptions } from 'react-toastify';
 
-const tooltipActionTimeout = 2000;
+const tooltipActionTimeout = 1500;
 
 export const ActionBar = ({ fen }: ActionBarProps) => {
   const { mode, toggleThemeMode } = useThemeMode();
@@ -59,7 +59,7 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
       <Tooltip id={`theme-mode-switch-tooltip`} place="right">
         {themeModeSwitchTooltipText}
       </Tooltip>
-      <Tooltip id={`copy-fen-tooltip`} place="right">
+      <Tooltip id={`copy-fen-tooltip`} place="right" variant={fenRecentlyCopied ? 'success' : undefined}>
         {copyFenTooltipText}
       </Tooltip>
     </ActionBarContainer>
