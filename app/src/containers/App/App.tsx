@@ -10,6 +10,7 @@ import { GameProvider } from '../../context/gameContext';
 import Game from '../Game';
 import { ThemeModeProvider } from '../../context/themeModeContext';
 import useThemeMode from '../../hooks/useThemeMode';
+import { ToastContainer } from 'react-toastify';
 
 const AppContainer = () => {
   const { mode } = useThemeMode();
@@ -24,6 +25,7 @@ const AppContainer = () => {
       <StyledThemeProvider theme={{ ...theme, ...extraThemeArguments }}>
         <GlobalStyle />
         <Header />
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<Game />} />
           <Route path="/puzzle/:gameId" element={<Game />} />

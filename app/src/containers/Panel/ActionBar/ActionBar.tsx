@@ -5,7 +5,7 @@ import { ThemeMode } from '../../../types/theme';
 import { ActionBarContainer, IconWrapper, DarkModeSwitchWrapper } from './styled';
 import { Tooltip } from 'react-tooltip';
 import { ActionBarProps } from './types';
-import { ToastContainer, toast, TypeOptions } from 'react-toastify';
+import { toast, TypeOptions } from 'react-toastify';
 
 const tooltipActionTimeout = 2000;
 
@@ -43,7 +43,6 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
 
   return (
     <ActionBarContainer>
-      <ToastContainer />
       <IconWrapper data-tooltip-id={`copy-fen-tooltip`} onClick={() => copyFen(fen)}>
         <i className="bx bx-copy"></i>
       </IconWrapper>
