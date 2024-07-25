@@ -47,7 +47,7 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
   return (
     <ActionBarContainer>
       <IconWrapper data-tooltip-id={`copy-fen-tooltip`} onClick={() => copyFen(fen)}>
-        <i className="bx bx-copy"></i>
+        <i className="bx bxs-chess"></i>
       </IconWrapper>
       <DarkModeSwitchWrapper data-tooltip-id={`theme-mode-switch-tooltip`} $mode={mode}>
         <DarkModeSwitch
