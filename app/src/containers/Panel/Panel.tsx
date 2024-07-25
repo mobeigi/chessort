@@ -30,13 +30,22 @@ import { GameApiResponse } from '../../services/chessortServer';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useTheme } from 'styled-components';
 import ActionBar from './ActionBar';
+import confetti from 'canvas-confetti';
 
+// TODO: Both below functions should be in some sort of game utils file
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
 // A card can have 1 or many correct ranks depending on if the number of equivilanet solution evaluations
 const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) => {
   return solutionEvals
     .map((item, index) => (item === moveDetail.evalResult?.engineEval ? index + 1 : -1)) // offset index to start at 1
     .filter((index) => index !== -1);
+};
+
+const isSolutionCorrect = (solutionEvals: string[], moveDetails: MoveDetail[]) => {
+  return moveDetails.every((moveDetail) => {
+    const correctRanks = computeCorrectRanks(solutionEvals, moveDetail);
+    return correctRanks.includes(moveDetail.curRank);
+  });
 };
 
 export const Panel = () => {
@@ -76,6 +85,25 @@ export const Panel = () => {
       loadGameAndSetInitialLoadCompleted();
     }
   }, [dispatch, gameId, loadGame, state.isInitialLoadCompleted]);
+
+  useEffect(() => {
+    if (!state.isInitialLoadCompleted) {
+      return;
+    }
+
+    // Spawn confetti on correct solution
+    if (isSolutionCorrect(state.solutionEvals, state.moveDetails)) {
+      confetti({
+        particleCount: 300,
+        spread: 5000,
+        angle: 90,
+        startVelocity: 40,
+        gravity: 0.7,
+        origin: { x: 0.5, y: 0.5 },
+        disableForReducedMotion: true,
+      });
+    }
+  }, [state.isInitialLoadCompleted, state.moveDetails, state.solutionEvals]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

@@ -67,7 +67,6 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
     const currentIndex = orientations.indexOf(boardOrientation);
     const nextIndex = (currentIndex + 1) % orientations.length;
     const nextBoardOrientation = orientations[nextIndex];
-    console.log(nextBoardOrientation);
     setBoardOrientation(nextBoardOrientation);
   };
 
