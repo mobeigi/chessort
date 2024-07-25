@@ -9,7 +9,7 @@ import '../../../node_modules/chessground/assets/chessground.base.css';
 import '../../assets/pieces/maestro/chessground.maestro.external.css';
 import '../../assets/chessground/chessground.chessort.css';
 
-export const ChessgroundBoard = ({ fen, lastMove }: ChessGroundBoardProps) => {
+export const ChessgroundBoard = ({ fen, lastMove = [], orientation = 'white' }: ChessGroundBoardProps) => {
   const boardRef = useRef(null);
   const [api, setApi] = useState<Api>();
 
@@ -17,7 +17,6 @@ export const ChessgroundBoard = ({ fen, lastMove }: ChessGroundBoardProps) => {
   useEffect(() => {
     if (boardRef.current) {
       const api = Chessground(boardRef.current, initialConfig);
-      console.log(api);
       setApi(api);
       return () => {
         api.destroy();
@@ -29,10 +28,11 @@ export const ChessgroundBoard = ({ fen, lastMove }: ChessGroundBoardProps) => {
   // This essentially binds the props to the API
   useEffect(() => {
     api?.set({
-      fen: fen,
-      lastMove: lastMove,
+      fen,
+      lastMove,
+      orientation,
     });
-  }, [api, fen, lastMove]);
+  }, [api, fen, lastMove, orientation]);
 
   return <ChessgroundContainer ref={boardRef}></ChessgroundContainer>;
 };

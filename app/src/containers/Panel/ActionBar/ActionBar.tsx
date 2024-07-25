@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useThemeMode from '../../../hooks/useThemeMode';
+import useUserPreferences from '../../../hooks/useUserPreferences';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 import { ThemeMode } from '../../../types/theme';
 import { ActionBarContainer, LichessLogoIcon, IconWrapper, DarkModeSwitchWrapper } from './styled';
@@ -7,6 +7,10 @@ import { Tooltip } from 'react-tooltip';
 import { ActionBarProps } from './types';
 import { toast, TypeOptions } from 'react-toastify';
 import { SvgIcon } from '../../../styles/icon';
+import {
+  BoardOrientation as BoardOrientationEnum,
+  BoardOrientationType,
+} from '../../../context/userPreferencesContext';
 
 import ChessComLogoPawnSvg from '../../../assets/icons/chesscom_logo_pawn.svg?react';
 import LichessLogoSvg from '../../../assets/icons/lichess_logo.svg?react';
@@ -24,7 +28,7 @@ const getChessComAnalysisUrl = (fen: string) => {
 };
 
 export const ActionBar = ({ fen }: ActionBarProps) => {
-  const { mode, toggleThemeMode } = useThemeMode();
+  const { mode, toggleThemeMode, boardOrientation, setBoardOrientation } = useUserPreferences();
   const [fenRecentlyCopied, setFenRecentlyCopied] = useState(false);
 
   const showToast = (message: string, type: TypeOptions) => {
@@ -34,6 +38,31 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
       type,
       theme: mode,
     });
+  };
+
+  const getBoardOrientationNiceName = (boardOrientation: BoardOrientationType): string => {
+    switch (boardOrientation) {
+      case BoardOrientationEnum.White:
+        return 'White on bottom';
+      case BoardOrientationEnum.Black:
+        return 'Black on bottom';
+      case BoardOrientationEnum.Turn:
+        return 'Turn Player';
+      default:
+        console.error('Unknown board orientation:', boardOrientation);
+        showToast(`Unknown board orientation: ${boardOrientation}`, 'error');
+        return 'Unknown';
+    }
+  };
+
+  const cycleBoardOrientation = () => {
+    // Pick the next board orientation from the enum and set it
+    const orientations = Object.values(BoardOrientationEnum) as BoardOrientationType[];
+    const currentIndex = orientations.indexOf(boardOrientation);
+    const nextIndex = (currentIndex + 1) % orientations.length;
+    const nextBoardOrientation = orientations[nextIndex];
+    console.log(nextBoardOrientation);
+    setBoardOrientation(nextBoardOrientation);
   };
 
   const copyFen = (fen: string) => {
@@ -51,6 +80,8 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
       });
   };
 
+  const boardOrientationNiceName = getBoardOrientationNiceName(boardOrientation);
+
   const copyFenTooltipText = fenRecentlyCopied ? 'Copied!' : 'Copy FEN';
 
   const otherThemeMode = mode == ThemeMode.Dark ? ThemeMode.Light : ThemeMode.Dark;
@@ -58,6 +89,9 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
 
   return (
     <ActionBarContainer>
+      <IconWrapper data-tooltip-id={`flip-board-tooltip`} onClick={() => cycleBoardOrientation()}>
+        <i className="bx bx-rotate-left"></i>
+      </IconWrapper>
       <a href={getLichessAnalysisUrl(fen)} target="_blank">
         <IconWrapper data-tooltip-id={`analyse-lichess-tooltip`}>
           <LichessLogoIcon>
@@ -87,6 +121,12 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
         </DarkModeSwitchWrapper>
       </IconWrapper>
       {/* Tooltips */}
+      <Tooltip id={`flip-board-tooltip`} place="right">
+        Cycle board orientation
+        <br />
+        <br />
+        Current: <strong>{boardOrientationNiceName}</strong>
+      </Tooltip>
       <Tooltip id={`analyse-lichess-tooltip`} place="right">
         Analyse on <strong>Lichess.org</strong>
       </Tooltip>

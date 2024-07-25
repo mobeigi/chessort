@@ -8,12 +8,12 @@ import GlobalStyle from '../../styles/GlobalStyle';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { GameProvider } from '../../context/gameContext';
 import Game from '../Game';
-import { ThemeModeProvider } from '../../context/themeModeContext';
-import useThemeMode from '../../hooks/useThemeMode';
+import { UserPreferencesProvider } from '../../context/userPreferencesContext';
+import useUserPreferences from '../../hooks/useUserPreferences';
 import { ToastContainer } from 'react-toastify';
 
 const AppContainer = () => {
-  const { mode } = useThemeMode();
+  const { mode } = useUserPreferences();
   const currentTheme = mode === ThemeMode.Dark ? theme.colors.dark : theme.colors.light;
 
   // Provide current theme and mode for convenience
@@ -40,11 +40,11 @@ const AppContainer = () => {
 export const App = () => (
   <>
     <Router>
-      <ThemeModeProvider>
+      <UserPreferencesProvider>
         <GameProvider>
           <AppContainer />
         </GameProvider>
-      </ThemeModeProvider>
+      </UserPreferencesProvider>
     </Router>
   </>
 );

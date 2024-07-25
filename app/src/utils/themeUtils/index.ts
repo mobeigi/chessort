@@ -1,1 +1,1 @@
-export { hexToRgba, getStoredTheme, setStoredTheme } from './themeUtils';
+export { hexToRgba } from './themeUtils';
