@@ -95,10 +95,11 @@ export const Panel = () => {
     if (isSolutionCorrect(state.solutionEvals, state.moveDetails)) {
       confetti({
         particleCount: 300,
-        spread: 5000,
+        spread: 500,
         angle: 90,
         startVelocity: 40,
         gravity: 0.7,
+        ticks: 100,
         origin: { x: 0.5, y: 0.5 },
         disableForReducedMotion: true,
       });
