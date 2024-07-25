@@ -15,14 +15,12 @@ const tooltipActionTimeout = 1500;
 const sunColor = '#f8de26';
 const moonColor = '#f5f5f5';
 
-const analyseOnLichess = (fen: string) => {
-  const targetUrl = `https://lichess.org/analysis/${fen}`;
-  window.open(targetUrl, '_blank');
+const getLichessAnalysisUrl = (fen: string) => {
+  return `https://lichess.org/analysis/${fen}`;
 };
 
-const analyseOnChessCom = (fen: string) => {
-  const targetUrl = `https://www.chess.com/analysis?tab=analysis&fen=${fen}`;
-  window.open(targetUrl, '_blank');
+const getChessComAnalysisUrl = (fen: string) => {
+  return `https://www.chess.com/analysis?tab=analysis&fen=${fen}`;
 };
 
 export const ActionBar = ({ fen }: ActionBarProps) => {
@@ -60,16 +58,20 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
 
   return (
     <ActionBarContainer>
-      <IconWrapper data-tooltip-id={`analyse-lichess-tooltip`} onClick={() => analyseOnLichess(fen)}>
-        <LichessLogoIcon>
-          <LichessLogoSvg />
-        </LichessLogoIcon>
-      </IconWrapper>
-      <IconWrapper data-tooltip-id={`analyse-chesscom-tooltip`} onClick={() => analyseOnChessCom(fen)}>
-        <SvgIcon>
-          <ChessComLogoPawnSvg />
-        </SvgIcon>
-      </IconWrapper>
+      <a href={getLichessAnalysisUrl(fen)} target="_blank">
+        <IconWrapper data-tooltip-id={`analyse-lichess-tooltip`}>
+          <LichessLogoIcon>
+            <LichessLogoSvg />
+          </LichessLogoIcon>
+        </IconWrapper>
+      </a>
+      <a href={getChessComAnalysisUrl(fen)} target="_blank">
+        <IconWrapper data-tooltip-id={`analyse-chesscom-tooltip`}>
+          <SvgIcon>
+            <ChessComLogoPawnSvg />
+          </SvgIcon>
+        </IconWrapper>
+      </a>
       <IconWrapper data-tooltip-id={`copy-fen-tooltip`} onClick={() => copyFen(fen)}>
         <i className="bx bxs-chess"></i>
       </IconWrapper>
