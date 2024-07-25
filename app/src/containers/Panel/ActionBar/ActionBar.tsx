@@ -73,11 +73,11 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
       <IconWrapper data-tooltip-id={`copy-fen-tooltip`} onClick={() => copyFen(fen)}>
         <i className="bx bxs-chess"></i>
       </IconWrapper>
-      <IconWrapper data-tooltip-id={`theme-mode-switch-tooltip`}>
+      <IconWrapper data-tooltip-id={`theme-mode-switch-tooltip`} onClick={() => toggleThemeMode()}>
         <DarkModeSwitchWrapper $mode={mode}>
           <DarkModeSwitch
             checked={mode == ThemeMode.Dark}
-            onChange={() => toggleThemeMode()}
+            onChange={() => {}} /* We use onClick on icon wrapper instead */
             size={'0.9em'}
             sunColor={sunColor}
             moonColor={moonColor}
