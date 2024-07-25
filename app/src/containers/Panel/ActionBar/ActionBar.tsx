@@ -25,7 +25,6 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
     navigator.clipboard
       .writeText(fen)
       .then(() => {
-        throw Error();
         setFenRecentlyCopied(true);
         setTimeout(() => {
           setFenRecentlyCopied(false);
