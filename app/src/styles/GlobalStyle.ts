@@ -1,4 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
+import 'boxicons/css/boxicons.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const GlobalStyle = createGlobalStyle`
   /* Base font size */
@@ -23,7 +25,6 @@ const GlobalStyle = createGlobalStyle`
   #root {
     background-color: ${({ theme }) => theme.colors.background};
     background: linear-gradient(180deg, ${({ theme }) => theme.colors.background}, ${({ theme }) => theme.colors.backgroundBlend});
-
     color: ${({ theme }) => theme.colors.text.base};
   }
 

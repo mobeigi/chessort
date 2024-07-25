@@ -145,7 +145,7 @@ export const Panel = () => {
         <Description gameId={state.gameDetails.gameId} difficulty={state.gameDetails.difficulty} />
       </DescriptionWrapper>
 
-      <ActionBar />
+      <ActionBar fen={state.gameDetails.fen} />
 
       <CardsWrapper>
         <DndContext
