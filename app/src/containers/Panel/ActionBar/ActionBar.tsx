@@ -95,6 +95,9 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
 
   return (
     <ActionBarContainer>
+      <IconWrapper data-tooltip-id={`help-tooltip`}>
+        <i className="bx bxs-help-circle"></i>
+      </IconWrapper>
       <IconWrapper data-tooltip-id={`flip-board-tooltip`} onClick={() => cycleBoardOrientation()}>
         <RotateIconWithAdjustments className="bx bx-rotate-left"></RotateIconWithAdjustments>
       </IconWrapper>
@@ -127,22 +130,25 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
         </DarkModeSwitchWrapper>
       </IconWrapper>
       {/* Tooltips */}
-      <Tooltip id={`flip-board-tooltip`} place="right">
+      <Tooltip id={`help-tooltip`} place="top">
+        How to play
+      </Tooltip>
+      <Tooltip id={`flip-board-tooltip`} place="top">
         Cycle board orientation
         <br />
         <br />
         Current: <strong>{boardOrientationNiceName}</strong>
       </Tooltip>
-      <Tooltip id={`analyse-lichess-tooltip`} place="right">
+      <Tooltip id={`analyse-lichess-tooltip`} place="top">
         Analyse on <strong>Lichess.org</strong>
       </Tooltip>
-      <Tooltip id={`analyse-chesscom-tooltip`} place="right">
+      <Tooltip id={`analyse-chesscom-tooltip`} place="top">
         Analyse on <strong>Chess.com</strong>
       </Tooltip>
-      <Tooltip id={`theme-mode-switch-tooltip`} place="right">
+      <Tooltip id={`theme-mode-switch-tooltip`} place="top">
         {themeModeSwitchTooltipText}
       </Tooltip>
-      <Tooltip id={`copy-fen-tooltip`} place="right" variant={fenRecentlyCopied ? 'success' : undefined}>
+      <Tooltip id={`copy-fen-tooltip`} place="top" variant={fenRecentlyCopied ? 'success' : undefined}>
         {copyFenTooltipText}
       </Tooltip>
     </ActionBarContainer>
