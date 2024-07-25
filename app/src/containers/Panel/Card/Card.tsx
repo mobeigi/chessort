@@ -142,7 +142,7 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
         <EngineEvalWrapper $advantageFor={advantageColor}>{engineEvalValue}</EngineEvalWrapper>
       </CardContainer>
 
-      {/* Tooltips - Rendered at the end so they show on top and we avoid explicitly setting z-index */}
+      {/* Tooltips */}
       <Tooltip id={`current-rank-tooltip-${moveDetail.uciMove}`} place="top">
         {currentRankTooltipText}
       </Tooltip>
