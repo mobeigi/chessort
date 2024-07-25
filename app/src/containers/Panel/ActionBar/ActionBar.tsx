@@ -8,6 +8,8 @@ import { ActionBarProps } from './types';
 import { toast, TypeOptions } from 'react-toastify';
 
 const tooltipActionTimeout = 1500;
+const sunColor = '#f8de26';
+const moonColor = '#f5f5f5';
 
 export const ActionBar = ({ fen }: ActionBarProps) => {
   const { mode, toggleThemeMode } = useThemeMode();
@@ -51,8 +53,8 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
           checked={mode == ThemeMode.Dark}
           onChange={() => toggleThemeMode()}
           size={'1.5em'}
-          sunColor={'#f8de26'}
-          moonColor={'#f5f5f5'}
+          sunColor={sunColor}
+          moonColor={moonColor}
         />
       </DarkModeSwitchWrapper>
       {/* Tooltips */}

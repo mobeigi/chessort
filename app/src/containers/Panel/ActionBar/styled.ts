@@ -4,6 +4,7 @@ import { ThemeMode } from '../../../types/theme';
 export const ActionBarContainer = styled.div`
   display: flex;
   align-items: center;
+  gap: 0.2em;
 `;
 
 type DarkModeSwitchWrapperProps = {
