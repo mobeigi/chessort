@@ -2,7 +2,13 @@ import { useState } from 'react';
 import useUserPreferences from '../../../hooks/useUserPreferences';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 import { ThemeMode } from '../../../types/theme';
-import { ActionBarContainer, LichessLogoIcon, IconWrapper, DarkModeSwitchWrapper } from './styled';
+import {
+  ActionBarContainer,
+  LichessLogoIcon,
+  IconWrapper,
+  DarkModeSwitchWrapper,
+  RotateIconWithAdjustments,
+} from './styled';
 import { Tooltip } from 'react-tooltip';
 import { ActionBarProps } from './types';
 import { toast, TypeOptions } from 'react-toastify';
@@ -47,7 +53,7 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
       case BoardOrientationEnum.Black:
         return 'Black on bottom';
       case BoardOrientationEnum.Turn:
-        return 'Turn Player';
+        return 'Turn player';
       default:
         console.error('Unknown board orientation:', boardOrientation);
         showToast(`Unknown board orientation: ${boardOrientation}`, 'error');
@@ -90,7 +96,7 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
   return (
     <ActionBarContainer>
       <IconWrapper data-tooltip-id={`flip-board-tooltip`} onClick={() => cycleBoardOrientation()}>
-        <i className="bx bx-rotate-left"></i>
+        <RotateIconWithAdjustments className="bx bx-rotate-left"></RotateIconWithAdjustments>
       </IconWrapper>
       <a href={getLichessAnalysisUrl(fen)} target="_blank">
         <IconWrapper data-tooltip-id={`analyse-lichess-tooltip`}>

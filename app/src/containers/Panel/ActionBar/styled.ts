@@ -33,6 +33,10 @@ export const IconWrapper = styled.span`
     color: ${({ theme }) => theme.colors.text.baseHighlight};
   }
 
+  &:active {
+    transform: scale(0.95);
+  }
+
   // Add grey circle backdrop on hover to icon
   width: 1.2em;
   height: 1.2em;
@@ -55,6 +59,12 @@ export const IconWrapper = styled.span`
   &:hover::before {
     opacity: 1;
   }
+`;
+
+export const RotateIconWithAdjustments = styled.i`
+  // For whatever unknown reason, the rotate icon from Boxicons is not fully center aligned by default...
+  // So we have to manually add margin to it here
+  margin-left: 0.1em;
 `;
 
 export const LichessLogoIcon = styled(SvgIcon)`
