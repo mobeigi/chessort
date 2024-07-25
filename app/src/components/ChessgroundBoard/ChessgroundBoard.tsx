@@ -9,7 +9,12 @@ import '../../../node_modules/chessground/assets/chessground.base.css';
 import '../../assets/pieces/maestro/chessground.maestro.external.css';
 import '../../assets/chessground/chessground.chessort.css';
 
-export const ChessgroundBoard = ({ fen, lastMove = [], orientation = 'white' }: ChessGroundBoardProps) => {
+export const ChessgroundBoard = ({
+  fen,
+  lastMove = [],
+  turnColor = 'white',
+  orientation = 'white',
+}: ChessGroundBoardProps) => {
   const boardRef = useRef(null);
   const [api, setApi] = useState<Api>();
 
@@ -30,9 +35,10 @@ export const ChessgroundBoard = ({ fen, lastMove = [], orientation = 'white' }: 
     api?.set({
       fen,
       lastMove,
+      turnColor,
       orientation,
     });
-  }, [api, fen, lastMove, orientation]);
+  }, [api, fen, lastMove, orientation, turnColor]);
 
   return <ChessgroundContainer ref={boardRef}></ChessgroundContainer>;
 };

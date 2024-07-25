@@ -13,18 +13,18 @@ cg-board square.selected {
 }
 
 /** Alternating colors in rank/file/square labels */
-.cg-wrap coords:nth-child(odd) coord:nth-child(even),
-.cg-wrap coords.squares:nth-child(even) coord:nth-child(odd),
-.cg-wrap.orientation-black coords.files:nth-child(even) coord:nth-child(odd),
-.cg-wrap coords.files:nth-child(even) coord:nth-child(even) {
-  color: #b88762;
+.cg-wrap coords:nth-child(odd) coord:nth-child(odd),
+.cg-wrap.orientation-black coords:nth-child(odd) coord:nth-child(even),
+.cg-wrap coords.files:nth-child(even) coord:nth-child(odd),
+.cg-wrap.orientation-black coords.files:nth-child(even) coord:nth-child(even) {
+  color: #edd6b0;
 }
 
-.cg-wrap coords:nth-child(odd) coord:nth-child(odd),
-.cg-wrap coords.squares:nth-child(even) coord:nth-child(even),
-.cg-wrap.orientation-black coords.files:nth-child(even) coord:nth-child(even),
-.cg-wrap coords.files:nth-child(even) coord:nth-child(odd) {
-  color: #edd6b0;
+.cg-wrap coords:nth-child(odd) coord:nth-child(even),
+.cg-wrap.orientation-black coords:nth-child(odd) coord:nth-child(odd),
+.cg-wrap coords.files:nth-child(even) coord:nth-child(even),
+.cg-wrap.orientation-black coords.files:nth-child(even) coord:nth-child(odd) {
+  color: #b88762;
 }
 
 /* Styling */

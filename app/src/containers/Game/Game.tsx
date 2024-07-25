@@ -7,12 +7,16 @@ import useUserPreferences from '../../hooks/useUserPreferences';
 import { BoardOrientation } from '../../context/userPreferencesContext';
 import { Color as ChessJsColor } from 'chess.js';
 
+const chessJsTurnToColor = (turnColor: ChessJsColor): Color => {
+  return turnColor === 'w' ? 'white' : 'black';
+};
+
 const getBoardOrientation = (boardOrientation: BoardOrientation, turnColor: ChessJsColor): Color => {
   const turnOrientation = turnColor === 'w' ? 'white' : 'black';
 
   switch (boardOrientation) {
     case BoardOrientation.Turn:
-      return turnColor === 'w' ? 'white' : 'black';
+      return chessJsTurnToColor(turnColor);
     case BoardOrientation.White:
       return 'white';
     case BoardOrientation.Black:
@@ -37,7 +41,12 @@ export const Game = () => {
   return (
     <GameWrapper>
       <ChessBoardWrapper>
-        <ChessGroundBoard fen={state.curChessJs.fen()} lastMove={lastMove} orientation={orientation} />
+        <ChessGroundBoard
+          fen={state.curChessJs.fen()}
+          turnColor={chessJsTurnToColor(state.initialChessJs.turn())}
+          lastMove={lastMove}
+          orientation={orientation}
+        />
       </ChessBoardWrapper>
       <PanelWrapper>
         <Panel />
