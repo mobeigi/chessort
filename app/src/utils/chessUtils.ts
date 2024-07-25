@@ -1,6 +1,6 @@
 import { Chess } from 'chess.js';
 import { Color } from '../types/color';
-import { SVG_PIECES, PieceChar } from '../types/chess';
+import { SVG_PIECE_ELEMENTS, PieceChar } from '../types/chess';
 
 /**
  * Converts a UCI move to SAN format.
@@ -29,27 +29,27 @@ export const getTurnPlayerColor = (chess: Chess): Color => {
 };
 
 /**
- * Returns the SVG icon for the given piece character and color.
+ * Returns the SVG for the given piece character and color.
  *
  * @param pieceChar - The character representing the piece (e.g., 'K' for king, 'Q' for queen).
  * @param color - The color of the piece.
- * @returns The SVG icon for the specified piece and color.
+ * @returns The SVG for the specified piece and color.
  */
-export const getPieceSvg = (pieceChar: PieceChar, color: Color): string => {
+export const getPieceSvg = (pieceChar: PieceChar, color: Color) => {
   if (color === Color.Neutral) {
     throw new Error('Neutral color does not have associated piece SVGs.');
   }
 
   // Construct the SVG file name
   const colorCode = color === Color.White ? 'w' : 'b';
-  const pieceKey = `${colorCode}${pieceChar}` as keyof typeof SVG_PIECES;
+  const pieceKey = `${colorCode}${pieceChar}` as keyof typeof SVG_PIECE_ELEMENTS;
 
-  // Return the corresponding SVG icon
-  return SVG_PIECES[pieceKey];
+  // Return the corresponding SVG
+  return SVG_PIECE_ELEMENTS[pieceKey];
 };
 
 /**
- * Returns the SVG icon for the piece being moved in SAN notation.
+ * Returns the SVG for the piece being moved in SAN notation.
  *
  * @param san - The SAN notation of the move.
  *              This can be in the form of a piece move (e.g., "Nf3" for knight move),
@@ -57,11 +57,11 @@ export const getPieceSvg = (pieceChar: PieceChar, color: Color): string => {
  * @param color - The color of the piece.
  *                Must be either Color.White or Color.Black.
  *                Color.Neutral is not supported and will throw an error.
- * @returns The SVG icon for the piece being moved.
- *          For castling, it returns the SVG icon for the king.
- *          For all other moves, it returns the SVG icon for the piece specified in the SAN notation.
+ * @returns The SVG for the piece being moved.
+ *          For castling, it returns the SVG for the king.
+ *          For all other moves, it returns the SVG for the piece specified in the SAN notation.
  */
-export const getPieceSvgBySan = (san: string, color: Color): string => {
+export const getPieceSvgBySan = (san: string, color: Color) => {
   if (color === Color.Neutral) {
     throw new Error('Neutral color does not have associated piece SVGs.');
   }

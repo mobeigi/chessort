@@ -34,10 +34,6 @@ export const CreatedByWrapper = styled.div`
   }
 `;
 
-export const PieceWrapper = styled.img`
-  height: 1.2em;
-`;
-
 export const CopyrightDisclaimer = styled.div`
   display: flex;
 

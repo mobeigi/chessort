@@ -15,6 +15,7 @@ type DarkModeSwitchWrapperProps = {
 export const DarkModeSwitchWrapper = styled.span<DarkModeSwitchWrapperProps>`
   display: flex;
   * {
+    // TODO: Avoid using * if possible
     // Set stroke based on theme, this seems to be only way to stoke the svg properly
     stroke: ${({ $mode }) => ($mode === ThemeMode.Light ? '#444' : '#bbb')};
   }

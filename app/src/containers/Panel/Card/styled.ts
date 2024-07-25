@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Color } from '../../../types/color';
 import { getBaseColor, getOverlayColor } from './utils';
+import { SvgIcon } from '../../../styles/icon';
 
 interface CardContainerProps {
   $isDragging: boolean;
@@ -109,8 +110,12 @@ export const SanMoveWrapper = styled.span`
   padding-left: 0.6em;
 `;
 
-export const MovePieceIcon = styled.img`
-  height: 2em;
+export const MovePieceIcon = styled(SvgIcon)`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 2em;
 `;
 
 interface SanMovePieceProps {

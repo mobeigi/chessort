@@ -102,7 +102,7 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
   const engineEvalValue = revealed ? formatEvaluation(moveDetail.evalResult!.engineEval) : '?';
 
   const StatusIcon = getStatusIcon(revealed, moveDetail.curRank, correctRanks);
-  const movePieceSvg = getPieceSvgBySan(sanMove, turnPlayer);
+  const MovePieceSvg = getPieceSvgBySan(sanMove, turnPlayer);
 
   return (
     <>
@@ -131,7 +131,9 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
           </CurrentRankNumberWrapper>
         </CurrentRankWrapper>
         <SanMoveWrapper>
-          <MovePieceIcon src={movePieceSvg} />
+          <MovePieceIcon>
+            <MovePieceSvg />
+          </MovePieceIcon>
           <MoveNotation $color={turnPlayer}>{formattedSanMove}</MoveNotation>
         </SanMoveWrapper>
         {revealed && (
