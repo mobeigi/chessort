@@ -20,6 +20,7 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
       position: 'bottom-left',
       autoClose: 2000,
       type,
+      theme: mode,
     });
   };
 
@@ -34,7 +35,7 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
       })
       .catch((err) => {
         console.error('Failed to copy FEN to clipboard: ', err);
-        showToast(`Failed to copy FEN to clipboard`, 'error');
+        showToast(`Failed to copy FEN to clipboard.`, 'error');
       });
   };
 
