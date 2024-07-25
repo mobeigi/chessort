@@ -2,14 +2,28 @@ import { useState } from 'react';
 import useThemeMode from '../../../hooks/useThemeMode';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 import { ThemeMode } from '../../../types/theme';
-import { ActionBarContainer, IconWrapper, DarkModeSwitchWrapper } from './styled';
+import { ActionBarContainer, LichessLogoIcon, IconWrapper, DarkModeSwitchWrapper } from './styled';
 import { Tooltip } from 'react-tooltip';
 import { ActionBarProps } from './types';
 import { toast, TypeOptions } from 'react-toastify';
+import { SvgIcon } from '../../../styles/icon';
+
+import ChessComLogoPawnSvg from '../../../assets/icons/chesscom_logo_pawn.svg?react';
+import LichessLogoSvg from '../../../assets/icons/lichess_logo.svg?react';
 
 const tooltipActionTimeout = 1500;
 const sunColor = '#f8de26';
 const moonColor = '#f5f5f5';
+
+const analyseOnLichess = (fen: string) => {
+  const targetUrl = `https://lichess.org/analysis/${fen}`;
+  window.open(targetUrl, '_blank');
+};
+
+const analyseOnChessCom = (fen: string) => {
+  const targetUrl = `https://www.chess.com/analysis?tab=analysis&fen=${fen}`;
+  window.open(targetUrl, '_blank');
+};
 
 export const ActionBar = ({ fen }: ActionBarProps) => {
   const { mode, toggleThemeMode } = useThemeMode();
@@ -46,19 +60,37 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
 
   return (
     <ActionBarContainer>
+      <IconWrapper data-tooltip-id={`analyse-lichess-tooltip`} onClick={() => analyseOnLichess(fen)}>
+        <LichessLogoIcon>
+          <LichessLogoSvg />
+        </LichessLogoIcon>
+      </IconWrapper>
+      <IconWrapper data-tooltip-id={`analyse-chesscom-tooltip`} onClick={() => analyseOnChessCom(fen)}>
+        <SvgIcon>
+          <ChessComLogoPawnSvg />
+        </SvgIcon>
+      </IconWrapper>
       <IconWrapper data-tooltip-id={`copy-fen-tooltip`} onClick={() => copyFen(fen)}>
         <i className="bx bxs-chess"></i>
       </IconWrapper>
-      <DarkModeSwitchWrapper data-tooltip-id={`theme-mode-switch-tooltip`} $mode={mode}>
-        <DarkModeSwitch
-          checked={mode == ThemeMode.Dark}
-          onChange={() => toggleThemeMode()}
-          size={'1.5em'}
-          sunColor={sunColor}
-          moonColor={moonColor}
-        />
-      </DarkModeSwitchWrapper>
+      <IconWrapper data-tooltip-id={`theme-mode-switch-tooltip`}>
+        <DarkModeSwitchWrapper $mode={mode}>
+          <DarkModeSwitch
+            checked={mode == ThemeMode.Dark}
+            onChange={() => toggleThemeMode()}
+            size={'0.9em'}
+            sunColor={sunColor}
+            moonColor={moonColor}
+          />
+        </DarkModeSwitchWrapper>
+      </IconWrapper>
       {/* Tooltips */}
+      <Tooltip id={`analyse-lichess-tooltip`} place="right">
+        Analyse on <strong>Lichess.org</strong>
+      </Tooltip>
+      <Tooltip id={`analyse-chesscom-tooltip`} place="right">
+        Analyse on <strong>Chess.com</strong>
+      </Tooltip>
       <Tooltip id={`theme-mode-switch-tooltip`} place="right">
         {themeModeSwitchTooltipText}
       </Tooltip>

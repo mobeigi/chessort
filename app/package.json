@@ -26,8 +26,7 @@
     "react-toastify": "^10.0.5",
     "react-toggle-dark-mode": "^1.1.1",
     "react-tooltip": "^5.27.1",
-    "styled-components": "^6.1.11",
-    "vite-plugin-svgr": "^4.2.0"
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@types/base64-url": "^2.2.2",
@@ -43,6 +42,7 @@
     "eslint-plugin-react-refresh": "^0.4.7",
     "prettier": "^3.3.3",
     "typescript": "^5.2.2",
-    "vite": "^5.3.4"
+    "vite": "^5.3.4",
+    "vite-plugin-svgr": "^4.2.0"
   }
 }
