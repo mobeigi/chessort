@@ -2,7 +2,7 @@ import StyledModal from '../../components/StyledModal';
 import { useTheme } from 'styled-components';
 import { hexToRgba } from '../../utils/themeUtils';
 import { HowToModalProps } from './types';
-import { ModalContentWrapper, HowToSection, ExampleCardsContainer, ExampleCardWrapper } from './styled';
+import { HowToSection, ExampleCardsContainer, ExampleCardWrapper } from './styled';
 import { Card1, Card2, Card3, Card4 } from './examples';
 
 const HowToContent = () => {

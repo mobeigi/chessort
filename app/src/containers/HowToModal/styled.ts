@@ -23,6 +23,12 @@ export const ExampleCardsContainer = styled.div`
 export const ExampleCardWrapper = styled.div`
   width: 60%;
 
+  // Overwrite padding to force the smallest form factor for the modal
+  // TODO: This should be supported by the card itself via props
+  & > *:first-child {
+    padding: 0.2em 0.8em;
+  }
+
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
