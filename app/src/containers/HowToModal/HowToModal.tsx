@@ -15,14 +15,18 @@ const HowToContent = () => {
       <p>
         <strong>Chessort</strong> is a Chess puzzle game where you sort moves based on the chess engine's evaluation.
       </p>
-      <h4>Notes</h4>
+      <h4>Key points</h4>
       <ul>
         <li>
           <strong>{numOfMovesToSort}</strong> moves to sort from <strong>strongest</strong> (at top) to{' '}
           <strong>weakest</strong> (at bottom).
         </li>
         <li>
-          Check (<code>+</code>) and checkmate (<code>#</code>) notations are initially hidden.
+          <strong>Move</strong> and <strong>Piece</strong> color indicates the player to move.
+        </li>
+        <li>
+          <strong>Check</strong> (<code>+</code>) and <strong>Checkmate</strong> (<code>#</code>) notations are
+          initially hidden.
         </li>
         <li>Moves of equal strength can be correct in multiple positions.</li>
         <li>
