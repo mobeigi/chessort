@@ -38,15 +38,12 @@ export const ModalStyle = styled.div<AnimationProps>`
   bottom: auto;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  z-index: 10000;
+  z-index: 1000;
 
   min-width: 40vw;
   min-height: 20vh;
   max-width: 80vw;
   max-height: 80vh;
-
-  padding: 2em;
-  overflow: auto;
 
   border-radius: 0.5em;
   outline: none;
@@ -60,6 +57,10 @@ export const ModalStyle = styled.div<AnimationProps>`
   animation: ${({ isExiting }) => (isExiting ? slideOut : slideIn)} 0.2s forwards;
 `;
 
+export const ModalContentInner = styled.div`
+  display: flex;
+`;
+
 export const Children = styled.div`
   display: flex;
   flex: 1 1 auto;
@@ -67,12 +68,19 @@ export const Children = styled.div`
   height: 100%;
   min-width: inherit;
   min-height: inherit;
+
+  padding: 2em;
+  box-sizing: border-box;
+  border-radius: 0.5em;
+
+  // Ensure children overflow if too long
+  overflow: auto;
 `;
 
 export const OverlayStyle = styled.div<AnimationProps>`
   position: fixed;
   inset: 0px;
-  z-index: 9999;
+  z-index: 999;
 
   // Default styling
   background-color: rgba(255, 255, 255, 0.75);
