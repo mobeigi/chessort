@@ -40,6 +40,9 @@ export const CardsWrapper = styled.div`
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+
+  // Support d&d on mobile
+  touch-action: none;
 `;
 
 export const SubmitButton = styled(SuccessButton)`

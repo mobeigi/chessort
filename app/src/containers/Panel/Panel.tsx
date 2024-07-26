@@ -10,6 +10,7 @@ import {
   useSensors,
   DragEndEvent,
   DragStartEvent,
+  TouchSensor,
 } from '@dnd-kit/core';
 import {
   arrayMove,
@@ -128,6 +129,9 @@ export const Panel = () => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 4 } /* To allow onClick events */,
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: { distance: 4 } /* Mobile support */,
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
