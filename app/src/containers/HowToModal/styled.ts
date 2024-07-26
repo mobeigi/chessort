@@ -26,4 +26,9 @@ export const ExampleCardsContainer = styled.div`
 
 export const ExampleCardWrapper = styled.div`
   width: 60%;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 `;
