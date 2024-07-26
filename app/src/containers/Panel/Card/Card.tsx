@@ -22,9 +22,10 @@ import CorrectIcon from '../../../assets/icons/correct.svg?react';
 import IncorrectIcon from '../../../assets/icons/incorrect.svg?react';
 import CurrentRankIcon from '../../../assets/icons/two-way.svg?react';
 import { evaluateAdvantage, formatEvaluation, getOrdinalSuffix } from './utils';
-import { Tooltip } from 'react-tooltip';
 import { Color } from '../../../types/color';
 import { getPieceSvgBySan } from '../../../utils/chessUtils';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { useMemo } from 'react';
 
 const getStatusIcon = (revealed: boolean, curRank: number, correctRanks: number[]) => {
   if (!revealed) {
@@ -43,7 +44,7 @@ function removeCheckAndMateSymbols(sanMove: string): string {
   return sanMove;
 }
 
-const getCurrentRankTooltipText = (correctRanks: number[]) => {
+const getCurrentRankTooltipElement = (correctRanks: number[]) => {
   // Convert ranks to ordinal suffixes
   const ordinalRanks = correctRanks.map((rank) => getOrdinalSuffix(rank));
 
@@ -63,7 +64,7 @@ const getCurrentRankTooltipText = (correctRanks: number[]) => {
   return <>{tooltipText}</>;
 };
 
-const getEngineRankTooltipText = (moveDetail: MoveDetail) => (
+const getEngineRankTooltipElement = (moveDetail: MoveDetail) => (
   <>
     This is the engine's <strong>{getOrdinalSuffix(moveDetail.evalResult!.engineOverallRank)}</strong> best move.
   </>
@@ -91,13 +92,18 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
   const transformStyle = CSS.Transform.toString(transform);
 
   const DigitGridComponent = revealed ? getDigitGrid(correctRanks.length) : OneDigitGrid;
-  const currentRankTooltipText = revealed ? getCurrentRankTooltipText(correctRanks) : null;
+  const currentRankTooltipText = revealed ? getCurrentRankTooltipElement(correctRanks) : null;
+  const currentRankTooltipHtml = useMemo(() => renderToStaticMarkup(currentRankTooltipText), [currentRankTooltipText]);
 
   const advantageColor = revealed ? evaluateAdvantage(moveDetail.evalResult!.engineEval) : Color.Neutral;
 
   const formattedSanMove = revealed ? sanMove : removeCheckAndMateSymbols(sanMove);
 
-  const engineRankTooltipText = revealed ? getEngineRankTooltipText(moveDetail) : null;
+  const engineRankTooltipElement = revealed ? getEngineRankTooltipElement(moveDetail) : null;
+  const engineRankTooltipHtml = useMemo(
+    () => renderToStaticMarkup(engineRankTooltipElement),
+    [engineRankTooltipElement],
+  );
 
   const engineEvalValue = revealed ? formatEvaluation(moveDetail.evalResult!.engineEval) : '?';
 
@@ -105,52 +111,42 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
   const MovePieceSvg = getPieceSvgBySan(sanMove, turnPlayer);
 
   return (
-    <>
-      <CardContainer
-        ref={setNodeRef}
-        style={{ transform: transformStyle, transition }}
-        $isDragging={isDragging}
-        $isPreviewed={isPreviewed}
-        $revealed={revealed}
-        {...attributes}
-        {...listeners}
-        onClick={() => onClick(moveDetail.uciMove)}
-      >
-        <CurrentRankWrapper data-tooltip-id={`current-rank-tooltip-${moveDetail.uciMove}`}>
-          <StatusIconWrapper>
-            <StatusIcon />
-          </StatusIconWrapper>
-          <CurrentRankNumberWrapper>
-            <DigitGridComponent>
-              {revealed ? (
-                correctRanks.map((digit, index) => <span key={index}>{digit}</span>)
-              ) : (
-                <span>{moveDetail.curRank}</span>
-              )}
-            </DigitGridComponent>
-          </CurrentRankNumberWrapper>
-        </CurrentRankWrapper>
-        <SanMoveWrapper>
-          <MovePieceIcon>
-            <MovePieceSvg />
-          </MovePieceIcon>
-          <MoveNotation $color={turnPlayer}>{formattedSanMove}</MoveNotation>
-        </SanMoveWrapper>
-        {revealed && (
-          <EngineRankWrapper data-tooltip-id={`engine-rank-tooltip-${moveDetail.uciMove}`}>
-            <EngineRank $rank={moveDetail.evalResult!.engineOverallRank}></EngineRank>
-          </EngineRankWrapper>
-        )}
-        <EngineEvalWrapper $advantageFor={advantageColor}>{engineEvalValue}</EngineEvalWrapper>
-      </CardContainer>
-
-      {/* Tooltips */}
-      <Tooltip id={`current-rank-tooltip-${moveDetail.uciMove}`} place="top">
-        {currentRankTooltipText}
-      </Tooltip>
-      <Tooltip id={`engine-rank-tooltip-${moveDetail.uciMove}`} place="top">
-        {engineRankTooltipText}
-      </Tooltip>
-    </>
+    <CardContainer
+      ref={setNodeRef}
+      style={{ transform: transformStyle, transition }}
+      $isDragging={isDragging}
+      $isPreviewed={isPreviewed}
+      $revealed={revealed}
+      {...attributes}
+      {...listeners}
+      onClick={() => onClick(moveDetail.uciMove)}
+    >
+      <CurrentRankWrapper data-tooltip-id={`base-tooltip`} data-tooltip-html={currentRankTooltipHtml}>
+        <StatusIconWrapper>
+          <StatusIcon />
+        </StatusIconWrapper>
+        <CurrentRankNumberWrapper>
+          <DigitGridComponent>
+            {revealed ? (
+              correctRanks.map((digit, index) => <span key={index}>{digit}</span>)
+            ) : (
+              <span>{moveDetail.curRank}</span>
+            )}
+          </DigitGridComponent>
+        </CurrentRankNumberWrapper>
+      </CurrentRankWrapper>
+      <SanMoveWrapper>
+        <MovePieceIcon>
+          <MovePieceSvg />
+        </MovePieceIcon>
+        <MoveNotation $color={turnPlayer}>{formattedSanMove}</MoveNotation>
+      </SanMoveWrapper>
+      {revealed && (
+        <EngineRankWrapper data-tooltip-id={`base-tooltip`} data-tooltip-html={engineRankTooltipHtml}>
+          <EngineRank $rank={moveDetail.evalResult!.engineOverallRank}></EngineRank>
+        </EngineRankWrapper>
+      )}
+      <EngineEvalWrapper $advantageFor={advantageColor}>{engineEvalValue}</EngineEvalWrapper>
+    </CardContainer>
   );
 };

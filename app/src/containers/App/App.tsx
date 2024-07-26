@@ -12,6 +12,7 @@ import { UserPreferencesProvider } from '../../context/userPreferencesContext';
 import useUserPreferences from '../../hooks/useUserPreferences';
 import { ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
+import GlobalTooltips from './GlobalTooltip';
 
 Modal.setAppElement('#root');
 
@@ -24,9 +25,9 @@ const AppContainer = () => {
 
   return (
     <>
-      {/* Provide  */}
       <StyledThemeProvider theme={{ ...theme, ...extraThemeArguments }}>
         <GlobalStyle />
+        <GlobalTooltips />
         <Header />
         <ToastContainer />
         <Routes>
