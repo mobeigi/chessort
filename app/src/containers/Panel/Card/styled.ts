@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Color } from '../../../types/color';
-import { getBaseColor, getOverlayColor } from './utils';
+import { getBaseColor, getOverlayColor, getTextShadowColor } from './utils';
 import { SvgIcon } from '../../../styles/icon';
 
 interface CardContainerProps {
@@ -127,7 +127,7 @@ export const MoveNotation = styled.span<SanMovePieceProps>`
   font-family: 'Roboto Mono', monospace;
   line-height: 1.2em;
   color: ${(props) => getBaseColor(props.$color)};
-  text-shadow: 0px 0px 4px ${(props) => getOverlayColor(props.$color)};
+  text-shadow: 0px 0px 4px ${(props) => getTextShadowColor(props.$color)};
 `;
 
 export const EngineRankWrapper = styled.span`

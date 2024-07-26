@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { SvgIcon } from '../../styles/icon';
-import { getBaseColor, getOverlayColor } from '../Panel/Card/utils';
+import { getBaseColor, getTextShadowColor } from '../Panel/Card/utils';
 import { Color } from '../../types/color';
 
 export const HowToSection = styled.section`
@@ -60,7 +60,7 @@ export const ExampleMoveNotation = styled.span<ExampleSanMovePieceProps>`
   font-weight: bold;
   font-family: 'Roboto Mono', monospace;
   color: ${(props) => getBaseColor(props.$color)};
-  text-shadow: 0px 0px 4px ${(props) => getOverlayColor(props.$color)};
+  text-shadow: 0px 0px 4px ${(props) => getTextShadowColor(props.$color)};
 `;
 
 export const ExampleMovePieceIcon = styled(SvgIcon)`

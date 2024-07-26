@@ -93,6 +93,25 @@ export const getOverlayColor = (color: Color): string => {
   }
 };
 
+/**
+ * Returns the text shadow color based on the given color.
+ *
+ * @param color - The color indicating who has the advantage (Color.White, Color.Black, or Color.Neutral).
+ * @returns The text shadow color as a string.
+ */
+export const getTextShadowColor = (color: Color): string => {
+  switch (color) {
+    case Color.White:
+      return 'rgba(0, 0, 0, 0.6)';
+    case Color.Black:
+      return 'rgba(255, 255, 255, 0.2)';
+    case Color.Neutral:
+      return 'rgba(255, 255, 255, 0.2)';
+    default:
+      return 'rgba(0, 0, 0, 0.6)';
+  }
+};
+
 export const getOrdinalSuffix = (number: number) => {
   const lastDigit = number % 10;
   const lastTwoDigits = number % 100;
