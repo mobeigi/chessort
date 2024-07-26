@@ -39,7 +39,7 @@ export const ExampleCardsContainer = styled.div`
 `;
 
 interface ExampleCardWrapperProps {
-  revealed: boolean;
+  $revealed: boolean;
 }
 
 export const ExampleCardWrapper = styled.div<ExampleCardWrapperProps>`
@@ -58,9 +58,9 @@ export const ExampleCardWrapper = styled.div<ExampleCardWrapperProps>`
   -ms-user-select: none;
 
   // Animate cards with fane in
-  opacity: ${({ revealed }) => (revealed ? 1 : 0)};
-  animation: ${({ revealed }) =>
-    revealed
+  opacity: ${({ $revealed }) => ($revealed ? 1 : 0)};
+  animation: ${({ $revealed }) =>
+    $revealed
       ? css`
           ${fadeIn} 0.5s ease-in-out
         `

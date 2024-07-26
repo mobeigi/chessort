@@ -64,16 +64,16 @@ const HowToContent = () => {
       </ul>
       <h4>Example</h4>
       <ExampleCardsContainer>
-        <ExampleCardWrapper revealed={revealed[0]}>
+        <ExampleCardWrapper $revealed={revealed[0]}>
           <Card1 />
         </ExampleCardWrapper>
-        <ExampleCardWrapper revealed={revealed[1]}>
+        <ExampleCardWrapper $revealed={revealed[1]}>
           <Card2 />
         </ExampleCardWrapper>
-        <ExampleCardWrapper revealed={revealed[2]}>
+        <ExampleCardWrapper $revealed={revealed[2]}>
           <Card4 />
         </ExampleCardWrapper>
-        <ExampleCardWrapper revealed={revealed[3]}>
+        <ExampleCardWrapper $revealed={revealed[3]}>
           <Card3 />
         </ExampleCardWrapper>
       </ExampleCardsContainer>

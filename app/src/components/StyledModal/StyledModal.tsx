@@ -37,15 +37,15 @@ export const StyledModal = ({
         overlay: overlayStyle,
       }}
       contentElement={(props, children) => (
-        <ModalStyle isExiting={isExiting} {...props}>
-          <CloseIconWrapper onClick={handleRequestClose} color={closeIconColor} hoverColor={closeIconHoverColor}>
+        <ModalStyle $isExiting={isExiting} {...props}>
+          <CloseIconWrapper onClick={handleRequestClose} $color={closeIconColor} $hoverColor={closeIconHoverColor}>
             <i className="bx bx-x"></i>
           </CloseIconWrapper>
           <Children>{children}</Children>
         </ModalStyle>
       )}
       overlayElement={(props, contentElement) => (
-        <OverlayStyle isExiting={isExiting} {...props}>
+        <OverlayStyle $isExiting={isExiting} {...props}>
           {contentElement}
         </OverlayStyle>
       )}

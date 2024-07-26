@@ -27,7 +27,7 @@ const slideOut = keyframes`
 `;
 
 export interface AnimationProps {
-  isExiting: boolean;
+  $isExiting: boolean;
 }
 
 export const ModalStyle = styled.div<AnimationProps>`
@@ -54,7 +54,7 @@ export const ModalStyle = styled.div<AnimationProps>`
   outline: none;
 
   // Animation styles
-  animation: ${({ isExiting }) => (isExiting ? slideOut : slideIn)} 0.2s forwards;
+  animation: ${({ $isExiting }) => ($isExiting ? slideOut : slideIn)} 0.2s forwards;
 `;
 
 export const Children = styled.div`
@@ -80,7 +80,12 @@ export const OverlayStyle = styled.div<AnimationProps>`
   opacity: ${({ isExiting }) => (isExiting ? 0 : 1)};
 `;
 
-export const CloseIconWrapper = styled.span<{ color?: string; hoverColor?: string }>`
+export interface CloseIconWrapperProps {
+  $color?: string;
+  $hoverColor?: string;
+}
+
+export const CloseIconWrapper = styled.span<CloseIconWrapperProps>`
   position: absolute;
   right: 0.5em;
   top: 0.5em;
@@ -88,10 +93,10 @@ export const CloseIconWrapper = styled.span<{ color?: string; hoverColor?: strin
   user-select: none;
   cursor: pointer;
   font-size: 2em;
-  color: ${(props) => props.color || '#000'};
+  color: ${(props) => props.$color || '#000'};
 
   &:hover {
-    color: ${(props) => props.hoverColor || '#888'};
+    color: ${(props) => props.$hoverColor || '#888'};
   }
 
   &:active {
