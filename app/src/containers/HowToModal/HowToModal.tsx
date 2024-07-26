@@ -22,7 +22,7 @@ const HowToContent = () => {
           <strong>weakest</strong> (at bottom).
         </li>
         <li>
-          <strong>Move</strong> and <strong>Piece</strong> color indicates the player to move.{' '}
+          <strong>Move</strong> and <strong>Piece</strong> colour indicates the player to move.{' '}
           <ExampleMoveWrapper>
             <WhiteMove />
             <BlackMove />
