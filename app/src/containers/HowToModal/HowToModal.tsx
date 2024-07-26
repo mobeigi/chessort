@@ -68,7 +68,7 @@ export const HowToModal = ({ isOpen, onRequestClose }: HowToModalProps) => {
   const modalStyle = {
     color: theme.colors.text.base,
     backgroundColor: theme.colors.container.background,
-    maxWidth: '525px',
+    maxWidth: '550px',
   };
   const overlayStyle = {
     backgroundColor: hexToRgba(theme.colors.container.background, 0.75),
