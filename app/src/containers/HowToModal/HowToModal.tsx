@@ -73,9 +73,7 @@ export const HowToModal = ({ isOpen, onRequestClose }: HowToModalProps) => {
       closeIconColor={closeIconColor}
       closeIconHoverColor={closeIconHoverColor}
     >
-      <ModalContentWrapper>
-        <HowToContent />
-      </ModalContentWrapper>
+      <HowToContent />
     </StyledModal>
   );
 };

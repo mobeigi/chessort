@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import Modal from 'react-modal';
-import { ModalStyle, ModalContentInner, OverlayStyle, Children, CloseIconWrapper } from './styled';
+import { ModalStyle, OverlayStyle, Children, CloseIconWrapper } from './styled';
 import { StyledModalProps } from './types';
 
 export const StyledModal = ({
@@ -38,12 +38,10 @@ export const StyledModal = ({
       }}
       contentElement={(props, children) => (
         <ModalStyle isExiting={isExiting} {...props}>
-          <ModalContentInner>
-            <CloseIconWrapper onClick={handleRequestClose} color={closeIconColor} hoverColor={closeIconHoverColor}>
-              <i className="bx bx-x"></i>
-            </CloseIconWrapper>
-            <Children>{children}</Children>
-          </ModalContentInner>
+          <CloseIconWrapper onClick={handleRequestClose} color={closeIconColor} hoverColor={closeIconHoverColor}>
+            <i className="bx bx-x"></i>
+          </CloseIconWrapper>
+          <Children>{children}</Children>
         </ModalStyle>
       )}
       overlayElement={(props, contentElement) => (

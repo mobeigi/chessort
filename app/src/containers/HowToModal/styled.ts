@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-export const ModalContentWrapper = styled.div`
-  max-width: 525px; // TODO: Use a breakpoint for this
-`;
-
 export const HowToSection = styled.section`
   h2,
   h4 {

@@ -57,21 +57,11 @@ export const ModalStyle = styled.div<AnimationProps>`
   animation: ${({ isExiting }) => (isExiting ? slideOut : slideIn)} 0.2s forwards;
 `;
 
-export const ModalContentInner = styled.div`
-  display: flex;
-`;
-
 export const Children = styled.div`
   display: flex;
+  flex-direction: column;
   flex: 1 1 auto;
-  width: 100%;
-  height: 100%;
-  min-width: inherit;
-  min-height: inherit;
-
-  padding: 2em;
-  box-sizing: border-box;
-  border-radius: 0.5em;
+  padding: 1em 2em 1em 2em;
 
   // Ensure children overflow if too long
   overflow: auto;
