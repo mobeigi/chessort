@@ -40,18 +40,18 @@ export const ModalStyle = styled.div<AnimationProps>`
   margin-right: -50%;
   transform: translate(-50%, -50%);
 
-  min-width: 40vw;
-  min-height: 20vh;
+  // Default sizing
+  width: auto;
+  height: auto;
   max-width: 80vw;
   max-height: 80vh;
-
-  border-radius: 0.5em;
-  outline: none;
 
   // Default styling
   color: #000;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  outline: none;
 
   // Animation styles
   animation: ${({ isExiting }) => (isExiting ? slideOut : slideIn)} 0.2s forwards;
