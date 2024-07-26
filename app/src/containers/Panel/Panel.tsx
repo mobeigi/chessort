@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton, NextButton } from './styled';
 import {
   DndContext,
@@ -42,6 +42,9 @@ const computeCorrectRanks = (solutionEvals: string[], moveDetail: MoveDetail) =>
 };
 
 const isSolutionCorrect = (solutionEvals: string[], moveDetails: MoveDetail[]) => {
+  if (solutionEvals.length !== 4 || moveDetails.length !== 4) {
+    return false;
+  }
   return moveDetails.every((moveDetail) => {
     const correctRanks = computeCorrectRanks(solutionEvals, moveDetail);
     return correctRanks.includes(moveDetail.curRank);
@@ -51,15 +54,18 @@ const isSolutionCorrect = (solutionEvals: string[], moveDetails: MoveDetail[]) =
 export const Panel = () => {
   const { state, dispatch } = useGameContext();
   const navigate = useNavigate();
+  const location = useLocation();
   const theme = useTheme();
   const { gameId } = useParams<{ gameId?: string }>();
 
   const onLoadGameSuccess = useCallback(
     (game: GameApiResponse) => {
       // Populate browser navigation history
-      navigate(`/puzzle/${game.gameId}`);
+      if (game.gameId !== gameId) {
+        navigate(`/puzzle/${game.gameId}`);
+      }
     },
-    [navigate],
+    [gameId, navigate],
   );
 
   const onRevealSolutionSuccess = useCallback(() => {
@@ -86,12 +92,25 @@ export const Panel = () => {
     }
   }, [dispatch, gameId, loadGame, state.isInitialLoadCompleted]);
 
+  // Load game on URL change
+  // This is to support browser navigation buttons
   useEffect(() => {
     if (!state.isInitialLoadCompleted) {
       return;
     }
 
-    // Spawn confetti on correct solution
+    const puzzleIdInUrl = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
+    if (state.gameDetails.gameId !== puzzleIdInUrl) {
+      loadGame(puzzleIdInUrl);
+    }
+  }, [loadGame, location, state.gameDetails.gameId, state.isInitialLoadCompleted]);
+
+  // Spawn confetti on correct solution
+  useEffect(() => {
+    if (!state.isInitialLoadCompleted) {
+      return;
+    }
+
     if (isSolutionCorrect(state.solutionEvals, state.moveDetails)) {
       confetti({
         particleCount: 300,
