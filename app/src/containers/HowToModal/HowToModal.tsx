@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import StyledModal from '../../components/StyledModal';
 import { useTheme } from 'styled-components';
 import { hexToRgba } from '../../utils/themeUtils';
@@ -8,6 +9,27 @@ import { Card1, Card2, Card3, Card4, WhiteMove, BlackMove } from './examples';
 const HowToContent = () => {
   const numOfMovesToSort = 4;
   const engineEvaluationDepthUsed = 22;
+  const [revealed, setRevealed] = useState([false, false, false, false]);
+
+  // Reveal cards one by one with delay
+  useEffect(() => {
+    const timeouts: number[] = [];
+    for (let i = 0; i < revealed.length; i++) {
+      timeouts.push(
+        setTimeout(
+          () => {
+            setRevealed((prev) => {
+              const newRevealed = [...prev];
+              newRevealed[i] = true;
+              return newRevealed;
+            });
+          },
+          100 * (i + 1),
+        ),
+      );
+    }
+    return () => timeouts.forEach((timeout) => clearTimeout(timeout));
+  }, [revealed.length]);
 
   return (
     <HowToSection>
@@ -42,16 +64,16 @@ const HowToContent = () => {
       </ul>
       <h4>Example</h4>
       <ExampleCardsContainer>
-        <ExampleCardWrapper>
+        <ExampleCardWrapper revealed={revealed[0]}>
           <Card1 />
         </ExampleCardWrapper>
-        <ExampleCardWrapper>
+        <ExampleCardWrapper revealed={revealed[1]}>
           <Card2 />
         </ExampleCardWrapper>
-        <ExampleCardWrapper>
+        <ExampleCardWrapper revealed={revealed[2]}>
           <Card4 />
         </ExampleCardWrapper>
-        <ExampleCardWrapper>
+        <ExampleCardWrapper revealed={revealed[3]}>
           <Card3 />
         </ExampleCardWrapper>
       </ExampleCardsContainer>

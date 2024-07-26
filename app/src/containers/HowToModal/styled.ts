@@ -1,7 +1,18 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { SvgIcon } from '../../styles/icon';
 import { getBaseColor, getTextShadowColor } from '../Panel/Card/utils';
 import { Color } from '../../types/color';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export const HowToSection = styled.section`
   & h2,
@@ -27,7 +38,11 @@ export const ExampleCardsContainer = styled.div`
   align-items: center;
 `;
 
-export const ExampleCardWrapper = styled.div`
+interface ExampleCardWrapperProps {
+  revealed: boolean;
+}
+
+export const ExampleCardWrapper = styled.div<ExampleCardWrapperProps>`
   width: 60%;
 
   // Overwrite padding to force the smallest form factor for the modal
@@ -36,10 +51,21 @@ export const ExampleCardWrapper = styled.div`
     padding: 0.2em 0.8em;
   }
 
+  // Disable select
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+
+  // Animate cards with fane in
+  opacity: ${({ revealed }) => (revealed ? 1 : 0)};
+  animation: ${({ revealed }) =>
+    revealed
+      ? css`
+          ${fadeIn} 0.5s ease-in-out
+        `
+      : 'none'};
+  transition: opacity 0.5s ease-in-out;
 `;
 
 export const ExampleSanMoveWrapper = styled.span`
