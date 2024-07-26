@@ -45,3 +45,11 @@ coords.ranks {
   bottom: 0%;
   left: 4.8%;
 }
+
+.cg-wrap coords.ranks,
+.cg-wrap coords.files {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
