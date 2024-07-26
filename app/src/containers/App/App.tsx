@@ -11,6 +11,9 @@ import Game from '../Game';
 import { UserPreferencesProvider } from '../../context/userPreferencesContext';
 import useUserPreferences from '../../hooks/useUserPreferences';
 import { ToastContainer } from 'react-toastify';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 const AppContainer = () => {
   const { mode } = useUserPreferences();

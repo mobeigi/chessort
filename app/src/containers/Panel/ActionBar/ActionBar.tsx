@@ -20,6 +20,7 @@ import {
 
 import ChessComLogoPawnSvg from '../../../assets/icons/chesscom_logo_pawn.svg?react';
 import LichessLogoSvg from '../../../assets/icons/lichess_logo.svg?react';
+import HowToModal from '../../HowToModal';
 
 const tooltipActionTimeout = 1500;
 const sunColor = '#f8de26';
@@ -36,6 +37,7 @@ const getChessComAnalysisUrl = (fen: string) => {
 export const ActionBar = ({ fen }: ActionBarProps) => {
   const { mode, toggleThemeMode, boardOrientation, setBoardOrientation } = useUserPreferences();
   const [fenRecentlyCopied, setFenRecentlyCopied] = useState(false);
+  const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
 
   const showToast = (message: string, type: TypeOptions) => {
     toast.error(message, {
@@ -93,63 +95,66 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
   const themeModeSwitchTooltipText = `Switch to ${otherThemeMode} mode`;
 
   return (
-    <ActionBarContainer>
-      <IconWrapper data-tooltip-id={`help-tooltip`}>
-        <i className="bx bxs-help-circle"></i>
-      </IconWrapper>
-      <IconWrapper data-tooltip-id={`flip-board-tooltip`} onClick={() => cycleBoardOrientation()}>
-        <RotateIconWithAdjustments className="bx bx-rotate-left"></RotateIconWithAdjustments>
-      </IconWrapper>
-      <a href={getLichessAnalysisUrl(fen)} target="_blank">
-        <IconWrapper data-tooltip-id={`analyse-lichess-tooltip`}>
-          <LichessLogoIcon>
-            <LichessLogoSvg />
-          </LichessLogoIcon>
+    <>
+      <HowToModal isOpen={isHowToModalOpen} onRequestClose={() => setIsHowToModalOpen(false)} />
+      <ActionBarContainer>
+        <IconWrapper data-tooltip-id={`help-tooltip`} onClick={() => setIsHowToModalOpen(true)}>
+          <i className="bx bxs-help-circle"></i>
         </IconWrapper>
-      </a>
-      <a href={getChessComAnalysisUrl(fen)} target="_blank">
-        <IconWrapper data-tooltip-id={`analyse-chesscom-tooltip`}>
-          <SvgIcon>
-            <ChessComLogoPawnSvg />
-          </SvgIcon>
+        <IconWrapper data-tooltip-id={`flip-board-tooltip`} onClick={() => cycleBoardOrientation()}>
+          <RotateIconWithAdjustments className="bx bx-rotate-left"></RotateIconWithAdjustments>
         </IconWrapper>
-      </a>
-      <IconWrapper data-tooltip-id={`copy-fen-tooltip`} onClick={() => copyFen(fen)}>
-        <i className="bx bxs-chess"></i>
-      </IconWrapper>
-      <IconWrapper data-tooltip-id={`theme-mode-switch-tooltip`} onClick={() => toggleThemeMode()}>
-        <DarkModeSwitchWrapper $mode={mode}>
-          <DarkModeSwitch
-            checked={mode == ThemeMode.Dark}
-            onChange={() => {}} /* We use onClick on icon wrapper instead */
-            size={'0.9em'}
-            sunColor={sunColor}
-            moonColor={moonColor}
-          />
-        </DarkModeSwitchWrapper>
-      </IconWrapper>
-      {/* Tooltips */}
-      <Tooltip id={`help-tooltip`} place="top">
-        How to play
-      </Tooltip>
-      <Tooltip id={`flip-board-tooltip`} place="top">
-        Cycle board orientation
-        <br />
-        <br />
-        Current: <strong>{boardOrientationNiceName}</strong>
-      </Tooltip>
-      <Tooltip id={`analyse-lichess-tooltip`} place="top">
-        Analyse on <strong>Lichess.org</strong>
-      </Tooltip>
-      <Tooltip id={`analyse-chesscom-tooltip`} place="top">
-        Analyse on <strong>Chess.com</strong>
-      </Tooltip>
-      <Tooltip id={`theme-mode-switch-tooltip`} place="top">
-        {themeModeSwitchTooltipText}
-      </Tooltip>
-      <Tooltip id={`copy-fen-tooltip`} place="top" variant={fenRecentlyCopied ? 'success' : undefined}>
-        {copyFenTooltipText}
-      </Tooltip>
-    </ActionBarContainer>
+        <a href={getLichessAnalysisUrl(fen)} target="_blank">
+          <IconWrapper data-tooltip-id={`analyse-lichess-tooltip`}>
+            <LichessLogoIcon>
+              <LichessLogoSvg />
+            </LichessLogoIcon>
+          </IconWrapper>
+        </a>
+        <a href={getChessComAnalysisUrl(fen)} target="_blank">
+          <IconWrapper data-tooltip-id={`analyse-chesscom-tooltip`}>
+            <SvgIcon>
+              <ChessComLogoPawnSvg />
+            </SvgIcon>
+          </IconWrapper>
+        </a>
+        <IconWrapper data-tooltip-id={`copy-fen-tooltip`} onClick={() => copyFen(fen)}>
+          <i className="bx bxs-chess"></i>
+        </IconWrapper>
+        <IconWrapper data-tooltip-id={`theme-mode-switch-tooltip`} onClick={() => toggleThemeMode()}>
+          <DarkModeSwitchWrapper $mode={mode}>
+            <DarkModeSwitch
+              checked={mode == ThemeMode.Dark}
+              onChange={() => {}} /* We use onClick on icon wrapper instead */
+              size={'0.9em'}
+              sunColor={sunColor}
+              moonColor={moonColor}
+            />
+          </DarkModeSwitchWrapper>
+        </IconWrapper>
+        {/* Tooltips */}
+        <Tooltip id={`help-tooltip`} place="top">
+          How to play
+        </Tooltip>
+        <Tooltip id={`flip-board-tooltip`} place="top">
+          Cycle board orientation
+          <br />
+          <br />
+          Current: <strong>{boardOrientationNiceName}</strong>
+        </Tooltip>
+        <Tooltip id={`analyse-lichess-tooltip`} place="top">
+          Analyse on <strong>Lichess.org</strong>
+        </Tooltip>
+        <Tooltip id={`analyse-chesscom-tooltip`} place="top">
+          Analyse on <strong>Chess.com</strong>
+        </Tooltip>
+        <Tooltip id={`theme-mode-switch-tooltip`} place="top">
+          {themeModeSwitchTooltipText}
+        </Tooltip>
+        <Tooltip id={`copy-fen-tooltip`} place="top" variant={fenRecentlyCopied ? 'success' : undefined}>
+          {copyFenTooltipText}
+        </Tooltip>
+      </ActionBarContainer>
+    </>
   );
 };
