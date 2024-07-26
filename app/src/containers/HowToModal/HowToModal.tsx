@@ -25,6 +25,9 @@ const HowToContent = () => {
           <strong>Move</strong> and <strong>Piece</strong> color indicates the player to move.
         </li>
         <li>
+          <strong>Drag & Drop</strong> to reorder. <strong>Click</strong> to preview moves.
+        </li>
+        <li>
           <strong>Check</strong> (<code>+</code>) and <strong>Checkmate</strong> (<code>#</code>) notations are
           initially hidden.
         </li>
