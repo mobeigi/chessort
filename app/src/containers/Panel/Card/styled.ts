@@ -171,7 +171,7 @@ export const EngineRank = styled.span<EngineRankProps>`
     props.$rank === 1 &&
     `
     background-color: gold;
-    color: #B8860B;
+    color: #9f750e;
   `}
 
   ${(props) =>
@@ -185,15 +185,15 @@ export const EngineRank = styled.span<EngineRankProps>`
     props.$rank === 3 &&
     `
     background-color: #cd7f32;
-    color: #964e12;
+    color: #7a4518;
   `}
 
   ${(props) =>
     props.$rank > 3 &&
     `
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    background-color: #808080;
-    color: #ffffeb;
+    background-color: ${getBaseColor(Color.Neutral)};
+    color: ${getOverlayColor(Color.Neutral)};
   `}
 `;
 

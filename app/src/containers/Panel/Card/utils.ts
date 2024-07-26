@@ -87,7 +87,7 @@ export const getOverlayColor = (color: Color): string => {
     case Color.Black:
       return '#fff';
     case Color.Neutral:
-      return '#fff';
+      return '#dadada';
     default:
       return '#312e2b';
   }
