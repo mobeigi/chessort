@@ -15,8 +15,6 @@ export const GameWrapper = styled.section`
 export const ChessBoardWrapper = styled.section`
   display: flex;
 
-  z-index: 1; /* So panel appears on top of Chessboard for things like tooltips */
-
   /* Hack below to ensure chessboard looks good on any viewport.
    * This ensures the board will fit on the screen even on weird viewports that don't have a squarish aspect ratio.
    * TODO: Its possible this can be refactored now to remove the calc() calls and generally be improved.
@@ -44,8 +42,6 @@ export const PanelWrapper = styled.section`
   display: flex;
   width: calc(min(30vw, 30vh));
   height: calc(min(65vw, 65vh));
-
-  z-index: 2; /* So panel appears on top of Chessboard for things like tooltips */
 
   max-width: 100%; /* Avoid overflow */
 

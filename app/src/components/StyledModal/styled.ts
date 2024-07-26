@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import zIndex from '../../styles/zindex';
 
 const slideIn = keyframes`
   from {
@@ -38,7 +39,6 @@ export const ModalStyle = styled.div<AnimationProps>`
   bottom: auto;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
 
   min-width: 40vw;
   min-height: 20vh;
@@ -80,7 +80,7 @@ export const Children = styled.div`
 export const OverlayStyle = styled.div<AnimationProps>`
   position: fixed;
   inset: 0px;
-  z-index: 999;
+  z-index: ${zIndex.modal};
 
   // Default styling
   background-color: rgba(255, 255, 255, 0.75);

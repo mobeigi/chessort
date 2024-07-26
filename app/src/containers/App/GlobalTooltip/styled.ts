@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
+import zIndex from '../../../styles/zindex';
 
 export const GlobalTooltipWrapper = styled.div`
-  // Tooltips appear above everything
-  z-index: 9999;
+  // Set desired z-index
+  z-index: ${zIndex.tooltip};
 `;
