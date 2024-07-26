@@ -1,6 +1,35 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
-export const ModalStyle = styled.div`
+const slideIn = keyframes`
+  from {
+    transform: translate(-50%, -30%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+`;
+
+const slideOut = keyframes`
+  0% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -15%);
+    opacity: 0;
+  }
+`;
+
+export interface AnimationProps {
+  isExiting: boolean;
+}
+
+export const ModalStyle = styled.div<AnimationProps>`
   display: flex;
   position: fixed;
   top: 50%;
@@ -26,6 +55,9 @@ export const ModalStyle = styled.div`
   color: #000;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.2);
+
+  // Animation styles
+  animation: ${({ isExiting }) => (isExiting ? slideOut : slideIn)} 0.2s forwards;
 `;
 
 export const Children = styled.div`
@@ -37,13 +69,17 @@ export const Children = styled.div`
   min-height: inherit;
 `;
 
-export const OverlayStyle = styled.div`
+export const OverlayStyle = styled.div<AnimationProps>`
   position: fixed;
   inset: 0px;
   z-index: 9999;
 
   // Default styling
   background-color: rgba(255, 255, 255, 0.75);
+
+  // Animation styles
+  transition: opacity 0.2s ease;
+  opacity: ${({ isExiting }) => (isExiting ? 0 : 1)};
 `;
 
 export const CloseIconWrapper = styled.span<{ color?: string; hoverColor?: string }>`
