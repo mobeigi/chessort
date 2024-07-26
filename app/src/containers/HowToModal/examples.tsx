@@ -1,5 +1,28 @@
 import Card from '../Panel/Card';
 import { Color } from '../../types/color';
+import { getPieceSvg } from '../../utils/chessUtils';
+import { ExampleSanMoveWrapper, ExampleMovePieceIcon, ExampleMoveNotation } from './styled';
+
+const WhitePawnSvg = getPieceSvg('P', Color.White);
+const BlackPawnSvg = getPieceSvg('P', Color.Black);
+
+export const WhiteMove = () => (
+  <ExampleSanMoveWrapper>
+    <ExampleMovePieceIcon>
+      <WhitePawnSvg />
+    </ExampleMovePieceIcon>
+    <ExampleMoveNotation $color={Color.White}>e4</ExampleMoveNotation>
+  </ExampleSanMoveWrapper>
+);
+
+export const BlackMove = () => (
+  <ExampleSanMoveWrapper>
+    <ExampleMovePieceIcon>
+      <BlackPawnSvg />
+    </ExampleMovePieceIcon>
+    <ExampleMoveNotation $color={Color.Black}>e5</ExampleMoveNotation>
+  </ExampleSanMoveWrapper>
+);
 
 // The four following cards could belong to a theoretical game
 export const Card1 = () => (

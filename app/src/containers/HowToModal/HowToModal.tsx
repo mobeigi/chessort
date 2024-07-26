@@ -2,8 +2,8 @@ import StyledModal from '../../components/StyledModal';
 import { useTheme } from 'styled-components';
 import { hexToRgba } from '../../utils/themeUtils';
 import { HowToModalProps } from './types';
-import { HowToSection, ExampleCardsContainer, ExampleCardWrapper } from './styled';
-import { Card1, Card2, Card3, Card4 } from './examples';
+import { HowToSection, ExampleCardsContainer, ExampleCardWrapper, ExampleMoveWrapper } from './styled';
+import { Card1, Card2, Card3, Card4, WhiteMove, BlackMove } from './examples';
 
 const HowToContent = () => {
   const numOfMovesToSort = 4;
@@ -22,7 +22,11 @@ const HowToContent = () => {
           <strong>weakest</strong> (at bottom).
         </li>
         <li>
-          <strong>Move</strong> and <strong>Piece</strong> color indicates the player to move.
+          <strong>Move</strong> and <strong>Piece</strong> color indicates the player to move.{' '}
+          <ExampleMoveWrapper>
+            <WhiteMove />
+            <BlackMove />
+          </ExampleMoveWrapper>{' '}
         </li>
         <li>
           <strong>Drag & Drop</strong> to reorder. <strong>Click</strong> to preview moves.
