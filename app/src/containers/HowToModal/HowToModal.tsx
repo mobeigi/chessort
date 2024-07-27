@@ -89,7 +89,7 @@ const HowToContent = () => {
 
       <DiscordContainer>
         <a href={discordInviteLink} target="_blank">
-          <span>For discussions, feature requests, and more, join our </span>
+          <span>Join the conversation on </span>
           <DiscordLogoWrapper>
             <i className="bx bxl-discord"></i>
             <strong>Discord</strong>
