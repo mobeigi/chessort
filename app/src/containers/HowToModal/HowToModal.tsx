@@ -3,12 +3,21 @@ import StyledModal from '../../components/StyledModal';
 import { useTheme } from 'styled-components';
 import { hexToRgba } from '../../utils/themeUtils';
 import { HowToModalProps } from './types';
-import { HowToSection, ExampleCardsContainer, ExampleCardWrapper, ExampleMoveWrapper } from './styled';
+import {
+  HowToSection,
+  ExampleCardsContainer,
+  ExampleCardWrapper,
+  ExampleMoveWrapper,
+  DiscordContainer,
+  DiscordLogoWrapper,
+} from './styled';
 import { Card1, Card2, Card3, Card4, WhiteMove, BlackMove } from './examples';
 
+const numOfMovesToSort = 4;
+const engineEvaluationDepthUsed = 22;
+const discordInviteLink = 'https://discord.gg/pjJUG3CWnc';
+
 const HowToContent = () => {
-  const numOfMovesToSort = 4;
-  const engineEvaluationDepthUsed = 22;
   const [revealed, setRevealed] = useState([false, false, false, false]);
 
   // Reveal cards one by one with delay
@@ -78,7 +87,15 @@ const HowToContent = () => {
         </ExampleCardWrapper>
       </ExampleCardsContainer>
 
-      <p>For discussion, feature requests, bug reports, please visit: TODO</p>
+      <DiscordContainer>
+        <a href={discordInviteLink} target="_blank">
+          <span>For discussions, feature requests, and more, join our </span>
+          <DiscordLogoWrapper>
+            <i className="bx bxl-discord"></i>
+            <strong>Discord</strong>
+          </DiscordLogoWrapper>
+        </a>
+      </DiscordContainer>
     </HowToSection>
   );
 };

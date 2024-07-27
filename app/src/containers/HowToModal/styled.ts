@@ -33,6 +33,7 @@ export const ExampleCardsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5em;
+  margin-bottom: 1.5em;
 
   justify-content: center;
   align-items: center;
@@ -99,4 +100,27 @@ export const ExampleMovePieceIcon = styled(SvgIcon)`
 export const ExampleMoveWrapper = styled.div`
   display: inline-flex;
   gap: 0.4em;
+`;
+
+export const DiscordContainer = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // Discord pallete
+  color: #7289da;
+  & a {
+    color: #7289da;
+  }
+
+  & a:hover,
+  & a:focus {
+    color: #99aefb;
+  }
+`;
+
+export const DiscordLogoWrapper = styled.span`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 `;
