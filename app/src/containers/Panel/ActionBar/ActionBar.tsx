@@ -96,7 +96,7 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
 
   const handleCopyFenError = (err: Error) => {
     console.error('Failed to copy FEN to clipboard:', err);
-    showToast('Failed to copy FEN to clipboard.', 'error');
+    showToast('Failed to copy FEN to clipboard.', 'error', mode);
   };
 
   const copyFen = (fen: string) => {
