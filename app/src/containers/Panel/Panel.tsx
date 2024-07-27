@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton, NextButton } from './styled';
 import {
@@ -27,11 +27,12 @@ import { MoveDetail } from '../../context/gameContext/types';
 import { useLoadGame } from '../../hooks/useLoadGame';
 import { useRevealSolution } from '../../hooks/useRevealSolution';
 import { useNavigate } from 'react-router-dom';
-import { GameApiResponse } from '../../services/chessortServer';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useTheme } from 'styled-components';
 import ActionBar from './ActionBar';
 import confetti from 'canvas-confetti';
+import { toast, TypeOptions } from 'react-toastify';
+import { ThemeMode } from '../../types/theme';
 
 // TODO: Both below functions should be in some sort of game utils file
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
@@ -52,66 +53,95 @@ const isSolutionCorrect = (solutionEvals: string[], moveDetails: MoveDetail[]) =
   });
 };
 
+// TODO: comonise the toasts
+const showToast = (message: string, type: TypeOptions, themeMode: ThemeMode) => {
+  toast.info(message, {
+    position: 'bottom-left',
+    autoClose: 2000,
+    type,
+    theme: themeMode,
+  });
+};
+
 export const Panel = () => {
   const { state, dispatch } = useGameContext();
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
-  const { gameId } = useParams<{ gameId?: string }>();
 
-  const onLoadGameSuccess = useCallback(
-    (game: GameApiResponse) => {
-      // Populate browser navigation history
-      if (game.gameId !== gameId) {
-        navigate(`/puzzle/${game.gameId}`);
-      }
-    },
-    [gameId, navigate],
-  );
+  const { loadGame, game, loading, error } = useLoadGame();
+  const { gameId } = useParams<{ gameId?: string }>();
+  const [lastLocation, setLastLocation] = useState(location.pathname);
+
+  // We have special states to track the initial loading / failure
+  const [isInitLoadAttempted, setIsInitLoadAttempted] = useState(false);
+  const [isInitLoadCompleted, setIsInitLoadCompleted] = useState(false);
+  const [initError, setInitError] = useState(false);
 
   const onRevealSolutionSuccess = useCallback(() => {
     // Unpreview upon revealing the solution
     dispatch({ type: 'UNPREVIEW_MOVE' });
   }, [dispatch]);
 
-  const { loadGame } = useLoadGame({
-    onSuccess: onLoadGameSuccess,
-  });
-
   const { revealSolution } = useRevealSolution({
     onSuccess: onRevealSolutionSuccess,
   });
 
-  // The initial loading of the first game
+  /**
+   * Populate browser navigation.
+   * To support back/forward browser navigation.
+   */
   useEffect(() => {
-    if (!state.isInitialLoadCompleted) {
-      const loadGameAndSetInitialLoadCompleted = async () => {
-        await loadGame(gameId);
-        dispatch({ type: 'SET_INITIAL_LOAD_COMPLETED', payload: true });
-      };
-      loadGameAndSetInitialLoadCompleted();
+    const targetPathname = game ? `/puzzle/${game.gameId}` : '';
+    if (game?.gameId && location.pathname !== targetPathname) {
+      // Populate browser navigation history
+      navigate(`/puzzle/${game.gameId}`);
     }
-  }, [dispatch, gameId, loadGame, state.isInitialLoadCompleted]);
+    // Only fire when gameId changes (indicating fresh game just loaded)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [game?.gameId]);
 
-  // Load game on URL change
-  // This is to support browser navigation buttons
+  /**
+   * Load the inital game.
+   */
   useEffect(() => {
-    if (!state.isInitialLoadCompleted) {
-      return;
+    if (!isInitLoadAttempted) {
+      loadGame(gameId);
+      setIsInitLoadAttempted(true);
     }
 
-    const puzzleIdInUrl = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
-    if (state.gameDetails.gameId !== puzzleIdInUrl) {
-      loadGame(puzzleIdInUrl);
+    if (isInitLoadAttempted && !isInitLoadCompleted && !loading) {
+      setInitError(error);
+      setIsInitLoadCompleted(true);
     }
-  }, [loadGame, location, state.gameDetails.gameId, state.isInitialLoadCompleted]);
+  }, [isInitLoadAttempted, loadGame, gameId, isInitLoadCompleted, loading, error]);
 
-  // Spawn confetti on correct solution
+  /**
+   * Load a new game whenever the location pathname changes.
+   */
   useEffect(() => {
-    if (!state.isInitialLoadCompleted) {
-      return;
+    if (location.pathname !== lastLocation) {
+      const puzzleIdInUrl = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
+      if (state.gameDetails.gameId !== puzzleIdInUrl) {
+        loadGame(puzzleIdInUrl);
+      }
+      setLastLocation(location.pathname);
     }
+  }, [location, lastLocation, state.gameDetails.gameId, loadGame]);
 
+  /**
+   * Trigger error toasts on error
+   */
+  useEffect(() => {
+    if (!loading && error) {
+      showToast('Failed to load game.', 'error', ThemeMode.Dark);
+    }
+  }, [dispatch, error, loading]);
+
+  /**
+   * Spawn confetti on correct solution
+   */
+  useEffect(() => {
     if (isSolutionCorrect(state.solutionEvals, state.moveDetails)) {
       confetti({
         particleCount: 300,
@@ -124,7 +154,7 @@ export const Panel = () => {
         disableForReducedMotion: true,
       });
     }
-  }, [state.isInitialLoadCompleted, state.moveDetails, state.solutionEvals]);
+  }, [state.moveDetails, state.solutionEvals]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -182,11 +212,22 @@ export const Panel = () => {
 
   const turnPlayer = getTurnPlayerColor(state.initialChessJs);
 
-  // Loading state for initial load
-  if (!state.isInitialLoadCompleted) {
+  // Initial loading state
+  if (!isInitLoadCompleted) {
     return (
       <PanelContainer>
         <ClipLoader color={theme.colors.status.disabled.baseHighlight} />
+      </PanelContainer>
+    );
+  }
+
+  // Initial loading resulted in error state
+  if (isInitLoadCompleted && initError) {
+    return (
+      <PanelContainer>
+        <div>
+          <i className="bx bx-error"></i> <span>Failed to load game.</span>
+        </div>
       </PanelContainer>
     );
   }

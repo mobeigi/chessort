@@ -11,7 +11,6 @@ export interface GameState {
   isPreview: boolean; // if the curChessJs is set to preview a move
   previewedMove: string | null; // the UCI move being previewed or null if we're not previewing a move
   revealed: boolean; // if the game has been revealed (solution being shown)
-  isInitialLoadCompleted: boolean; // true after very first initial game is loaded
   isLoadingGame: boolean; // if we're in process of loading a game
   isLoadingSolution: boolean; // if we're in process of loading a solution
 }

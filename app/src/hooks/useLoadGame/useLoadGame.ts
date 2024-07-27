@@ -1,13 +1,19 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useGameContext } from '../useGameContext';
 import { getNewRandomGame, getGameByGameId } from '../../services/chessortServer/api';
-import { UseLoadGameProps } from './types';
+import { GameApiResponse } from '../../services/chessortServer';
 
-export const useLoadGame = ({ onSuccess }: UseLoadGameProps = {}) => {
-  const { state, dispatch } = useGameContext();
+export const useLoadGame = () => {
+  const { dispatch } = useGameContext();
+  const [game, setGame] = useState<GameApiResponse>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   const loadGame = useCallback(
     async (gameId?: string) => {
+      setLoading(true);
+      setError(false);
+
       dispatch({ type: 'SET_LOADING_GAME', payload: true });
 
       try {
@@ -20,18 +26,17 @@ export const useLoadGame = ({ onSuccess }: UseLoadGameProps = {}) => {
           payload: game,
         });
 
-        if (onSuccess) {
-          onSuccess(game);
-        }
+        setGame(game);
 
         dispatch({ type: 'SET_LOADING_GAME', payload: false });
       } catch (error) {
-        // TOOO: need to expose error, handle in UI properly
-        console.error('Error fetching new game data:', error);
+        setError(true);
+      } finally {
+        setLoading(false);
       }
     },
-    [dispatch, onSuccess],
+    [dispatch],
   );
 
-  return { loadGame, isLoadingGame: state.isLoadingGame };
+  return { loadGame, game, loading, error };
 };

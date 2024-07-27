@@ -24,7 +24,6 @@ const initialState: GameState = {
   isPreview: false,
   previewedMove: null,
   revealed: false,
-  isInitialLoadCompleted: false,
   isLoadingGame: true,
   isLoadingSolution: false,
 };
