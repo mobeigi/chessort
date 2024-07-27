@@ -25,7 +25,6 @@ export const ExampleCardsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  margin-bottom: 1.5em;
 
   justify-content: center;
   align-items: center;

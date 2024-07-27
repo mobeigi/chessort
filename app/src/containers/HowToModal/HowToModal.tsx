@@ -49,7 +49,7 @@ const HowToContent = () => {
       <h4>Key points</h4>
       <ul>
         <li>
-          <strong>{numOfMovesToSort}</strong> moves to sort from <strong>strongest</strong> (at top) to{' '}
+          Sort <strong>{numOfMovesToSort}</strong> moves from <strong>strongest</strong> (at top) to{' '}
           <strong>weakest</strong> (at bottom).
         </li>
         <li>
