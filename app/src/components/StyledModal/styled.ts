@@ -77,7 +77,7 @@ export const OverlayStyle = styled.div<AnimationProps>`
 
   // Animation styles
   transition: opacity 0.2s ease;
-  opacity: ${({ isExiting }) => (isExiting ? 0 : 1)};
+  opacity: ${({ $isExiting }) => ($isExiting ? 0 : 1)};
 `;
 
 export interface CloseIconWrapperProps {
