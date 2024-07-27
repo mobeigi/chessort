@@ -29,6 +29,10 @@ export const StyledModal = ({
       onRequestClose={handleRequestClose}
       shouldCloseOnEsc={true}
       shouldCloseOnOverlayClick={true}
+      // Avoiding scrolling background body when modal open
+      // This solves issues when there are multiple scroll bars present (one on modal, one on body)
+      onAfterOpen={() => (document.body.style.overflow = 'hidden')}
+      onAfterClose={() => (document.body.style.overflow = 'unset')}
       // Custom classnames are required to 'remove' default styling
       className="StyledModal_Content"
       overlayClassName="StyledModal_Overlay"

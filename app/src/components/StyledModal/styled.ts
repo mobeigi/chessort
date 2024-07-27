@@ -72,6 +72,9 @@ export const OverlayStyle = styled.div<AnimationProps>`
   inset: 0px;
   z-index: ${zIndex.modal};
 
+  // No scrolling the overlay on mobile
+  touch-action: none;
+
   // Default styling
   background-color: rgba(255, 255, 255, 0.75);
 
