@@ -34,6 +34,7 @@ export const useRevealSolution = () => {
       setError(true);
     } finally {
       setLoading(false);
+      dispatch({ type: 'SET_LOADING_SOLUTION', payload: false });
     }
   }, [dispatch, state.gameDetails.fen, state.moveDetails]);
 

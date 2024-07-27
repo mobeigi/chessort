@@ -27,12 +27,11 @@ export const useLoadGame = () => {
         });
 
         setGame(game);
-
-        dispatch({ type: 'SET_LOADING_GAME', payload: false });
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
+        dispatch({ type: 'SET_LOADING_GAME', payload: false });
       }
     },
     [dispatch],

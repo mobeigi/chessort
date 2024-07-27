@@ -123,13 +123,19 @@ export const Panel = () => {
   }, [location, lastLocation, state.gameDetails.gameId, loadGame]);
 
   /**
-   * Trigger error toasts on error
+   * Trigger error toasts for errors
    */
   useEffect(() => {
     if (!loading && error) {
       showToast('Failed to load game.', 'error', ThemeMode.Dark);
     }
   }, [dispatch, error, loading]);
+
+  useEffect(() => {
+    if (!solutionLoading && solutionError) {
+      showToast('Failed to load solution.', 'error', ThemeMode.Dark);
+    }
+  }, [dispatch, solutionError, solutionLoading]);
 
   /**
    * On reveal

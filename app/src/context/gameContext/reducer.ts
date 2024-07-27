@@ -71,7 +71,6 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
     case 'REVEAL_SOLUTION':
       return {
         ...state,
-        isLoadingSolution: false,
         revealed: true,
       };
 
