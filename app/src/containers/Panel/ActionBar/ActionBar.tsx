@@ -45,19 +45,19 @@ const getCycleBoardTooltipElement = (boardOrientationNiceName: string) => {
   );
 };
 
+const showToast = (message: string, type: TypeOptions, themeMode: ThemeMode) => {
+  toast.info(message, {
+    position: 'bottom-left',
+    autoClose: 2000,
+    type,
+    theme: themeMode,
+  });
+};
+
 export const ActionBar = ({ fen }: ActionBarProps) => {
   const { mode, toggleThemeMode, boardOrientation, setBoardOrientation } = useUserPreferences();
   const [fenRecentlyCopied, setFenRecentlyCopied] = useState(false);
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
-
-  const showToast = (message: string, type: TypeOptions) => {
-    toast.error(message, {
-      position: 'bottom-left',
-      autoClose: 2000,
-      type,
-      theme: mode,
-    });
-  };
 
   const getBoardOrientationNiceName = (boardOrientation: BoardOrientationType): string => {
     switch (boardOrientation) {
@@ -69,7 +69,7 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
         return 'Turn player';
       default:
         console.error('Unknown board orientation:', boardOrientation);
-        showToast(`Unknown board orientation: ${boardOrientation}`, 'error');
+        showToast(`Unknown board orientation: ${boardOrientation}`, 'error', mode);
         return 'Unknown';
     }
   };

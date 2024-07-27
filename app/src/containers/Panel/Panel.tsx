@@ -53,7 +53,6 @@ const isSolutionCorrect = (solutionEvals: string[], moveDetails: MoveDetail[]) =
   });
 };
 
-// TODO: comonise the toasts
 const showToast = (message: string, type: TypeOptions, themeMode: ThemeMode) => {
   toast.info(message, {
     position: 'bottom-left',
