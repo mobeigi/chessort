@@ -42,3 +42,20 @@ export const getStoredBoardOrientation = (): BoardOrientation => {
 export const setStoredBoardOrientation = (boardOrientation: BoardOrientation): void => {
   localStorage.setItem('boardOrientation', boardOrientation);
 };
+
+/**
+ * Retrieves the stored onboarding complete status from local storage.
+ * @returns {boolean} The onboarding complete status.
+ */
+export const getStoredOnboardingComplete = (): boolean => {
+  const storedValue = localStorage.getItem('onboardingComplete');
+  return storedValue === 'true';
+};
+
+/**
+ * Stores the onboarding complete status to local storage.
+ * @param {boolean} onboardingComplete - The onboarding complete status to store.
+ */
+export const setStoredOnboardingComplete = (onboardingComplete: boolean): void => {
+  localStorage.setItem('onboardingComplete', onboardingComplete.toString());
+};

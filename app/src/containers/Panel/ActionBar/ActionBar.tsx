@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useUserPreferences from '../../../hooks/useUserPreferences';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 import { ThemeMode } from '../../../types/theme';
@@ -55,9 +55,20 @@ const showToast = (message: string, type: TypeOptions, themeMode: ThemeMode) => 
 };
 
 export const ActionBar = ({ fen }: ActionBarProps) => {
-  const { mode, toggleThemeMode, boardOrientation, setBoardOrientation } = useUserPreferences();
+  const { mode, toggleThemeMode, boardOrientation, setBoardOrientation, onboardingCompelte, setOnboardingComplete } =
+    useUserPreferences();
   const [fenRecentlyCopied, setFenRecentlyCopied] = useState(false);
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
+
+  /**
+   * Trigger onboarding for new users
+   */
+  useEffect(() => {
+    if (!onboardingCompelte) {
+      setIsHowToModalOpen(true);
+      setOnboardingComplete(true);
+    }
+  }, [onboardingCompelte, setOnboardingComplete]);
 
   const getBoardOrientationNiceName = (boardOrientation: BoardOrientationType): string => {
     switch (boardOrientation) {

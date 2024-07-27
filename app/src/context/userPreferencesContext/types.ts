@@ -11,4 +11,6 @@ export interface UserPreferencesContextProps {
   toggleThemeMode: () => void;
   boardOrientation: BoardOrientation;
   setBoardOrientation: (boardOrientation: BoardOrientation) => void;
+  onboardingCompelte: boolean;
+  setOnboardingComplete: (onboardingCompelte: boolean) => void;
 }
