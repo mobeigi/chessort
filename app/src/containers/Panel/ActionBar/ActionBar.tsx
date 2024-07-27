@@ -83,19 +83,25 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
     setBoardOrientation(nextBoardOrientation);
   };
 
+  const handleCopyFenError = (err: Error) => {
+    console.error('Failed to copy FEN to clipboard:', err);
+    showToast('Failed to copy FEN to clipboard.', 'error');
+  };
+
   const copyFen = (fen: string) => {
-    navigator.clipboard
-      .writeText(fen)
-      .then(() => {
-        setFenRecentlyCopied(true);
-        setTimeout(() => {
-          setFenRecentlyCopied(false);
-        }, tooltipActionTimeout);
-      })
-      .catch((err) => {
-        console.error('Failed to copy FEN to clipboard: ', err);
-        showToast(`Failed to copy FEN to clipboard.`, 'error');
-      });
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard
+        .writeText(fen)
+        .then(() => {
+          setFenRecentlyCopied(true);
+          setTimeout(() => {
+            setFenRecentlyCopied(false);
+          }, tooltipActionTimeout);
+        })
+        .catch(handleCopyFenError);
+    } else {
+      handleCopyFenError(new Error('Clipboard API not supported'));
+    }
   };
 
   const analyseOnLichessTooltipHtml = 'Analyse on <strong>Lichess.org</strong>';
