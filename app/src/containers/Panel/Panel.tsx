@@ -127,15 +127,15 @@ export const Panel = () => {
    */
   useEffect(() => {
     if (!loading && error) {
-      showToast('Failed to load game.', 'error', ThemeMode.Dark);
+      showToast('Failed to load game.', 'error', theme.mode);
     }
-  }, [dispatch, error, loading]);
+  }, [dispatch, error, loading, theme.mode]);
 
   useEffect(() => {
     if (!solutionLoading && solutionError) {
-      showToast('Failed to load solution.', 'error', ThemeMode.Dark);
+      showToast('Failed to load solution.', 'error', theme.mode);
     }
-  }, [dispatch, solutionError, solutionLoading]);
+  }, [dispatch, solutionError, solutionLoading, theme.mode]);
 
   /**
    * On reveal
