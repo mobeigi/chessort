@@ -45,6 +45,7 @@ interface ExampleCardWrapperProps {
 
 export const ExampleCardWrapper = styled.div<ExampleCardWrapperProps>`
   width: 60%;
+  min-width: 220px;
 
   // Overwrite padding to force the smallest form factor for the modal
   // TODO: This should be supported by the card itself via props
