@@ -70,6 +70,8 @@ export const Panel = () => {
   const theme = useTheme();
 
   const { loadGame, game, loading, error } = useLoadGame();
+  const { revealSolution, loading: solutionLoading, error: solutionError } = useRevealSolution();
+
   const { gameId } = useParams<{ gameId?: string }>();
   const [lastLocation, setLastLocation] = useState(location.pathname);
 
@@ -77,15 +79,6 @@ export const Panel = () => {
   const [isInitLoadAttempted, setIsInitLoadAttempted] = useState(false);
   const [isInitLoadCompleted, setIsInitLoadCompleted] = useState(false);
   const [initError, setInitError] = useState(false);
-
-  const onRevealSolutionSuccess = useCallback(() => {
-    // Unpreview upon revealing the solution
-    dispatch({ type: 'UNPREVIEW_MOVE' });
-  }, [dispatch]);
-
-  const { revealSolution } = useRevealSolution({
-    onSuccess: onRevealSolutionSuccess,
-  });
 
   /**
    * Populate browser navigation.
@@ -137,6 +130,16 @@ export const Panel = () => {
       showToast('Failed to load game.', 'error', ThemeMode.Dark);
     }
   }, [dispatch, error, loading]);
+
+  /**
+   * On reveal
+   */
+  useEffect(() => {
+    if (state.revealed && !solutionLoading && !solutionError) {
+      // Unpreview upon revealing the solution
+      dispatch({ type: 'UNPREVIEW_MOVE' });
+    }
+  }, [dispatch, solutionError, solutionLoading, state.revealed]);
 
   /**
    * Spawn confetti on correct solution

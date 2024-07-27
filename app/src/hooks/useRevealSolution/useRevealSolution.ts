@@ -1,12 +1,18 @@
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useGameContext } from '../useGameContext';
 import { getGameSolution } from '../../services/chessortServer/api';
-import { UseRevealSolutionProps } from './types';
+import { SolutionApiResponse } from '../../services/chessortServer';
 
-export const useRevealSolution = ({ onSuccess }: UseRevealSolutionProps = {}) => {
+export const useRevealSolution = () => {
   const { state, dispatch } = useGameContext();
+  const [solution, setSolution] = useState<SolutionApiResponse>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   const revealSolution = useCallback(async () => {
+    setLoading(true);
+    setError(false);
+
     dispatch({ type: 'SET_LOADING_SOLUTION', payload: true });
 
     try {
@@ -21,16 +27,15 @@ export const useRevealSolution = ({ onSuccess }: UseRevealSolutionProps = {}) =>
         payload: solution,
       });
 
+      setSolution(solution);
+
       dispatch({ type: 'REVEAL_SOLUTION' }); // also sets loading solution to false
-
-      if (onSuccess) {
-        onSuccess(solution);
-      }
     } catch (error) {
-      // TOOO: need to expose error, handle in UI properly
-      console.error('Error getting game solution data:', error);
+      setError(true);
+    } finally {
+      setLoading(false);
     }
-  }, [dispatch, onSuccess, state.gameDetails.fen, state.moveDetails]);
+  }, [dispatch, state.gameDetails.fen, state.moveDetails]);
 
-  return { revealSolution };
+  return { revealSolution, solution, loading, error };
 };
