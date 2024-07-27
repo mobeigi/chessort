@@ -19,14 +19,6 @@ export const HowToSection = styled.section`
   & h4 {
     margin: 0.5em auto;
   }
-
-  & ul {
-    margin: 0.2em auto;
-  }
-
-  & li {
-    margin: 0.4em auto;
-  }
 `;
 
 export const ExampleCardsContainer = styled.div`

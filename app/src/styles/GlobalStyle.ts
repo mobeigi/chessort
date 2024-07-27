@@ -58,6 +58,16 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1em;
     margin: 2.33em 0;
   }
+
+  /* Lists */
+  ul, ol {
+    list-style-position: inside;
+    padding-left: 0.75em;
+  }
+  
+  li {
+    padding-left: 0em;
+  }
   
   /* Links */
   a {
