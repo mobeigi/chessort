@@ -114,6 +114,7 @@ export const DragIconAdjustmentWrapper = styled.span`
   justify-content: center;
   align-items: center;
   font-size: 3em;
+  margin-left: 0.05em;
 
   & svg path,
   svg rect {
