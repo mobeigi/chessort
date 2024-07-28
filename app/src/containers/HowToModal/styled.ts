@@ -50,7 +50,7 @@ export const ExampleCardWrapper = styled.div<ExampleCardWrapperProps>`
   -webkit-user-select: none;
   -ms-user-select: none;
 
-  // Animate cards with fane in
+  // Animate cards with fade in
   opacity: ${({ $revealed }) => ($revealed ? 1 : 0)};
   animation: ${({ $revealed }) =>
     $revealed
