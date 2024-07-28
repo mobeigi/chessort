@@ -120,6 +120,7 @@ export const Card = ({ moveDetail, sanMove, turnPlayer, revealed, correctRanks, 
       {...attributes}
       {...listeners}
       onClick={() => onClick(moveDetail.uciMove)}
+      tabIndex={-1} // Disable browser tab selection as we have our own keyboard mechanism in place for the cards
     >
       <CurrentRankWrapper data-tooltip-id={`base-tooltip`} data-tooltip-html={currentRankTooltipHtml}>
         <StatusIconWrapper>

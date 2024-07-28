@@ -171,10 +171,84 @@ export const Panel = () => {
     useSensor(TouchSensor, {
       activationConstraint: { distance: 4 } /* Mobile support */,
     }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
   );
+
+  const handleSubmit = useCallback(() => revealSolution(), [revealSolution]);
+  const handleNextPuzzle = useCallback(() => loadGame(), [loadGame]);
+
+  /**
+   * Keyboard listeners to play the game
+   */
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!event.repeat) {
+        const key = parseInt(event.key);
+        // Preview / unpreview
+        if (key >= 1 && key <= 4) {
+          dispatch({ type: 'UNPREVIEW_MOVE' });
+          const moveDetail = state.moveDetails[key - 1];
+
+          // Preview the clicked move if it is not the same as the current previewed move
+          // If the clicked move is the same as the current previewed move, it will be unpreviewed in the prior action
+          if (moveDetail && state.previewedMove !== moveDetail.uciMove) {
+            dispatch({ type: 'PREVIEW_MOVE', payload: moveDetail.uciMove });
+          }
+        } else if (event.key == 'ArrowUp') {
+          const oldIndex = state.moveDetails.findIndex((card) => card.uciMove === state.previewedMove);
+
+          // If not found or first item as it cant move up
+          if (oldIndex === -1 || oldIndex === 0) {
+            return;
+          }
+          const newIndex = oldIndex - 1;
+          const newMoveDetails = arrayMove(state.moveDetails, oldIndex, newIndex).map((moveDetail, index) => ({
+            ...moveDetail,
+            curRank: index + 1,
+          }));
+
+          dispatch({ type: 'UPDATE_MOVE_DETAILS', payload: newMoveDetails });
+        } else if (event.key == 'ArrowDown') {
+          const oldIndex = state.moveDetails.findIndex((card) => card.uciMove === state.previewedMove);
+
+          // If not found or last item as it cant move up
+          if (oldIndex === -1 || oldIndex === state.moveDetails.length - 1) {
+            return;
+          }
+          const newIndex = oldIndex + 1;
+          const newMoveDetails = arrayMove(state.moveDetails, oldIndex, newIndex).map((moveDetail, index) => ({
+            ...moveDetail,
+            curRank: index + 1,
+          }));
+
+          dispatch({ type: 'UPDATE_MOVE_DETAILS', payload: newMoveDetails });
+        } else if (event.key === 'Enter') {
+          if (!isInitLoadCompleted || loading || solutionLoading) {
+            return;
+          } else if (state.revealed) {
+            handleNextPuzzle();
+          } else {
+            handleSubmit();
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [
+    dispatch,
+    handleNextPuzzle,
+    handleSubmit,
+    isInitLoadCompleted,
+    loading,
+    solutionError,
+    solutionLoading,
+    state.moveDetails,
+    state.previewedMove,
+    state.revealed,
+  ]);
 
   const handleCardClick = useCallback(
     (uciMove: string) => {
@@ -214,9 +288,6 @@ export const Panel = () => {
       dispatch({ type: 'UPDATE_MOVE_DETAILS', payload: newMoveDetails });
     }
   };
-
-  const handleSubmit = () => revealSolution();
-  const handleNextPuzzle = () => loadGame();
 
   const turnPlayer = getTurnPlayerColor(state.initialChessJs);
 
