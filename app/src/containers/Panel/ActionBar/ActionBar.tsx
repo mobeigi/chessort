@@ -138,6 +138,7 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
         <IconWrapper
           data-tooltip-id={`base-tooltip`}
           data-tooltip-content="How to play"
+          data-tooltip-hidden={isHowToModalOpen} // Hide tooltip so it doesn't stay focused on mobile
           onClick={() => setIsHowToModalOpen(true)}
         >
           <i className="bx bxs-help-circle"></i>
