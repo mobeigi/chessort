@@ -1,22 +1,7 @@
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 import { SvgIcon } from '../../styles/icon';
 import { getBaseColor, getTextShadowColor } from '../Panel/Card/utils';
 import { Color } from '../../types/color';
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(4em);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const fadeInCss = css`
-  ${fadeIn} 0.5s ease-in-out
-`;
 
 export const HowToSection = styled.section`
   & h2,
@@ -56,8 +41,10 @@ export const ExampleCardWrapper = styled.div<ExampleCardWrapperProps>`
 
   // Animate cards with fade in
   opacity: ${({ $revealed }) => ($revealed ? 1 : 0)};
-  animation: ${({ $revealed }) => ($revealed ? fadeInCss : 'none')};
-  transition: opacity 0.5s ease-in-out;
+  transform: ${({ $revealed }) => ($revealed ? 'translateY(0)' : 'translateY(4em)')};
+  transition:
+    opacity 0.5s ease-in-out,
+    transform 0.5s ease-in-out;
 `;
 
 export const ExampleSanMoveWrapper = styled.span`
