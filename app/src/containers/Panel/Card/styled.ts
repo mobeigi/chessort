@@ -147,6 +147,7 @@ interface EngineRankProps {
 
 export const EngineRank = styled.span<EngineRankProps>`
   display: flex;
+  position: relative;
   width: 24px;
   height: 24px;
   font-size: 0.75em;
