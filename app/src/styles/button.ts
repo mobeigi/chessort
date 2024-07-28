@@ -5,6 +5,7 @@ const BaseButton = styled.button``;
 export const PrimaryButton = styled(BaseButton)``;
 
 export const SuccessButton = styled(BaseButton)`
+  color: ${({ theme }) => theme.colors.status.success.complement};
   background-color: ${({ theme }) => theme.colors.status.success.base};
 
   &:hover {

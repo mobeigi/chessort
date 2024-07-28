@@ -17,15 +17,20 @@ const theme = {
         primary: {
           base: '#2b76a3',
           baseHighlight: '#5aa7cc',
+          accent: '#104a63',
+          complement: '#ffffff',
         },
         success: {
           base: '#4caf50',
           baseHighlight: '#60d065',
+          accent: '#2e7d32',
+          complement: '#ffffff',
         },
         disabled: {
           base: '#cccccc',
           baseHighlight: '#666666',
           accent: '#999999',
+          complement: '#333333',
         },
       },
       container: {
@@ -48,15 +53,20 @@ const theme = {
         primary: {
           base: '#2b76a3',
           baseHighlight: '#5aa7cc',
+          accent: '#104a63',
+          complement: '#ffffff',
         },
         success: {
           base: '#4caf50',
           baseHighlight: '#60d065',
+          accent: '#2e7d32',
+          complement: '#ffffff',
         },
         disabled: {
           base: '#cccccc',
           baseHighlight: '#666666',
           accent: '#999999',
+          complement: '#333333',
         },
       },
       container: {

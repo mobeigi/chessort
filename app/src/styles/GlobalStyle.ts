@@ -87,6 +87,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 500;
     font-family: inherit;
     cursor: pointer;
+    color: ${({ theme }) => theme.colors.status.primary.complement};
     background-color: ${({ theme }) => theme.colors.status.primary.base};
     transition:
         border-color 0.25s,
