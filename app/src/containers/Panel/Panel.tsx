@@ -193,7 +193,7 @@ export const Panel = () => {
           if (moveDetail && state.previewedMove !== moveDetail.uciMove) {
             dispatch({ type: 'PREVIEW_MOVE', payload: moveDetail.uciMove });
           }
-        } else if (event.key == 'ArrowUp') {
+        } else if (event.key == 'ArrowUp' || event.key === 'w' || event.key === 'W') {
           const oldIndex = state.moveDetails.findIndex((card) => card.uciMove === state.previewedMove);
 
           // If not found or first item as it cant move up
@@ -207,7 +207,7 @@ export const Panel = () => {
           }));
 
           dispatch({ type: 'UPDATE_MOVE_DETAILS', payload: newMoveDetails });
-        } else if (event.key == 'ArrowDown') {
+        } else if (event.key == 'ArrowDown' || event.key === 's' || event.key === 'S') {
           const oldIndex = state.moveDetails.findIndex((card) => card.uciMove === state.previewedMove);
 
           // If not found or last item as it cant move up
