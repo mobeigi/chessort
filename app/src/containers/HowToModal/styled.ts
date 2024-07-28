@@ -118,7 +118,7 @@ export const DragIconAdjustmentWrapper = styled.span`
 
   & svg path,
   svg rect {
-    fill: white;
+    fill: ${({ theme }) => theme.colors.text.base};
   }
 `;
 
@@ -130,7 +130,7 @@ export const ClickIconAdjustmentWrapper = styled.span`
 
   & svg path,
   svg rect {
-    fill: white;
+    fill: ${({ theme }) => theme.colors.text.base};
   }
 `;
 
@@ -143,11 +143,11 @@ export const DoubleStackGrid = styled.span`
 export const Key = styled.div`
   display: inline-block;
   min-width: 1em;
-  border: 0.1em solid white;
+  border: 0.1em solid #fff;
   border-radius: 0.4em;
   padding: 0.6em 0.9em;
-  background-color: #333; // TODO: theme this
-  color: white; // TODO: theme this
+  background-color: #333;
+  color: #fff;
   font-weight: bold;
   text-align: center;
   line-height: 1;
