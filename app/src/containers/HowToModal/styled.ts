@@ -6,12 +6,16 @@ import { Color } from '../../types/color';
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(4em);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
+`;
+
+const fadeInCss = css`
+  ${fadeIn} 0.5s ease-in-out
 `;
 
 export const HowToSection = styled.section`
@@ -52,12 +56,7 @@ export const ExampleCardWrapper = styled.div<ExampleCardWrapperProps>`
 
   // Animate cards with fade in
   opacity: ${({ $revealed }) => ($revealed ? 1 : 0)};
-  animation: ${({ $revealed }) =>
-    $revealed
-      ? css`
-          ${fadeIn} 0.5s ease-in-out
-        `
-      : 'none'};
+  animation: ${({ $revealed }) => ($revealed ? fadeInCss : 'none')};
   transition: opacity 0.5s ease-in-out;
 `;
 
