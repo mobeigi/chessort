@@ -39,7 +39,7 @@ export const ExampleCardWrapper = styled.div<ExampleCardWrapperProps>`
   -webkit-user-select: none;
   -ms-user-select: none;
 
-  // Animate cards with fade in
+  // Animate cards with slide in effect
   opacity: ${({ $revealed }) => ($revealed ? 1 : 0)};
   transform: ${({ $revealed }) => ($revealed ? 'translateY(0)' : 'translateY(4em)')};
   transition:
@@ -80,7 +80,11 @@ export const ExampleMoveWrapper = styled.div`
   gap: 0.4em;
 `;
 
-export const DiscordContainer = styled.p`
+interface DiscordContainerProps {
+  $animationDone: boolean;
+}
+
+export const DiscordContainer = styled.p<DiscordContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,6 +99,10 @@ export const DiscordContainer = styled.p`
   & a:focus {
     color: #99aefb;
   }
+
+  // Animation
+  opacity: ${({ $animationDone }) => ($animationDone ? 1 : 0)};
+  transition: opacity 0.5s ease-in-out;
 `;
 
 export const DiscordLogoWrapper = styled.span`

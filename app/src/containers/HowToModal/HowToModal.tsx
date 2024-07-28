@@ -19,6 +19,7 @@ const discordInviteLink = 'https://discord.gg/pjJUG3CWnc';
 
 const HowToContent = () => {
   const [revealed, setRevealed] = useState([false, false, false, false]);
+  const [discordAnimationDone, setDiscordAnimationDone] = useState(false);
 
   // Reveal cards one by one with delay
   useEffect(() => {
@@ -39,6 +40,15 @@ const HowToContent = () => {
     }
     return () => timeouts.forEach((timeout) => clearTimeout(timeout));
   }, [revealed.length]);
+
+  // Animate Discord container shorly after card animations are done
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDiscordAnimationDone(true);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <HowToSection>
@@ -87,7 +97,7 @@ const HowToContent = () => {
         </ExampleCardWrapper>
       </ExampleCardsContainer>
 
-      <DiscordContainer>
+      <DiscordContainer $animationDone={discordAnimationDone}>
         <a href={discordInviteLink} target="_blank">
           <span>Join the conversation on </span>
           <DiscordLogoWrapper>
