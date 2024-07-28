@@ -80,6 +80,79 @@ export const ExampleMoveWrapper = styled.div`
   gap: 0.4em;
 `;
 
+export const ControlsWrapper = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+`;
+
+export const ControlsGroup = styled.span`
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+`;
+
+export const ControlGroupName = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 0.7em;
+  font-family: 'Roboto Mono', monospace;
+`;
+
+export const ControlActions = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2em;
+  font-size: 0.8em;
+`;
+
+export const DragIconAdjustmentWrapper = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+
+  & svg path,
+  svg rect {
+    fill: white;
+  }
+`;
+
+export const ClickIconAdjustmentWrapper = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.3em;
+
+  & svg path,
+  svg rect {
+    fill: white;
+  }
+`;
+
+export const DoubleStackGrid = styled.span`
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  gap: 0.2em;
+`;
+
+export const Key = styled.div`
+  display: inline-block;
+  min-width: 1em;
+  border: 0.1em solid white;
+  border-radius: 0.4em;
+  padding: 0.6em 0.9em;
+  background-color: #333; // TODO: theme this
+  color: white; // TODO: theme this
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+  user-select: none;
+`;
+
 interface DiscordContainerProps {
   $animationDone: boolean;
 }

@@ -10,8 +10,19 @@ import {
   ExampleMoveWrapper,
   DiscordContainer,
   DiscordLogoWrapper,
+  ControlsWrapper,
+  ControlsGroup,
+  ControlGroupName,
+  ControlActions,
+  DoubleStackGrid,
+  Key,
+  ClickIconAdjustmentWrapper,
+  DragIconAdjustmentWrapper,
 } from './styled';
 import { Card1, Card2, Card3, Card4, WhiteMove, BlackMove } from './examples';
+import { SvgIcon } from '../../styles/icon';
+import DropSvg from '../../assets/icons/Drop.svg?react';
+import ClickSvg from '../../assets/icons/click.svg?react';
 
 const numOfMovesToSort = 4;
 const engineEvaluationDepthUsed = 22;
@@ -69,9 +80,7 @@ const HowToContent = () => {
             <BlackMove />
           </ExampleMoveWrapper>{' '}
         </li>
-        <li>
-          <strong>Drag & Drop</strong> to reorder. <strong>Click</strong> to preview moves.
-        </li>
+
         <li>
           <strong>Check</strong> (<code>+</code>) and <strong>Checkmate</strong> (<code>#</code>) notations are
           initially hidden.
@@ -81,6 +90,56 @@ const HowToContent = () => {
           The <strong>engine's evaluation depth</strong> is set to <strong>{engineEvaluationDepthUsed}</strong>.
         </li>
       </ul>
+      <h4>Controls</h4>
+      <ControlsWrapper>
+        <ControlsGroup>
+          <ControlGroupName>Move Card</ControlGroupName>
+          <ControlActions>
+            <DoubleStackGrid>
+              <Key>⬆</Key>
+              <Key>⬇</Key>
+            </DoubleStackGrid>
+            <DoubleStackGrid>
+              <Key>W</Key>
+              <Key>S</Key>
+            </DoubleStackGrid>
+            <DragIconAdjustmentWrapper>
+              <SvgIcon>
+                <DropSvg />
+              </SvgIcon>
+            </DragIconAdjustmentWrapper>
+          </ControlActions>
+        </ControlsGroup>
+        <ControlsGroup>
+          <ControlGroupName>Toggle Preview</ControlGroupName>
+          <ControlActions>
+            <DoubleStackGrid>
+              <Key>1</Key>
+              <Key>3</Key>
+            </DoubleStackGrid>
+            <DoubleStackGrid>
+              <Key>2</Key>
+              <Key>4</Key>
+            </DoubleStackGrid>
+            <ClickIconAdjustmentWrapper>
+              <SvgIcon>
+                <ClickSvg />
+              </SvgIcon>
+            </ClickIconAdjustmentWrapper>
+          </ControlActions>
+        </ControlsGroup>
+        <ControlsGroup>
+          <ControlGroupName>Submit / Next</ControlGroupName>
+          <ControlActions>
+            <Key>Enter ⏎</Key>
+            <ClickIconAdjustmentWrapper>
+              <SvgIcon>
+                <ClickSvg />
+              </SvgIcon>
+            </ClickIconAdjustmentWrapper>
+          </ControlActions>
+        </ControlsGroup>
+      </ControlsWrapper>
       <h4>Example</h4>
       <ExampleCardsContainer>
         <ExampleCardWrapper $revealed={revealed[0]}>
