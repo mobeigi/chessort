@@ -42,33 +42,36 @@ The `generate.py` script processes chess positions from the Lichess puzzle CSV f
 
 After running the script, you might see the following files in the `out/` folder:
 
-- `chessort-100000-5.csv`
-- `chessort-100000-5.metadata.json`
+- `chessort-10000-10.csv`
+- `chessort-10000-10.metadata.json`
 
 These files represent a chunk of 5 processed lines starting from the offset of 100,000 in the Lichess puzzle CSV file, along with their processing metadata.
 
 ### Example Files
 
-#### chessort-100000-5.csv
+#### chessort-10000-10.csv
 ```csv
-LichessPuzzleId,FEN,Rating,Moves
-1XySo,8/8/R1p2P2/2k1P3/2P5/8/p3K3/7r w - - 1 47,879,"f6f7 +527,e5e6 +457,a6a5 +437,a6a2 -532,e2d3 -533,a6a4 -536,e2d2 -536,a6a3 -544,e2e3 -592,e2f3 -602"
-1XyUE,2k3r1/ppp5/4pPq1/Pb1pBn2/3P3p/2P2Q1P/2P2PP1/R4RK1 w - - 3 23,1655,"c3c4 +396,f1e1 +394,g2g4 +389,a1e1 +371,g2g3 +368,f3g4 +350,f6f7 +290,g1h2 -25,g1h1 -39,a5a6 -247"
-1XyRa,2kr3r/pp4p1/2pb2p1/4qp2/3p2P1/3Q3P/PP2PBB1/R2R2K1 w - - 0 21,2161,"d3d4 +340,d3f3 +290,g4f5 +281,g4g5 +277,a1c1 +252,a2a4 +247,a1b1 +234,d3c4 +231,g1f1 +223,a2a3 +201"
-1XyTH,r2q1rk1/1b2b1pp/3p4/p2npp2/PP6/4BP2/NP1QB1PP/R4RK1 b - - 0 20,1469,"d5e3 +165,g8h8 +141,a8c8 +83,f5f4 +16,d5b4 -46,d5f6 -84,d5f4 -90,d5c7 -105,f8f7 -145,d5b6 -236"
-1XyRx,r1bqk2r/ppp2ppp/2nbp3/3pN3/3PnB2/2P1P2P/PP3PP1/RN1QKB1R b KQkq - 2 7,1390,"d6e5 +9,c6e5 -7,d8f6 -9,d8h4 -19,c8d7 -21,a7a5 -23,e8g8 -32,c6e7 -32,d8e7 -36,h7h6 -38"
+LichessPuzzleId,FEN,Rating,PreLastMovePositionEvaluation,LastMove,CurrentPositionEvaluation,EvaluatedMoves
+09XNg,3rr1k1/ppp1qppp/5n2/8/1PPn4/P6P/1B1PBP2/RN1QR1K1 b - - 0 14,1425,-48,g2h3 -370,+370,"d4e2 +370,e7e6 +187,f6e4 +17,e7e5 -2,f6h5 -22,f6d5 -25,d4f3 -112,d4f5 -183,f6d7 -201,e7e4 -214"
+09Xh7,B4rk1/p1p5/3bp3/5pq1/3P2n1/2P5/PPQ1Pp2/R1B2K1R b - - 1 20,1871,+107,e1f1 #-2,#+2,"g4h2 #+2,d6f4 -65,g5g7 -65,g5g6 -152,g5f6 -239,g5e7 -254,g5d8 -318,g5e3 -383,g4e3 -385,g5f4 -387"
+09Xpo,2b1r1k1/4pp1p/3p1npB/5qP1/2Q5/5Pr1/1P2B2K/1R3R2 w - - 3 30,1887,+360,d5f5 -62,+62,"h2g3 +62,c4h4 -509,c4f7 -513,c4c8 -558,c4g4 -590,c4e6 -626,g5f6 #-1,b1c1 #-1,e2d3 #-1,h6f8 #-1"
+09Xtv,8/8/5k2/8/ppp3PP/2P2P2/PP3K2/8 b - - 0 36,2045,+530,h2h4 +37,-37,"a4a3 -37,f6g6 -543,b4b3 -543,b4c3 -555,f6e5 -557,f6f7 -559,f6e6 -570,f6e7 -574,f6g7 -576"
+09XVr,r5k1/4Rp2/1qP3pp/1p1pQN2/1P6/6P1/r4PP1/4R1K1 b - - 0 39,973,+429,d4f5 #-2,#+2,"b6f2 #+2,g6f5 -210,b6d4 -770,f7f6 #-2,h6h5 #-1,a2f2 #-1,a8e8 #-1,a2c2 #-1,a8f8 #-1,a2a1 #-1"
 ```
 
-#### chessort-100000-5.metadata.json
+#### chessort-10000-10.metadata.json
 ```json
 {
     "stockfishVersion": "16.1",
-    "offset": 100000,
-    "limit": 5,
-    "evaluationDepth": 22,
+    "offset": 10000,
+    "limit": 10,
+    "evaluationDepth": 10,
     "multipv": 10,
     "minimumMovesRequired": 4,
+    "minPopularityRequired": 90,
+    "minNumberPlaysRequired": 100,
+    "minRatingDeviation": 100,
     "inputLichessFileSha256": "a480b5c25389d653800889bcf223d32a622249bd3d6ba3e210b8c75bc8092300",
-    "outputFileSha256": "30bb030eb36bf41d3467920e84b8e6ddef74f585f5ba7a7be4d8d39f9499727c"
+    "outputFileSha256": "3c3fcc7e1f077d5299c903da2495ee170b196f34aa147d2d816dcba813f7362f"
 }
 ```
