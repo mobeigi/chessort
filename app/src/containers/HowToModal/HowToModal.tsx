@@ -107,7 +107,7 @@ const HowToContent = () => {
               </Key>
             </DoubleStackGrid>
             <ClickIconAdjustmentWrapper>
-              <SvgIcon data-tooltip-id={'base-tooltip'} data-tooltip-content={'Mouse click'}>
+              <SvgIcon data-tooltip-id={'base-tooltip'} data-tooltip-content={'Click'}>
                 <ClickSvg />
               </SvgIcon>
             </ClickIconAdjustmentWrapper>
@@ -146,7 +146,7 @@ const HowToContent = () => {
               Enter ⏎
             </Key>
             <ClickIconAdjustmentWrapper>
-              <SvgIcon data-tooltip-id={'base-tooltip'} data-tooltip-content={'Mouse click'}>
+              <SvgIcon data-tooltip-id={'base-tooltip'} data-tooltip-content={'Click'}>
                 <ClickSvg />
               </SvgIcon>
             </ClickIconAdjustmentWrapper>
