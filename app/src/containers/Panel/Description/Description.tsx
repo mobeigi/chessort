@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { PuzzleLine, GameId, DifficultyLine, DifficultyLozenge } from './styled';
 import { DescriptionProps } from './types';
 
@@ -8,7 +9,7 @@ export const Description = ({ gameId, difficulty }: DescriptionProps) => {
       <PuzzleLine>
         <strong>Game Id: </strong>
         <GameId>
-          <a href={puzzleLink}>#{gameId}</a>
+          <Link to={puzzleLink}>#{gameId}</Link>
         </GameId>
       </PuzzleLine>
       <DifficultyLine>
