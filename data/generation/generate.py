@@ -18,6 +18,9 @@ Configuration Parameters:
 - LICHESS_PUZZLE_FILE: Path to the input Lichess puzzle CSV file (relative to current directory).
 - BASE_OUTPUT_FILE_PATH: Base path to the output CSV file (relative to current directory).
 - MIN_MOVES_REQUIRED: Minimum number of moves required to process this result.
+- MIN_POPULARITY_REQUIRED: Minimum popularity score required.
+- MIN_NUMBER_PLAYS_REQUIRED: Minimum number of plays required.
+- MAX_RATING_DEVIATION: Maximum rating deviation allowed.
 - LICHESS_PUZZLE_FILE_OFFSET: Line offset to start processing from in the Lichess puzzle file.
 - LICHESS_PUZZLE_FILE_LIMIT: Number of lines to process from the Lichess puzzle file.
 - MULTI_PV: Number of top moves to evaluate for each FEN.
@@ -30,7 +33,7 @@ Output CSV format:
 - LichessPuzzleId: ID of the puzzle.
 - FEN: FEN string of the position.
 - Rating: Rating of the puzzle.
-- Moves: Comma-separated list of moves in UCI format followed by their evaluation.
+- EvaluatedMoves: Comma-separated list of moves in UCI format followed by their evaluation.
 
 Metadata JSON format:
 - stockfishVersion: Version of the Stockfish engine used.
@@ -38,6 +41,10 @@ Metadata JSON format:
 - limit: Number of lines processed.
 - evaluationDepth: Depth to which Stockfish evaluated the positions.
 - multipv: Number of top moves evaluated.
+- minimumMovesRequired: Minimum number of moves required.
+- minPopularityRequired: Minimum popularity score required.
+- minNumberPlaysRequired: Minimum number of plays required.
+- minRatingDeviation: Maximum rating deviation allowed.
 - inputLichessFileSha256: SHA-256 hash of the input Lichess puzzle file.
 - outputFileSha256: SHA-256 hash of the generated output CSV file.
 """
@@ -56,7 +63,11 @@ LICHESS_PUZZLE_FILE = os.path.join(os.getcwd(), 'lichess-data', 'lichess_db_puzz
 BASE_OUTPUT_FILE_PATH = os.path.join(os.getcwd(), 'out', 'chessort')
 
 MIN_MOVES_REQUIRED = 4
-LICHESS_PUZZLE_FILE_OFFSET = 100000
+MIN_POPULARITY_REQUIRED = 90
+MIN_NUMBER_PLAYS_REQUIRED = 100
+MAX_RATING_DEVIATION = 100
+
+LICHESS_PUZZLE_FILE_OFFSET = 1700000
 LICHESS_PUZZLE_FILE_LIMIT = 5
 
 MULTI_PV = 50
@@ -118,21 +129,36 @@ def process_puzzle(puzzle):
         'LichessPuzzleId': lichess_puzzle_id,
         'FEN': fen,
         'Rating': rating,
-        'Moves': moves_str
+        'EvaluatedMoves': moves_str
     }
+
+def meets_criteria(row):
+    return (
+        int(row['Popularity']) >= MIN_POPULARITY_REQUIRED and
+        int(row['NbPlays']) >= MIN_NUMBER_PLAYS_REQUIRED and
+        int(row['RatingDeviation']) <= MAX_RATING_DEVIATION
+    )
 
 # Process input file into a puzzle
 def process_input_file(file_path, offset=0, limit=10):
     output_file_path = f"{BASE_OUTPUT_FILE_PATH}-{offset}-{limit}.csv"
     metadata_file_path = f"{BASE_OUTPUT_FILE_PATH}-{offset}-{limit}.metadata.json"
     
+    # Short circuit if the output file already exists
+    if os.path.exists(output_file_path):
+        print(f"Output file {output_file_path} already exists. Exiting.")
+        return
+
     stockfish_version = get_stockfish_version()
     input_lichess_file_sha256 = sha256sum(file_path)
 
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         with ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
-            futures = {executor.submit(process_puzzle, row): row for i, row in enumerate(reader) if i >= offset and i < offset + limit}
+            futures = {
+                executor.submit(process_puzzle, row): row for i, row in enumerate(reader) 
+                if i >= offset and i < offset + limit and meets_criteria(row)
+            }
             with open(output_file_path, 'w', newline='') as csvfile:
                 fieldnames = ['LichessPuzzleId', 'FEN', 'Rating', 'Moves']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -152,6 +178,9 @@ def process_input_file(file_path, offset=0, limit=10):
         "evaluationDepth": EVALUATION_DEPTH,
         "multipv": MULTI_PV,
         "minimumMovesRequired": MIN_MOVES_REQUIRED,
+        "minPopularityRequired": MIN_POPULARITY_REQUIRED,
+        "minNumberPlaysRequired": MIN_NUMBER_PLAYS_REQUIRED,
+        "minRatingDeviation": MAX_RATING_DEVIATION,
         "inputLichessFileSha256": input_lichess_file_sha256,
         "outputFileSha256": output_file_sha256
     }
