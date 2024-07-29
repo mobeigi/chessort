@@ -22,9 +22,9 @@ def process_csv(file_path, offset, num_lines, popularity_threshold, nbplays_thre
             if i >= offset + num_lines:
                 break
             
-            if (int(row['Popularity']) > popularity_threshold and
-                int(row['NbPlays']) > nbplays_threshold and
-                int(row['RatingDeviation']) < rating_deviation_threshold and
+            if (int(row['Popularity']) >= popularity_threshold and
+                int(row['NbPlays']) >= nbplays_threshold and
+                int(row['RatingDeviation']) <= rating_deviation_threshold and
                 min_rating <= int(row['Rating']) <= max_rating):
                 
                 themes = row['Themes'].split()
@@ -50,7 +50,7 @@ def print_matching_items(matching_items):
 # Parameters
 LICHESS_PUZZLE_FILE = os.path.join(os.getcwd(), 'lichess-data', 'lichess_db_puzzle.csv')
 LICHESS_PUZZLE_FILE_OFFSET = 1700000
-LICHESS_PUZZLE_FILE_LIMIT = 5
+LICHESS_PUZZLE_FILE_LIMIT = 100
 
 popularity_threshold = 90  # Count rows with Popularity higher than this value
 nbplays_threshold = 100  # Count rows with NbPlays higher than this value
