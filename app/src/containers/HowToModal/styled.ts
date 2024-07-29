@@ -4,9 +4,21 @@ import { getBaseColor, getTextShadowColor } from '../Panel/Card/utils';
 import { Color } from '../../types/color';
 
 export const HowToSection = styled.section`
-  & h2,
-  & h4 {
-    margin: 0.5em auto;
+  & h2 {
+    margin: 0.4em auto 0.6em;
+  }
+
+  & p {
+    margin: 0.4em auto;
+  }
+
+  & h5 {
+    margin: 0.8em auto 0.4em;
+  }
+
+  & ul {
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
   }
 `;
 
@@ -162,6 +174,8 @@ export const DiscordContainer = styled.p<DiscordContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  padding-top: 1em;
 
   // Discord pallete
   color: #7289da;

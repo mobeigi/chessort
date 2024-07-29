@@ -43,8 +43,8 @@ export const ModalStyle = styled.div<AnimationProps>`
   // Default sizing
   width: auto;
   height: auto;
-  max-width: 80vw;
-  max-height: 80vh;
+  max-width: 85vw;
+  max-height: 85vh;
 
   // Default styling
   color: #000;

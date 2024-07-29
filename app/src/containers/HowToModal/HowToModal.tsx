@@ -67,11 +67,10 @@ const HowToContent = () => {
       <p>
         <strong>Chessort</strong> is a Chess puzzle game where you sort moves based on the chess engine's evaluation.
       </p>
-      <h4>Key points</h4>
+      <h5>Key points</h5>
       <ul>
         <li>
-          Sort <strong>{numOfMovesToSort}</strong> moves from <strong>strongest</strong> (at top) to{' '}
-          <strong>weakest</strong> (at bottom).
+          Sort <strong>{numOfMovesToSort}</strong> moves from <strong>strongest</strong> to <strong>weakest</strong>.
         </li>
         <li>
           <strong>Move</strong> and <strong>Piece</strong> colour indicates the player to move.{' '}
@@ -85,31 +84,9 @@ const HowToContent = () => {
           <strong>Check</strong> (<code>+</code>) and <strong>Checkmate</strong> (<code>#</code>) notations are
           initially hidden.
         </li>
-        <li>Moves of equal strength can be correct in multiple positions.</li>
-        <li>
-          The <strong>engine's evaluation depth</strong> is set to <strong>{engineEvaluationDepthUsed}</strong>.
-        </li>
       </ul>
-      <h4>Controls</h4>
+      <h5>Controls</h5>
       <ControlsWrapper>
-        <ControlsGroup>
-          <ControlGroupName>Move Card</ControlGroupName>
-          <ControlActions>
-            <DoubleStackGrid>
-              <Key>⬆</Key>
-              <Key>⬇</Key>
-            </DoubleStackGrid>
-            <DoubleStackGrid>
-              <Key>W</Key>
-              <Key>S</Key>
-            </DoubleStackGrid>
-            <DragIconAdjustmentWrapper>
-              <SvgIcon>
-                <DropSvg />
-              </SvgIcon>
-            </DragIconAdjustmentWrapper>
-          </ControlActions>
-        </ControlsGroup>
         <ControlsGroup>
           <ControlGroupName>Toggle Preview</ControlGroupName>
           <ControlActions>
@@ -129,6 +106,24 @@ const HowToContent = () => {
           </ControlActions>
         </ControlsGroup>
         <ControlsGroup>
+          <ControlGroupName>Move Card</ControlGroupName>
+          <ControlActions>
+            <DoubleStackGrid>
+              <Key>⬆</Key>
+              <Key>⬇</Key>
+            </DoubleStackGrid>
+            <DoubleStackGrid>
+              <Key>W</Key>
+              <Key>S</Key>
+            </DoubleStackGrid>
+            <DragIconAdjustmentWrapper>
+              <SvgIcon>
+                <DropSvg />
+              </SvgIcon>
+            </DragIconAdjustmentWrapper>
+          </ControlActions>
+        </ControlsGroup>
+        <ControlsGroup>
           <ControlGroupName>Submit / Next</ControlGroupName>
           <ControlActions>
             <Key>Enter ⏎</Key>
@@ -140,7 +135,7 @@ const HowToContent = () => {
           </ControlActions>
         </ControlsGroup>
       </ControlsWrapper>
-      <h4>Example</h4>
+      <h5>Example</h5>
       <ExampleCardsContainer>
         <ExampleCardWrapper $revealed={revealed[0]}>
           <Card1 />

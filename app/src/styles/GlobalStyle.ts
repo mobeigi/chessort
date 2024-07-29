@@ -61,8 +61,8 @@ const GlobalStyle = createGlobalStyle`
 
   /* Lists */
   ul, ol {
-    list-style-position: inside;
-    padding-left: 0.75em;
+    padding-left: 0em;
+    margin-left: 1.5em;
   }
   
   li {
