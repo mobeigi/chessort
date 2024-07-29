@@ -17,7 +17,7 @@ Configuration Parameters:
 - STOCKFISH_PATH: Path to the Stockfish executable.
 - LICHESS_PUZZLE_FILE: Path to the input Lichess puzzle CSV file (relative to current directory).
 - BASE_OUTPUT_FILE_PATH: Base path to the output CSV file (relative to current directory).
-- MIN_MOVES_REQUIRED: Minimum number of moves required to process this result.
+- MIN_MOVES_REQUIRED: Minimum number of moves required to process this result (after first opponent move is made).
 - MIN_POPULARITY_REQUIRED: Minimum popularity score required.
 - MIN_NUMBER_PLAYS_REQUIRED: Minimum number of plays required.
 - MAX_RATING_DEVIATION: Maximum rating deviation allowed.
@@ -89,6 +89,17 @@ def sha256sum(filename):
             h.update(chunk)
     return h.hexdigest()
 
+def switch_eval(engine_eval):
+    """ Convert the engine evaluation to other players perspective """
+    if isinstance(engine_eval, chess.engine.Mate):
+        mate_moves = -engine_eval.moves
+        return chess.engine.Mate(mate_moves)
+    elif isinstance(engine_eval, chess.engine.Cp):
+        eval_value = -engine_eval.score()
+        return chess.engine.Cp(eval_value)
+    else:
+        raise ValueError(f"Unexpected evaluation type: {engine_eval}")
+
 # Analyze the top moves for a given FEN
 def analyze_top_moves(fen, top_n, depth):
     with chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH) as engine:
@@ -120,8 +131,17 @@ def process_puzzle(puzzle):
     # The second move is the beginning of the solution.
     # See: https://database.lichess.org/#puzzles
     board = chess.Board(original_fen)
-    first_move = chess.Move.from_uci(moves[0]) # make first move (for opponent)
-    board.push(first_move)
+    opponent_first_move = chess.Move.from_uci(moves[0])
+
+    # Analyze the board state before making the first move
+    pre_last_move_top_moves = analyze_top_moves(original_fen, top_n=1, depth=EVALUATION_DEPTH)
+    if not pre_last_move_top_moves:
+        print(f"[{lichess_puzzle_id}] Skipped. No evaluation for the original position.")
+        return None
+    pre_last_move_evaluation = pre_last_move_top_moves[0][1]
+
+    # Make opponents move (the first move) now
+    board.push(opponent_first_move)
 
     # Generate top moves
     top_moves = analyze_top_moves(board.fen(), top_n=MULTI_PV, depth=EVALUATION_DEPTH)
@@ -133,12 +153,18 @@ def process_puzzle(puzzle):
 
     # Create a comma-separated list of moves with evaluations
     moves_str = ','.join([f"{move} {score}" for move, score in top_moves])
+    
+    best_top_move_evaluation = top_moves[0][1]
+    best_top_move_evaluation_relative_to_opponent = switch_eval(best_top_move_evaluation)
 
     return {
         'LichessPuzzleId': lichess_puzzle_id,
         'FEN': board.fen(),
         'Rating': rating,
-        'EvaluatedMoves': moves_str
+        'PreLastMovePositionEvaluation': pre_last_move_evaluation,
+        'LastMove': f"{opponent_first_move.uci()} {best_top_move_evaluation_relative_to_opponent}",
+        'CurrentPositionEvaluation': best_top_move_evaluation,
+        'EvaluatedMoves': moves_str,
     }
 
 def meets_criteria(row):
@@ -169,7 +195,7 @@ def process_input_file(file_path, offset=0, limit=10):
                 if i >= offset and i < offset + limit and meets_criteria(row)
             }
             with open(output_file_path, 'w', newline='') as csvfile:
-                fieldnames = ['LichessPuzzleId', 'FEN', 'Rating', 'EvaluatedMoves']
+                fieldnames = ['LichessPuzzleId', 'FEN', 'Rating', 'PreLastMovePositionEvaluation', 'LastMove', 'CurrentPositionEvaluation', 'EvaluatedMoves']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
                 for future in as_completed(futures):
