@@ -99,7 +99,7 @@ def get_game_by_game_id(game_id):
 
     if not result:
         session.close()
-        return None, [], 0, 0
+        return None, []
 
     game, position = result
 

@@ -50,7 +50,7 @@ const isSolutionCorrect = (solutionEvals: string[], moveDetails: MoveDetail[]) =
 const showToast = (message: string, type: TypeOptions, themeMode: ThemeMode) => {
   toast.info(message, {
     position: 'bottom-left',
-    autoClose: 2000,
+    autoClose: 5000,
     type,
     theme: themeMode,
   });
