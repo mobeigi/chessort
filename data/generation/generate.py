@@ -109,13 +109,22 @@ def analyze_top_moves(fen, top_n, depth):
 # Process an FEN
 def process_puzzle(puzzle):
     lichess_puzzle_id = puzzle['PuzzleId']
-    fen = puzzle['FEN']
+    original_fen = puzzle['FEN']
     rating = puzzle['Rating']
+    moves = puzzle['Moves'].split()
 
     print(f"[{lichess_puzzle_id}] Processing...")
 
+    # FEN is the position before the opponent makes their move.
+    # The position to present to the player is after applying the first move to that FEN.
+    # The second move is the beginning of the solution.
+    # See: https://database.lichess.org/#puzzles
+    board = chess.Board(original_fen)
+    first_move = chess.Move.from_uci(moves[0]) # make first move (for opponent)
+    board.push(first_move)
+
     # Generate top moves
-    top_moves = analyze_top_moves(fen, top_n=MULTI_PV, depth=EVALUATION_DEPTH)
+    top_moves = analyze_top_moves(board.fen(), top_n=MULTI_PV, depth=EVALUATION_DEPTH)
     
     # Ensure we have the minimum number of total moves
     if len(top_moves) < MIN_MOVES_REQUIRED:
@@ -127,7 +136,7 @@ def process_puzzle(puzzle):
 
     return {
         'LichessPuzzleId': lichess_puzzle_id,
-        'FEN': fen,
+        'FEN': board.fen(),
         'Rating': rating,
         'EvaluatedMoves': moves_str
     }
@@ -160,7 +169,7 @@ def process_input_file(file_path, offset=0, limit=10):
                 if i >= offset and i < offset + limit and meets_criteria(row)
             }
             with open(output_file_path, 'w', newline='') as csvfile:
-                fieldnames = ['LichessPuzzleId', 'FEN', 'Rating', 'Moves']
+                fieldnames = ['LichessPuzzleId', 'FEN', 'Rating', 'EvaluatedMoves']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
                 for future in as_completed(futures):
