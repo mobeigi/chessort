@@ -8,7 +8,10 @@ CREATE TABLE IF NOT EXISTS Puzzles (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     LichessPuzzleId VARCHAR(10) NOT NULL,
     FEN TEXT NOT NULL,
-    Rating INT
+    Rating INT,
+    PreLastMovePositionEval VARCHAR(10),
+    LastUciMove VARCHAR(10),
+    CurrentPositionEval VARCHAR(10)
 );
 
 -- Create the Moves table

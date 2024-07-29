@@ -17,13 +17,10 @@ Usage:
     python ingestion.py <csv_file_path>
 
 CSV File Format:
-    LichessPuzzleId,FEN,Rating,Moves
-    <LichessPuzzleId>,<FEN>,<Rating>,"<UciMove> <Eval>,<UciMove> <Eval>,..."
-
-Example:
-    LichessPuzzleId,FEN,Rating,Moves
-    1Xznj,1r2r3/pp3Qp1/2n3pk/4q3/6R1/P1N1P1PP/1P5K/8 b - - 2 32,1493,"g6g5 +410 e5f6 +48 e5h5 +46 e5f5 0 e8e6 0 e5d6 0 c6e7 -325 h6h7 -404 e5g5 -609 e5g3 #-23 e5e4 #-3 e5e6 #-2 a7a6 #-1 b7b6 #-1 a7a5 #-1 b7b5 #-1 c6b4 #-1 c6d4 #-1 c6a5 #-1 c6d8 #-1 b8a8 #-1 b8c8 #-1 b8d8 #-1 e8e7 #-1 e8c8 #-1 e8d8 #-1 e8f8 #-1 e8g8 #-1 e8h8 #-1 e5c3 #-1 e5e3 #-1 e5d4 #-1 e5f4 #-1 e5a5 #-1 e5b5 #-1 e5c5 #-1 e5d5 #-1 e5c7 #-1 e5e7 #-1 h6h5 #-1"
+    LichessPuzzleId,FEN,Rating,PreLastMovePositionEvaluation,LastMove,CurrentPositionEvaluation,EvaluatedMoves
+    <LichessPuzzleId>,<FEN>,<Rating>,<PreLastMovePositionEvaluation>,<LastMove>,<CurrentPositionEvaluation>,"<UciMove> <Eval>,<UciMove> <Eval>,..."
 """
+
 import csv
 import mysql.connector
 from mysql.connector import Error
@@ -55,11 +52,13 @@ def close_connection(connection):
     if connection.is_connected():
         connection.close()
 
-def insert_puzzle(cursor, lichess_puzzle_id, fen, rating):
+def insert_puzzle(cursor, lichess_puzzle_id, fen, rating, pre_last_move_eval, last_uci_move, current_pos_eval):
     """ Insert a puzzle into the Puzzles table """
-    query = "INSERT INTO Puzzles (LichessPuzzleId, FEN, Rating) VALUES (%s, %s, %s)"
-    cursor.execute(query, (lichess_puzzle_id, fen, rating))
+    query = """INSERT INTO Puzzles (LichessPuzzleId, FEN, Rating, PreLastMovePositionEval, LastUciMove, CurrentPositionEval) 
+               VALUES (%s, %s, %s, %s, %s, %s)"""
+    cursor.execute(query, (lichess_puzzle_id, fen, rating, pre_last_move_eval, last_uci_move, current_pos_eval))
     return cursor.lastrowid
+
 
 def insert_move(cursor, puzzle_id, uci_move, engine_eval, engine_overall_rank):
     """ Insert a move into the Moves table """
@@ -99,20 +98,28 @@ def process_csv(file_path):
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            lichess_puzzle_id = row['LichessPuzzleId']
             fen = row['FEN']
+            lichess_puzzle_id = row['LichessPuzzleId']
             rating = int(row['Rating'])
-            moves_str = row['Moves']
-            
+
             # Determine the turn player from the FEN string
             board = chess.Board(fen)
             turn_player = board.turn
+            opponent_player = not turn_player  # Opponent player is the opposite of the turn player
+
+            # Set variables
+            pre_last_move_eval = convert_to_global_eval(row['PreLastMovePositionEvaluation'], opponent_player) 
+            current_pos_eval = convert_to_global_eval(row['CurrentPositionEvaluation'], turn_player)
+        
+            # Parse the last move
+            last_move_parsed = parse_moves(row['LastMove'], opponent_player)
+            last_uci_move, _, _ = last_move_parsed[0]  # Get the first (and only) parsed move
 
             # Insert puzzle and get the generated ID
-            puzzle_id = insert_puzzle(cursor, lichess_puzzle_id, fen, rating)
+            puzzle_id = insert_puzzle(cursor, lichess_puzzle_id, fen, rating, pre_last_move_eval, last_uci_move, current_pos_eval)
 
             # Parse moves and insert them
-            moves = parse_moves(moves_str, turn_player)
+            moves = parse_moves(row['EvaluatedMoves'], turn_player)
             for uci_move, engine_eval, engine_overall_rank in moves:
                 insert_move(cursor, puzzle_id, uci_move, engine_eval, engine_overall_rank)
 
