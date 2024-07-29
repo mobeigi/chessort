@@ -10,6 +10,7 @@ import {
   ChessBoardAdjustmentWrapper,
 } from './styled';
 import { DescriptionProps } from './types';
+import CountUp from 'react-countup';
 
 export const Description = ({ gameId, difficulty, positionHits, gameHits }: DescriptionProps) => {
   const puzzleLink = `/game/${gameId}`;
@@ -32,14 +33,18 @@ export const Description = ({ gameId, difficulty, positionHits, gameHits }: Desc
             <JoystickIconAdjustmentWrapper>
               <i className="bx bx-joystick-alt"></i>
             </JoystickIconAdjustmentWrapper>
-            <span>{gameHits}</span>
+            <span>
+              <CountUp end={gameHits} />
+            </span>
           </HitCounter>
           <span>•</span>
           <HitCounter data-tooltip-id="base-tooltip" data-tooltip-html={positionHitsTooltipHtml}>
             <ChessBoardAdjustmentWrapper>
               <i className="bx bxs-chess"></i>
             </ChessBoardAdjustmentWrapper>
-            <span>{positionHits}</span>
+            <span>
+              <CountUp end={positionHits} />
+            </span>
           </HitCounter>
         </HitsContainer>
       </Line>
