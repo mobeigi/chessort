@@ -91,15 +91,23 @@ const HowToContent = () => {
           <ControlGroupName>Toggle Preview</ControlGroupName>
           <ControlActions>
             <DoubleStackGrid>
-              <Key>1</Key>
-              <Key>3</Key>
+              <Key data-tooltip-id={'base-tooltip'} data-tooltip-content={'1 Key'}>
+                1
+              </Key>
+              <Key data-tooltip-id={'base-tooltip'} data-tooltip-content={'3 Key'}>
+                3
+              </Key>
             </DoubleStackGrid>
             <DoubleStackGrid>
-              <Key>2</Key>
-              <Key>4</Key>
+              <Key data-tooltip-id={'base-tooltip'} data-tooltip-content={'2 Key'}>
+                2
+              </Key>
+              <Key data-tooltip-id={'base-tooltip'} data-tooltip-content={'4 Key'}>
+                4
+              </Key>
             </DoubleStackGrid>
             <ClickIconAdjustmentWrapper>
-              <SvgIcon>
+              <SvgIcon data-tooltip-id={'base-tooltip'} data-tooltip-content={'Mouse click'}>
                 <ClickSvg />
               </SvgIcon>
             </ClickIconAdjustmentWrapper>
@@ -109,15 +117,23 @@ const HowToContent = () => {
           <ControlGroupName>Move Card</ControlGroupName>
           <ControlActions>
             <DoubleStackGrid>
-              <Key>⬆</Key>
-              <Key>⬇</Key>
+              <Key data-tooltip-id={'base-tooltip'} data-tooltip-content={'Up Arrow'}>
+                ⬆
+              </Key>
+              <Key data-tooltip-id={'base-tooltip'} data-tooltip-content={'Down Arrow'}>
+                ⬇
+              </Key>
             </DoubleStackGrid>
             <DoubleStackGrid>
-              <Key>W</Key>
-              <Key>S</Key>
+              <Key data-tooltip-id={'base-tooltip'} data-tooltip-content={'W Key'}>
+                W
+              </Key>
+              <Key data-tooltip-id={'base-tooltip'} data-tooltip-content={'S Key'}>
+                S
+              </Key>
             </DoubleStackGrid>
             <DragIconAdjustmentWrapper>
-              <SvgIcon>
+              <SvgIcon data-tooltip-id={'base-tooltip'} data-tooltip-content={'Drag & Drop'}>
                 <DropSvg />
               </SvgIcon>
             </DragIconAdjustmentWrapper>
@@ -126,9 +142,11 @@ const HowToContent = () => {
         <ControlsGroup>
           <ControlGroupName>Submit / Next</ControlGroupName>
           <ControlActions>
-            <Key>Enter ⏎</Key>
+            <Key data-tooltip-id={'base-tooltip'} data-tooltip-content={'Enter Key'}>
+              Enter ⏎
+            </Key>
             <ClickIconAdjustmentWrapper>
-              <SvgIcon>
+              <SvgIcon data-tooltip-id={'base-tooltip'} data-tooltip-content={'Mouse click'}>
                 <ClickSvg />
               </SvgIcon>
             </ClickIconAdjustmentWrapper>
