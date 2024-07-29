@@ -15,12 +15,13 @@ export const PanelContainer = styled.div`
   border-radius: inherit;
 `;
 
-export const DescriptionWrapper = styled.main`
+export const Hub = styled.main`
   display: flex;
   flex-direction: column;
   padding: 0;
   margin: 0;
   width: 80%;
+  gap: 2em;
 `;
 
 export const CardsWrapper = styled.div`

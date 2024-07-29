@@ -1,13 +1,6 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import {
-  PanelContainer,
-  DescriptionWrapper,
-  CardsWrapper,
-  SubmitButton,
-  NextButton,
-  CardAndButtonContainer,
-} from './styled';
+import { PanelContainer, Hub, CardsWrapper, SubmitButton, NextButton, CardAndButtonContainer } from './styled';
 import {
   DndContext,
   closestCenter,
@@ -321,15 +314,15 @@ export const Panel = () => {
 
   return (
     <PanelContainer>
-      <DescriptionWrapper>
+      <Hub>
         <Description
           gameId={state.gameDetails.gameId}
           difficulty={state.gameDetails.difficulty}
           positionHits={state.gameDetails.positionHits}
           gameHits={state.gameDetails.gameHits}
         />
-      </DescriptionWrapper>
-      <ActionBar fen={state.gameDetails.fen} />
+        <ActionBar fen={state.gameDetails.fen} />
+      </Hub>
       <CardAndButtonContainer>
         <CardsWrapper>
           <DndContext
