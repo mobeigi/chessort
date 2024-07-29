@@ -5,6 +5,7 @@ Used to find how many items match our query.
 Useful for determining criteria that result in chunks with a decent number of games in them.
 """
 
+import os
 import csv
 from collections import defaultdict
 
@@ -47,9 +48,9 @@ def print_matching_items(matching_items):
         print("-" * 40)
 
 # Parameters
-file_path = './lichess-data/lichess_db_puzzle.csv'
-offset = 1700000  # Start at a specific offset in the file
-num_lines = 1000  # Process a specific number of lines
+LICHESS_PUZZLE_FILE = os.path.join(os.getcwd(), 'lichess-data', 'lichess_db_puzzle.csv')
+LICHESS_PUZZLE_FILE_OFFSET = 1700000
+LICHESS_PUZZLE_FILE_LIMIT = 5
 
 popularity_threshold = 90  # Count rows with Popularity higher than this value
 nbplays_threshold = 100  # Count rows with NbPlays higher than this value
@@ -58,7 +59,7 @@ min_rating = 0  # Minimum rating
 max_rating = 9999  # Maximum rating
 theme_filter = []  # List of themes to filter for
 
-result, theme_counts, matching_items = process_csv(file_path, offset, num_lines, popularity_threshold, nbplays_threshold, rating_deviation_threshold, min_rating, max_rating, theme_filter)
+result, theme_counts, matching_items = process_csv(LICHESS_PUZZLE_FILE, LICHESS_PUZZLE_FILE_OFFSET, LICHESS_PUZZLE_FILE_LIMIT, popularity_threshold, nbplays_threshold, rating_deviation_threshold, min_rating, max_rating, theme_filter)
 
 # Print results
 print("Matching Items:")
