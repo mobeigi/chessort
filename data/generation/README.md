@@ -45,7 +45,7 @@ After running the script, you might see the following files in the `out/` folder
 - `chessort-10000-10.csv`
 - `chessort-10000-10.metadata.json`
 
-These files represent a chunk of 5 processed lines starting from the offset of 100,000 in the Lichess puzzle CSV file, along with their processing metadata.
+These files represent a chunk of 10 processed lines starting from the offset of 10,000 in the Lichess puzzle CSV file, along with their processing metadata.
 
 ### Example Files
 
