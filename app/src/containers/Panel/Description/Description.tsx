@@ -2,13 +2,13 @@ import { PuzzleLine, GameId, DifficultyLine, DifficultyLozenge } from './styled'
 import { DescriptionProps } from './types';
 
 export const Description = ({ gameId, difficulty }: DescriptionProps) => {
-  const puzzleLink = `/puzzle/${gameId}`;
+  const puzzleLink = `/game/${gameId}`;
   return (
     <>
       <PuzzleLine>
-        <strong>Puzzle: </strong>
+        <strong>Game Id: </strong>
         <GameId>
-          <a href={puzzleLink}>{gameId}</a>
+          <a href={puzzleLink}>#{gameId}</a>
         </GameId>
       </PuzzleLine>
       <DifficultyLine>

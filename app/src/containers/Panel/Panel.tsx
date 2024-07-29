@@ -84,10 +84,10 @@ export const Panel = () => {
    * To support back/forward browser navigation.
    */
   useEffect(() => {
-    const targetPathname = game ? `/puzzle/${game.gameId}` : '';
+    const targetPathname = game ? `/game/${game.gameId}` : '';
     if (game?.gameId && location.pathname !== targetPathname) {
       // Populate browser navigation history
-      navigate(`/puzzle/${game.gameId}`);
+      navigate(`/game/${game.gameId}`);
     }
     // Only fire when gameId changes (indicating fresh game just loaded)
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -53,17 +53,16 @@ def close_connection(connection):
         connection.close()
 
 def insert_puzzle(cursor, lichess_puzzle_id, fen, rating, pre_last_move_eval, last_uci_move, current_pos_eval):
-    """ Insert a puzzle into the Puzzles table """
-    query = """INSERT INTO Puzzles (LichessPuzzleId, FEN, Rating, PreLastMovePositionEval, LastUciMove, CurrentPositionEval) 
+    """ Insert a puzzle into the Positions table """
+    query = """INSERT INTO Positions (LichessPuzzleId, FEN, Rating, PreLastMovePositionEval, LastUciMove, CurrentPositionEval) 
                VALUES (%s, %s, %s, %s, %s, %s)"""
     cursor.execute(query, (lichess_puzzle_id, fen, rating, pre_last_move_eval, last_uci_move, current_pos_eval))
     return cursor.lastrowid
 
-
-def insert_move(cursor, puzzle_id, uci_move, engine_eval, engine_overall_rank):
+def insert_move(cursor, position_id, uci_move, engine_eval, engine_overall_rank):
     """ Insert a move into the Moves table """
-    query = "INSERT INTO Moves (PuzzleID, UciMove, EngineEval, EngineOverallRank) VALUES (%s, %s, %s, %s)"
-    cursor.execute(query, (puzzle_id, uci_move, engine_eval, engine_overall_rank))
+    query = "INSERT INTO Moves (PositionID, UciMove, EngineEval, EngineOverallRank) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query, (position_id, uci_move, engine_eval, engine_overall_rank))
 
 def parse_moves(moves_str, turn_player):
     """ Parse the moves string into a list of tuples (uci_move, engine_eval, engine_overall_rank) """
@@ -116,12 +115,12 @@ def process_csv(file_path):
             last_uci_move, _, _ = last_move_parsed[0]  # Get the first (and only) parsed move
 
             # Insert puzzle and get the generated ID
-            puzzle_id = insert_puzzle(cursor, lichess_puzzle_id, fen, rating, pre_last_move_eval, last_uci_move, current_pos_eval)
+            position_id = insert_puzzle(cursor, lichess_puzzle_id, fen, rating, pre_last_move_eval, last_uci_move, current_pos_eval)
 
             # Parse moves and insert them
             moves = parse_moves(row['EvaluatedMoves'], turn_player)
             for uci_move, engine_eval, engine_overall_rank in moves:
-                insert_move(cursor, puzzle_id, uci_move, engine_eval, engine_overall_rank)
+                insert_move(cursor, position_id, uci_move, engine_eval, engine_overall_rank)
 
     connection.commit()
     cursor.close()

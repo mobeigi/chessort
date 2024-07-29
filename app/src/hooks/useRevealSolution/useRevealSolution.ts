@@ -16,10 +16,7 @@ export const useRevealSolution = () => {
     dispatch({ type: 'SET_LOADING_SOLUTION', payload: true });
 
     try {
-      const solution = await getGameSolution(
-        state.gameDetails.fen,
-        state.moveDetails.map((moveDetail) => moveDetail.uciMove),
-      );
+      const solution = await getGameSolution(state.gameDetails.gameId);
 
       // Response was successful
       dispatch({
@@ -36,7 +33,7 @@ export const useRevealSolution = () => {
       setLoading(false);
       dispatch({ type: 'SET_LOADING_SOLUTION', payload: false });
     }
-  }, [dispatch, state.gameDetails.fen, state.moveDetails]);
+  }, [dispatch, state.gameDetails.gameId]);
 
   return { revealSolution, solution, loading, error };
 };

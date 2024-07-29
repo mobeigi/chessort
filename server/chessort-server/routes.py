@@ -1,86 +1,94 @@
-from flask import Blueprint, request, jsonify
-from .db_client import get_random_puzzle, get_game_solution, get_puzzle_and_move_ids, get_puzzle_and_moves_by_ids
-from .utils import generate_game_id, decode_game_id
+from flask import Blueprint, jsonify, request
+from .db_client import get_random_game, get_game_by_game_id, register_game_played, get_game_solution, get_games_played_id
+from .utils import generate_game_id, decode_game_id, to_move_hash
 import random
 
 app = Blueprint('app', __name__)
 
 @app.route('/api/game/<gameId>', methods=['GET'])
 def get_game(gameId):
+    # Decode game id sqid
     decoded_ids = decode_game_id(gameId)
-
-    if len(decoded_ids) != 5:
+    if len(decoded_ids) != 1:
         return jsonify({'error': 'Invalid game id.'}), 404
 
-    puzzle_id = decoded_ids[0]
-    move_ids = decoded_ids[1:]
+    game_id = decoded_ids[0]
+    
+    # Get game
+    position, moves = get_game_by_game_id(game_id)
 
-    puzzle, moves = get_puzzle_and_moves_by_ids(puzzle_id, move_ids)
+    if not position or len(moves) != 4:
+        return jsonify({'error': 'Game was not found.'}), 404
 
-    if not puzzle or len(moves) != 4:
-        return jsonify({'error': 'Puzzle or moves not found'}), 404
-
+    # Register game as being played
+    fen = position.FEN
     uci_moves = [move.UciMove for move in moves]
+    move_hash = to_move_hash(uci_moves)
+    _, position_hits, game_hits = register_game_played(fen, move_hash)
 
     # Shuffle the moves for the response
     random.shuffle(uci_moves)
 
     return jsonify({
-        'fen': puzzle.FEN,
+        'gameId': gameId,
+        'fen': position.FEN,
         'uciMoves': uci_moves,
         'difficulty': 'BEGINNER',
-        'gameId': gameId
+        'positionHits': position_hits,
+        'gameHits': game_hits
     })
 
 @app.route('/api/game/random', methods=['GET'])
-def get_random_game():
-    puzzle, moves = get_random_puzzle()
+def api_get_random_game():
+    # Get a random game
+    position, moves = get_random_game()
     
-    if not puzzle or len(moves) != 4:
-        return jsonify({'error': 'No puzzles or insufficient/excess moves found'}), 404
+    if not position or len(moves) != 4:
+        return jsonify({'error': 'No position found or insufficient/excess moves found for position.'}), 404
+
+    # Insert game played id
+    fen = position.FEN
+    uci_moves = [move.UciMove for move in moves]
+    move_hash = to_move_hash(uci_moves)
+    game_played_id, position_hits, game_hits = register_game_played(fen, move_hash)
 
     # Generate the game ID
-    uci_moves = [move.UciMove for move in moves]
-    puzzle_id, move_ids = get_puzzle_and_move_ids(puzzle.FEN, uci_moves)
-    
-    if not puzzle_id or len(move_ids) != 4:
-        return jsonify({'error': 'Error generating game ID'}), 500
+    game_id = generate_game_id(game_played_id)
 
-    game_id = generate_game_id(puzzle_id, move_ids)
-    
     # Shuffle the moves for the response
     random.shuffle(uci_moves)
 
     return jsonify({
-        'fen': puzzle.FEN,
+        'fen': position.FEN,
         'uciMoves': uci_moves,
         'difficulty': 'BEGINNER',
-        'gameId': game_id
+        'gameId': game_id,
+        'positionHits': position_hits,
+        'gameHits': game_hits
     })
 
 @app.route('/api/solution', methods=['POST'])
 def get_solution():
+    # Get request data
     data = request.get_json()
-    fen = data.get('fen')
-    uci_moves = data.get('uciMoves')
+    provided_game_id = data.get('gameId')
 
-    if not fen or not uci_moves or len(uci_moves) != 4:
-        return jsonify({'error': 'Invalid input'}), 400
+    if not provided_game_id:
+        return jsonify({'error': 'Invalid input.'}), 400
 
-    solution = get_game_solution(fen, uci_moves)
+    # Decode game id sqid
+    decoded_ids = decode_game_id(provided_game_id)
+    if len(decoded_ids) != 1:
+        return jsonify({'error': 'Invalid game id.'}), 404
+    game_id = decoded_ids[0]
+
+    # Get solution
+    solution = get_game_solution(game_id)
 
     if not solution:
-        return jsonify({'error': 'Solution not found'}), 404
-
-    # Generate the game ID
-    puzzle_id, move_ids = get_puzzle_and_move_ids(fen, uci_moves)
+        return jsonify({'error': 'Game not found.'}), 404
     
-    if not puzzle_id or len(move_ids) != 4:
-        return jsonify({'error': 'Error generating game ID'}), 500
-
-    game_id = generate_game_id(puzzle_id, move_ids)
-
     return jsonify({
         'solution': solution,
-        'gameId': game_id
+        'gameId': provided_game_id,
     })

@@ -7,10 +7,9 @@ export const getNewRandomGame = () => fetchApi(`${BASE_API_URL}/game/random`) as
 export const getGameByGameId = (gameId: string) =>
   fetchApi(`${BASE_API_URL}/game/${gameId}`) as Promise<GameApiResponse>;
 
-export const getGameSolution = (fen: string, uciMoves: string[]) => {
+export const getGameSolution = (gameId: string) => {
   const data = {
-    fen,
-    uciMoves,
+    gameId,
   };
   return fetchApi(`${BASE_API_URL}/solution`, {
     method: 'POST',
