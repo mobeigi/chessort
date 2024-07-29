@@ -181,6 +181,11 @@ export const Panel = () => {
    */
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      // No keyboard actions if we're in a loading state
+      if (!isInitLoadCompleted || loading || solutionLoading) {
+        return;
+      }
+
       if (!event.repeat) {
         const key = parseInt(event.key);
         // Preview / unpreview
@@ -194,37 +199,39 @@ export const Panel = () => {
             dispatch({ type: 'PREVIEW_MOVE', payload: moveDetail.uciMove });
           }
         } else if (event.key == 'ArrowUp' || event.key === 'w' || event.key === 'W') {
-          const oldIndex = state.moveDetails.findIndex((card) => card.uciMove === state.previewedMove);
+          if (!state.revealed) {
+            const oldIndex = state.moveDetails.findIndex((card) => card.uciMove === state.previewedMove);
 
-          // If not found or first item as it cant move up
-          if (oldIndex === -1 || oldIndex === 0) {
-            return;
+            // If not found or first item as it cant move up
+            if (oldIndex === -1 || oldIndex === 0) {
+              return;
+            }
+            const newIndex = oldIndex - 1;
+            const newMoveDetails = arrayMove(state.moveDetails, oldIndex, newIndex).map((moveDetail, index) => ({
+              ...moveDetail,
+              curRank: index + 1,
+            }));
+
+            dispatch({ type: 'UPDATE_MOVE_DETAILS', payload: newMoveDetails });
           }
-          const newIndex = oldIndex - 1;
-          const newMoveDetails = arrayMove(state.moveDetails, oldIndex, newIndex).map((moveDetail, index) => ({
-            ...moveDetail,
-            curRank: index + 1,
-          }));
-
-          dispatch({ type: 'UPDATE_MOVE_DETAILS', payload: newMoveDetails });
         } else if (event.key == 'ArrowDown' || event.key === 's' || event.key === 'S') {
-          const oldIndex = state.moveDetails.findIndex((card) => card.uciMove === state.previewedMove);
+          if (!state.revealed) {
+            const oldIndex = state.moveDetails.findIndex((card) => card.uciMove === state.previewedMove);
 
-          // If not found or last item as it cant move up
-          if (oldIndex === -1 || oldIndex === state.moveDetails.length - 1) {
-            return;
+            // If not found or last item as it cant move up
+            if (oldIndex === -1 || oldIndex === state.moveDetails.length - 1) {
+              return;
+            }
+            const newIndex = oldIndex + 1;
+            const newMoveDetails = arrayMove(state.moveDetails, oldIndex, newIndex).map((moveDetail, index) => ({
+              ...moveDetail,
+              curRank: index + 1,
+            }));
+
+            dispatch({ type: 'UPDATE_MOVE_DETAILS', payload: newMoveDetails });
           }
-          const newIndex = oldIndex + 1;
-          const newMoveDetails = arrayMove(state.moveDetails, oldIndex, newIndex).map((moveDetail, index) => ({
-            ...moveDetail,
-            curRank: index + 1,
-          }));
-
-          dispatch({ type: 'UPDATE_MOVE_DETAILS', payload: newMoveDetails });
         } else if (event.key === 'Enter') {
-          if (!isInitLoadCompleted || loading || solutionLoading) {
-            return;
-          } else if (state.revealed) {
+          if (state.revealed) {
             handleNextPuzzle();
           } else {
             handleSubmit();
