@@ -4,7 +4,6 @@ import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton, NextBut
 import {
   DndContext,
   closestCenter,
-  KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
@@ -12,12 +11,7 @@ import {
   DragStartEvent,
   TouchSensor,
 } from '@dnd-kit/core';
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import Card from './Card';
 import { useGameContext } from '../../hooks/useGameContext';
