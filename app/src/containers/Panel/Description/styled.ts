@@ -1,15 +1,20 @@
 import { styled } from 'styled-components';
 import { Difficulty } from '../../../types/difficulty';
 
-export const PuzzleLine = styled.div``;
+export const DescriptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+`;
+
+export const Line = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 export const GameId = styled.span`
   font-family: 'Roboto Mono', monospace;
-`;
-
-export const DifficultyLine = styled.div`
-  display: flex;
-  gap: 0.5em;
 `;
 
 interface DifficultyWrapperProps {

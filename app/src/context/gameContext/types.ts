@@ -19,6 +19,8 @@ export type GameDetails = {
   gameId: string;
   fen: string;
   difficulty: Difficulty;
+  positionHits: number;
+  gameHits: number;
 };
 
 export type MoveDetail = {

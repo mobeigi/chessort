@@ -18,6 +18,8 @@ const initialState: GameState = {
     gameId: '',
     fen: emptyBoardFen,
     difficulty: Difficulty.BEGINNER,
+    positionHits: 0,
+    gameHits: 0,
   },
   initialChessJs: initialChessJs,
   curChessJs: curChessJs,

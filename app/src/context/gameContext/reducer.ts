@@ -15,6 +15,8 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
     case 'NEW_GAME': {
       const gameId = action.payload.gameId;
       const fen = action.payload.fen;
+      const positionHits = action.payload.positionHits;
+      const gameHits = action.payload.gameHits;
       const moveDetails = action.payload.uciMoves.map((uciMove: string, index: number) => ({
         uciMove,
         curRank: index + 1, // Assign rank based on the position in the array
@@ -26,7 +28,14 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
         // TODO: don't fallback to initial state here, just set everyying you need to
         ...initialState, // Reset to initial state, this will give us a fresh game state that we can update
         moveDetails: moveDetails,
-        gameDetails: { ...initialState.gameDetails, gameId: gameId, fen: fen, difficulty: difficulty },
+        gameDetails: {
+          ...initialState.gameDetails,
+          gameId: gameId,
+          fen: fen,
+          difficulty: difficulty,
+          positionHits: positionHits,
+          gameHits: gameHits,
+        },
         initialChessJs: new Chess(fen),
         curChessJs: new Chess(fen),
       };

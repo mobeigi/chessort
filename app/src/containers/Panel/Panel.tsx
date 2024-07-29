@@ -321,7 +321,12 @@ export const Panel = () => {
   return (
     <PanelContainer>
       <DescriptionWrapper>
-        <Description gameId={state.gameDetails.gameId} difficulty={state.gameDetails.difficulty} />
+        <Description
+          gameId={state.gameDetails.gameId}
+          difficulty={state.gameDetails.difficulty}
+          positionHits={state.gameDetails.positionHits}
+          gameHits={state.gameDetails.gameHits}
+        />
       </DescriptionWrapper>
 
       <ActionBar fen={state.gameDetails.fen} />

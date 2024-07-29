@@ -1,21 +1,28 @@
 import { Link } from 'react-router-dom';
-import { PuzzleLine, GameId, DifficultyLine, DifficultyLozenge } from './styled';
+import { Line, GameId, DifficultyLozenge, DescriptionContainer } from './styled';
 import { DescriptionProps } from './types';
 
-export const Description = ({ gameId, difficulty }: DescriptionProps) => {
+export const Description = ({ gameId, difficulty, positionHits, gameHits }: DescriptionProps) => {
   const puzzleLink = `/game/${gameId}`;
+
   return (
-    <>
-      <PuzzleLine>
-        <strong>Game Id: </strong>
+    <DescriptionContainer>
+      <Line>
+        <strong>Game:</strong>
         <GameId>
           <Link to={puzzleLink}>#{gameId}</Link>
         </GameId>
-      </PuzzleLine>
-      <DifficultyLine>
-        <strong>Difficulty: </strong>
+      </Line>
+      <Line>
+        <strong>Hits:</strong>
+        <span>
+          {gameHits} • {positionHits}
+        </span>
+      </Line>
+      <Line>
+        <strong>Difficulty:</strong>
         <DifficultyLozenge $difficulty={difficulty}>{difficulty}</DifficultyLozenge>
-      </DifficultyLine>
-    </>
+      </Line>
+    </DescriptionContainer>
   );
 };
