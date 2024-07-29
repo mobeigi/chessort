@@ -8,7 +8,7 @@ export const PanelContainer = styled.div`
   padding: 0.5em;
   box-sizing: border-box;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   gap: 1em;
   background: ${({ theme }) => theme.colors.container.background};
   color: ${({ theme }) => theme.colors.text.base};
@@ -26,7 +26,7 @@ export const DescriptionWrapper = styled.main`
 export const CardsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 97%;
+  width: 100%;
   justify-content: center;
   gap: 0.4em;
   padding: 0.5em 0.5em;
@@ -38,6 +38,14 @@ export const CardsWrapper = styled.div`
 
   // Support d&d on mobile
   touch-action: none;
+`;
+
+export const CardAndButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 97%;
 `;
 
 export const SubmitButton = styled(SuccessButton)`

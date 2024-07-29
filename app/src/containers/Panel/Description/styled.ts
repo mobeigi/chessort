@@ -4,7 +4,7 @@ import { Difficulty } from '../../../types/difficulty';
 export const DescriptionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.2em;
+  gap: 0.4em;
 `;
 
 export const Line = styled.div`
@@ -15,6 +15,31 @@ export const Line = styled.div`
 
 export const GameId = styled.span`
   font-family: 'Roboto Mono', monospace;
+`;
+
+export const HitsContainer = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+`;
+
+export const JoystickIconAdjustmentWrapper = styled.span`
+  display: flex;
+  font-size: 1.4em;
+`;
+
+export const ChessBoardAdjustmentWrapper = styled.span`
+  display: flex;
+  font-size: 1em;
+  padding-right: 0.08em;
+`;
+
+export const HitCounter = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.1em;
 `;
 
 interface DifficultyWrapperProps {

@@ -1,6 +1,13 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { PanelContainer, DescriptionWrapper, CardsWrapper, SubmitButton, NextButton } from './styled';
+import {
+  PanelContainer,
+  DescriptionWrapper,
+  CardsWrapper,
+  SubmitButton,
+  NextButton,
+  CardAndButtonContainer,
+} from './styled';
 import {
   DndContext,
   closestCenter,
@@ -322,54 +329,54 @@ export const Panel = () => {
           gameHits={state.gameDetails.gameHits}
         />
       </DescriptionWrapper>
-
       <ActionBar fen={state.gameDetails.fen} />
-
-      <CardsWrapper>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragStart={handleCardDragStart}
-          onDragEnd={handleCardDragEnd}
-          modifiers={[restrictToParentElement]}
-        >
-          <SortableContext
-            items={state.moveDetails.map((card) => card.uciMove)}
-            strategy={verticalListSortingStrategy}
-            disabled={state.isLoadingSolution || state.revealed}
+      <CardAndButtonContainer>
+        <CardsWrapper>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragStart={handleCardDragStart}
+            onDragEnd={handleCardDragEnd}
+            modifiers={[restrictToParentElement]}
           >
-            {state.moveDetails.map((moveDetail) => (
-              <Card
-                key={moveDetail.uciMove}
-                moveDetail={moveDetail}
-                turnPlayer={turnPlayer}
-                sanMove={uciMoveToSanMove(state.initialChessJs, moveDetail.uciMove) ?? ''}
-                revealed={state.revealed}
-                correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
-                onClick={handleCardClick}
-                isPreviewed={state.previewedMove === moveDetail.uciMove}
-              />
-            ))}
-          </SortableContext>
-        </DndContext>
-      </CardsWrapper>
-      {state.revealed ? (
-        <NextButton onClick={handleNextPuzzle} disabled={state.isLoadingGame}>
-          {state.isLoadingGame ? (
-            <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
-          ) : (
-            <span>Next Puzzle</span>
-          )}
-        </NextButton>
-      ) : (
-        <SubmitButton onClick={handleSubmit} disabled={state.isLoadingSolution}>
-          {state.isLoadingSolution ? (
-            <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
-          ) : (
-            <span>Submit</span>
-          )}
-        </SubmitButton>
-      )}
+            <SortableContext
+              items={state.moveDetails.map((card) => card.uciMove)}
+              strategy={verticalListSortingStrategy}
+              disabled={state.isLoadingSolution || state.revealed}
+            >
+              {state.moveDetails.map((moveDetail) => (
+                <Card
+                  key={moveDetail.uciMove}
+                  moveDetail={moveDetail}
+                  turnPlayer={turnPlayer}
+                  sanMove={uciMoveToSanMove(state.initialChessJs, moveDetail.uciMove) ?? ''}
+                  revealed={state.revealed}
+                  correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
+                  onClick={handleCardClick}
+                  isPreviewed={state.previewedMove === moveDetail.uciMove}
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
+        </CardsWrapper>
+        {state.revealed ? (
+          <NextButton onClick={handleNextPuzzle} disabled={state.isLoadingGame}>
+            {state.isLoadingGame ? (
+              <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
+            ) : (
+              <span>Next Puzzle</span>
+            )}
+          </NextButton>
+        ) : (
+          <SubmitButton onClick={handleSubmit} disabled={state.isLoadingSolution}>
+            {state.isLoadingSolution ? (
+              <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
+            ) : (
+              <span>Submit</span>
+            )}
+          </SubmitButton>
+        )}
+      </CardAndButtonContainer>
     </PanelContainer>
   );
 };

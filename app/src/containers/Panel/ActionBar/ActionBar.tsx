@@ -170,7 +170,7 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
           data-tooltip-content={copyFenTooltipText}
           onClick={() => copyFen(fen)}
         >
-          <i className="bx bxs-chess"></i>
+          <i className="bx bx-copy"></i>
         </IconWrapper>
         <IconWrapper
           data-tooltip-id={`base-tooltip`}

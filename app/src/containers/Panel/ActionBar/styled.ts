@@ -6,6 +6,8 @@ import { hexToRgba } from '../../../utils/themeUtils';
 export const ActionBarContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 0.1em;
 `;
 
 type DarkModeSwitchWrapperProps = {
