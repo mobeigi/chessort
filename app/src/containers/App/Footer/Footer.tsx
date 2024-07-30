@@ -28,12 +28,12 @@ export const Footer = () => {
         !!
       </CreatedByWrapper>
       <SocialContainer>
-        <a href={DISCORD_INVITE_URL}>
+        <a href={DISCORD_INVITE_URL} rel="external">
           <IconWrapper>
             <i className="bx bxl-discord"></i>
           </IconWrapper>
         </a>
-        <a href={GITHUB_REPO_URL}>
+        <a href={GITHUB_REPO_URL} rel="external">
           <IconWrapper>
             <i className="bx bxl-github"></i>
           </IconWrapper>
