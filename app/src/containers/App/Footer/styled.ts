@@ -34,8 +34,9 @@ export const CreatedByWrapper = styled.div`
   }
 `;
 
-export const CopyrightDisclaimer = styled.div`
+export const SocialContainer = styled.div`
   display: flex;
+  gap: 0.2em;
 
   /* Matches styling on board / panel. TODO: commonise this */
   width: calc(min(30vw, 30vh));
@@ -44,4 +45,21 @@ export const CopyrightDisclaimer = styled.div`
 
   justify-content: center;
   align-items: center;
+`;
+
+export const IconWrapper = styled.span`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  color: ${({ theme }) => theme.colors.text.base};
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.baseHighlight};
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 `;

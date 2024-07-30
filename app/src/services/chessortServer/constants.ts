@@ -1,1 +1,2 @@
-export const BASE_API_URL = 'http://localhost:16111/api'; // TODO: Replace with actual backend
+// Get base url from env
+export const API_BASE_URL = import.meta.env.VITE_CHESSORT_SERVER_API_BASE_URL;

@@ -25,10 +25,12 @@ def main():
     if args.debug:
         CORS(app)
 
+    port = 64355
+
     if args.debug:
-        app.run(host='0.0.0.0', port=16111, debug=True)
+        app.run(host='0.0.0.0', port=port, debug=True)
     else:
-        serve(app, host='0.0.0.0', port=16111)
+        serve(app, host='0.0.0.0', port=port)
 
 if __name__ == '__main__':
     main()
