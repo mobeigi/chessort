@@ -169,7 +169,7 @@ const HowToContent = () => {
       </ExampleCardsContainer>
 
       <DiscordContainer $animationDone={discordAnimationDone}>
-        <a href={DISCORD_INVITE_URL} target="_blank">
+        <a href={DISCORD_INVITE_URL} target="_blank" rel="external">
           <span>Join the conversation on </span>
           <DiscordLogoWrapper>
             <i className="bx bxl-discord"></i>

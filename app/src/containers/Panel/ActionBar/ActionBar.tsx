@@ -150,14 +150,14 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
         >
           <RotateIconWithAdjustments className="bx bx-rotate-left"></RotateIconWithAdjustments>
         </IconWrapper>
-        <a href={getLichessAnalysisUrl(fen)} target="_blank">
+        <a href={getLichessAnalysisUrl(fen)} target="_blank" rel="external">
           <IconWrapper data-tooltip-id={`base-tooltip`} data-tooltip-html={analyseOnLichessTooltipHtml}>
             <LichessLogoIcon>
               <LichessLogoSvg />
             </LichessLogoIcon>
           </IconWrapper>
         </a>
-        <a href={getChessComAnalysisUrl(fen)} target="_blank">
+        <a href={getChessComAnalysisUrl(fen)} target="_blank" rel="external">
           <IconWrapper data-tooltip-id={`base-tooltip`} data-tooltip-html={analyseOnChessComTooltipHtml}>
             <SvgIcon>
               <ChessComLogoPawnSvg />
