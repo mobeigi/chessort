@@ -13,7 +13,7 @@ import { DescriptionProps } from './types';
 import CountUp from 'react-countup';
 
 export const Description = ({ gameId, difficulty, positionHits, gameHits }: DescriptionProps) => {
-  const puzzleLink = `/game/${gameId}`;
+  const gameLink = `/game/${gameId}`;
 
   const gameHitsTooltipHtml = `<span>Game (position + moves) played <strong>${gameHits}</strong> times.</span>`;
   const positionHitsTooltipHtml = `<span>Position (FEN) played <strong>${positionHits}</strong> times.</span>`;
@@ -23,7 +23,7 @@ export const Description = ({ gameId, difficulty, positionHits, gameHits }: Desc
       <Line>
         <strong>Game:</strong>
         <GameId>
-          <Link to={puzzleLink}>#{gameId}</Link>
+          <Link to={gameLink}>#{gameId}</Link>
         </GameId>
       </Line>
       <Line>

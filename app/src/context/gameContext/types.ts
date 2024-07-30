@@ -3,7 +3,7 @@ import { Difficulty } from '../../types/difficulty';
 import { EvalResult } from '../../services/chessortServer';
 
 export interface GameState {
-  gameDetails: GameDetails; // Information about the game puzzle
+  gameDetails: GameDetails; // Information about the game
   moveDetails: MoveDetail[]; // Information about the list of possible moves
   solutionEvals: string[]; // The sorted evaluations to the correct answer. This can be computed from moveDetails but is in the state for convinience.
   initialChessJs: Chess; // initial reference board, should not be mutated via moves

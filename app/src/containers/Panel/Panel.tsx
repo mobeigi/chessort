@@ -107,9 +107,9 @@ export const Panel = () => {
    */
   useEffect(() => {
     if (location.pathname !== lastLocation) {
-      const puzzleIdInUrl = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
-      if (state.gameDetails.gameId !== puzzleIdInUrl) {
-        loadGame(puzzleIdInUrl);
+      const gameIdInUrl = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
+      if (state.gameDetails.gameId !== gameIdInUrl) {
+        loadGame(gameIdInUrl);
       }
       setLastLocation(location.pathname);
     }
@@ -168,7 +168,7 @@ export const Panel = () => {
   );
 
   const handleSubmit = useCallback(() => revealSolution(), [revealSolution]);
-  const handleNextPuzzle = useCallback(() => loadGame(), [loadGame]);
+  const handleNextGame = useCallback(() => loadGame(), [loadGame]);
 
   /**
    * Keyboard listeners to play the game
@@ -226,7 +226,7 @@ export const Panel = () => {
           }
         } else if (event.key === 'Enter') {
           if (state.revealed) {
-            handleNextPuzzle();
+            handleNextGame();
           } else {
             handleSubmit();
           }
@@ -240,7 +240,7 @@ export const Panel = () => {
     };
   }, [
     dispatch,
-    handleNextPuzzle,
+    handleNextGame,
     handleSubmit,
     isInitLoadCompleted,
     loading,
@@ -353,11 +353,11 @@ export const Panel = () => {
           </DndContext>
         </CardsWrapper>
         {state.revealed ? (
-          <NextButton onClick={handleNextPuzzle} disabled={state.isLoadingGame}>
+          <NextButton onClick={handleNextGame} disabled={state.isLoadingGame}>
             {state.isLoadingGame ? (
               <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
             ) : (
-              <span>Next Puzzle</span>
+              <span>Next Game</span>
             )}
           </NextButton>
         ) : (
