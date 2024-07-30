@@ -70,8 +70,8 @@ export const RotateIconWithAdjustments = styled.i`
 `;
 
 export const LichessLogoIcon = styled(SvgIcon)`
+  font-size: 0.9em;
   svg path {
-    stroke-width: 2;
     fill: ${({ theme }) => theme.colors.text.base};
     stroke: ${({ theme }) => theme.colors.text.base};
   }

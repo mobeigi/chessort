@@ -18,7 +18,7 @@ import {
 } from '../../../context/userPreferencesContext';
 
 import ChessComLogoPawnSvg from '../../../assets/icons/chesscom_logo_pawn.svg?react';
-import LichessLogoSvg from '../../../assets/icons/lichess_logo.svg?react';
+import LichessLogoSvg from '../../../assets/icons/lichess-thick2.svg?react';
 import HowToModal from '../../HowToModal';
 import { renderToStaticMarkup } from 'react-dom/server';
 
