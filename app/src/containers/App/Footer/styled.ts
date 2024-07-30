@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import { SquareCss, ComplementPanelCss } from '../../../styles/splitViews/squareSplit';
 
 export const FooterWrapper = styled.footer`
   display: flex;
   flex-direction: row;
+  gap: 0.5em;
 
   margin-top: 1em;
   margin-bottom: 0.5em;
@@ -18,12 +20,10 @@ export const FooterWrapper = styled.footer`
   }
 `;
 
-export const CreatedByWrapper = styled.div`
-  display: flex;
-
-  /* Matches styling on board / panel. TODO: commonise this */
-  width: calc(min(65vw, 65vh));
-  min-width: 300px;
+export const CreatedByWrapper = styled.section`
+  // Mimic the game dimensions but overwrite the height
+  ${SquareCss({ percent: 65, totalPercent: 95, minWidthPx: 400, minHeightPx: 0 })}
+  height: auto;
 
   justify-content: center;
   align-items: center;
@@ -34,14 +34,12 @@ export const CreatedByWrapper = styled.div`
   }
 `;
 
-export const SocialContainer = styled.div`
-  display: flex;
-  gap: 0.2em;
+export const SocialContainer = styled.section`
+  // Mimic the game dimensions but overwrite the height
+  ${ComplementPanelCss({ percent: 30, totalPercent: 95, minWidthPx: 230, minHeightPx: 0 })}
+  height: auto;
 
-  /* Matches styling on board / panel. TODO: commonise this */
-  width: calc(min(30vw, 30vh));
-  max-width: 100%; /* Avoid overflow */
-  min-width: calc((300px / 65) * 30);
+  gap: 0.2em;
 
   justify-content: center;
   align-items: center;

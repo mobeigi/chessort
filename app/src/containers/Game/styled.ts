@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { hexToRgba } from '../../utils/themeUtils';
+import { SquareCss, ComplementPanelCss } from '../../styles/splitViews';
 
 export const GameWrapper = styled.section`
   display: flex;
@@ -8,59 +9,38 @@ export const GameWrapper = styled.section`
   align-items: center;
   gap: 0.5em;
 
+  // Mobile vertical view
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     flex-direction: column;
   }
 `;
 
 export const ChessBoardWrapper = styled.section`
-  display: flex;
+  ${SquareCss({ percent: 65, totalPercent: 95, minWidthPx: 400, minHeightPx: 400 })}
 
-  /* Hack below to ensure chessboard looks good on any viewport.
-   * This ensures the board will fit on the screen even on weird viewports that don't have a squarish aspect ratio.
-   * TODO: Its possible this can be refactored now to remove the calc() calls and generally be improved.
-  */
-  width: calc(min(65vw, 65vh));
-  height: calc(
-    min(65vw, 65vh)
-  ); // We also set height explicitly to the same 'width' to allow other styling to fit child element (i.e. borders)
-
-  min-width: 400px;
-  min-height: 400px;
-
-  // Slight border for chessboard
-  cg-board {
-    border-radius: 0.4em;
-  }
-
+  // Mobile vertical view
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     width: 80vw;
     height: 80vw;
 
-    min-width: 300px;
+    min-width: 300px; // Match PanelWrapper height/width in this view
     min-height: 300px;
   }
 `;
 
 export const PanelWrapper = styled.section`
-  display: flex;
-  width: calc(min(30vw, 30vh));
-  height: calc(min(65vw, 65vh));
-
-  max-width: 100%; /* Avoid overflow */
-
-  min-width: 230px; // Or else panel doesn't quite fit everything with high vw/low vh viewports
-  min-height: 400px;
+  ${ComplementPanelCss({ percent: 30, totalPercent: 95, minWidthPx: 230, minHeightPx: 400 })}
 
   // Slight border for panel
   border: 1px solid ${({ theme }) => hexToRgba(theme.colors.container.accent, 0.2)};
   border-radius: 0.4em;
 
+  // Mobile vertical view
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     width: 80vw;
     height: auto;
 
-    min-width: 300px; // Match chessboard height/width in this orientation
+    min-width: 300px; // Match ChessBoardWrapper height/width in this view
     min-height: auto;
   }
 `;

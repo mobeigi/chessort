@@ -5,7 +5,7 @@ import { Api } from 'chessground/api';
 import { ChessGroundBoardProps } from './types';
 import { initialConfig } from './initialConfig';
 
-import '../../../node_modules/chessground/assets/chessground.base.css';
+import '../../assets/chessground/chessground.base.css';
 import '../../assets/pieces/maestro/chessground.maestro.external.css';
 import '../../assets/chessground/chessground.chessort.css';
 

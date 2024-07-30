@@ -53,3 +53,8 @@ coords.ranks {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+
+/* Slight border radius for aesthetics */
+cg-board {
+  border-radius: 0.4em;
+}
