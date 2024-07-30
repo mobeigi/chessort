@@ -9,7 +9,6 @@ export const PanelContainer = styled.div`
   box-sizing: border-box;
   align-items: center;
   justify-content: space-evenly;
-  gap: 1em;
   background: ${({ theme }) => theme.colors.container.background};
   color: ${({ theme }) => theme.colors.text.base};
   border-radius: inherit;
@@ -21,7 +20,7 @@ export const Hub = styled.main`
   padding: 0;
   margin: 0;
   width: 80%;
-  gap: 2em;
+  gap: 1.5em;
 `;
 
 export const CardsWrapper = styled.div`

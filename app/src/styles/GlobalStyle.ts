@@ -9,13 +9,13 @@ const GlobalStyle = createGlobalStyle`
   }
 
   /* Adjust font size for different screen sizes */
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.maxWidth}px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.maxWidth}px), (max-height: ${({ theme }) => theme.breakpoints.tablet.maxHeight}px) {
     html {
       font-size: 15px;
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px), (max-height: ${({ theme }) => theme.breakpoints.mobile.maxHeight}px) {
     html {
       font-size: 14px;
     }

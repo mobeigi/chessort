@@ -1,7 +1,7 @@
 const theme = {
   breakpoints: {
     mobile: { maxWidth: 800, maxHeight: 600 },
-    tablet: { maxWidth: 1200, maxHeight: 800 },
+    tablet: { maxWidth: 1000, maxHeight: 800 },
   },
   colors: {
     dark: {

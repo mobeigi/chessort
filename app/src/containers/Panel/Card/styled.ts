@@ -19,8 +19,6 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   display: flex;
   background-color: ${({ theme }) => theme.colors.chessBoardDarkSquare};
   color: #323232;
-  padding: 1.2em 0.8em;
-  height: 28px; /* To support tallest element in children */
   border: 0.15em solid transparent;
   border-radius: 0.4em;
   align-items: center;
@@ -41,12 +39,14 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
       box-shadow: 0 0 5px 0px ${theme.mode === 'dark' ? 'rgba(255, 227, 199, 0.5)' : 'rgba(121, 77, 44, 0.5)'}; /* Above border color at 0.5 opacity */
     `}
 
-  ${({ $revealed }) => ($revealed ? `cursor: auto;` : `cursor: grab;`)}
+  ${({ $revealed }) => ($revealed ? `cursor: auto` : `cursor: grab`)};
 
-  /* Here we also tweak padding based on height to make sure it fits nicely on viewports with high vw and low vh */  
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.maxWidth}px), (max-height: ${({ theme }) =>
-    theme.breakpoints.tablet.maxHeight}px) {
-    padding: 0.8em 0.4em;
+  /* Tweak padding for different viewports we support */
+  padding: 0.6em 0.4em;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.maxWidth}px),
+    (max-height: ${({ theme }) => theme.breakpoints.tablet.maxHeight}px) {
+    padding: 0.4em 0.4em;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px),
@@ -64,8 +64,15 @@ export const CurrentRankWrapper = styled.span`
 const BaseDigitGrid = styled.span`
   display: grid;
   justify-items: center;
-  line-height: 1.2em;
+  align-items: center;
   width: 1em;
+
+  /* to support same height regardless of how many items in grid, at most we'll have 2 rows */
+  height: 2em;
+
+  /* Ensure the text inside grid fits nicely */
+  font-size: 1em;
+  line-height: 1em;
 `;
 
 export const OneDigitGrid = styled(BaseDigitGrid)``;

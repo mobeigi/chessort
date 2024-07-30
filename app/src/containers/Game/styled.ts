@@ -5,6 +5,7 @@ export const GameWrapper = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   gap: 0.5em;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
@@ -24,8 +25,8 @@ export const ChessBoardWrapper = styled.section`
     min(65vw, 65vh)
   ); // We also set height explicitly to the same 'width' to allow other styling to fit child element (i.e. borders)
 
-  min-width: 300px;
-  min-height: 300px;
+  min-width: 400px;
+  min-height: 400px;
 
   // Slight border for chessboard
   cg-board {
@@ -35,6 +36,9 @@ export const ChessBoardWrapper = styled.section`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     width: 80vw;
     height: 80vw;
+
+    min-width: 300px;
+    min-height: 300px;
   }
 `;
 
@@ -46,7 +50,7 @@ export const PanelWrapper = styled.section`
   max-width: 100%; /* Avoid overflow */
 
   min-width: 230px; // Or else panel doesn't quite fit everything with high vw/low vh viewports
-  min-height: 300px;
+  min-height: 400px;
 
   // Slight border for panel
   border: 1px solid ${({ theme }) => hexToRgba(theme.colors.container.accent, 0.2)};
@@ -55,5 +59,8 @@ export const PanelWrapper = styled.section`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.maxWidth}px) {
     width: 80vw;
     height: auto;
+
+    min-width: 300px; // Match chessboard height/width in this orientation
+    min-height: auto;
   }
 `;

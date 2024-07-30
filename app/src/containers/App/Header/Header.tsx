@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 
 export const Header = () => {
   return (
-    <Link to="/">
-      <HeaderWrapper>
-        <Logo src={LogoSvg} alt="Chessort Logo" />
-        <Title>Chessort</Title>
-      </HeaderWrapper>
-    </Link>
+    <header>
+      <Link to="/">
+        <HeaderWrapper>
+          <Logo src={LogoSvg} alt="Chessort Logo" />
+          <Title>Chessort</Title>
+        </HeaderWrapper>
+      </Link>
+    </header>
   );
 };

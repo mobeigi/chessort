@@ -32,7 +32,7 @@ export const Logo = styled.img`
 
 export const Title = styled.h1`
   font-size: 4.5em;
-  line-height: 1em;
+  margin: 0.5em auto;
 
   color: ${({ theme }) => theme.colors.text.base};
 
