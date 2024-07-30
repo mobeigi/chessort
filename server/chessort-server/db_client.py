@@ -51,40 +51,36 @@ def register_game_played(fen, move_hash):
         game_played = GamesPlayed(PositionID=position.ID, MoveHash=move_hash)
         session.add(game_played)
         session.commit()  # Commit to get the ID of the new game played
+
+        # Create a GamesPlayedMetadata entry for the new game
+        games_played_metadata = GamesPlayedMetadata(GamesPlayedID=game_played.ID, Hits=0)
+        session.add(games_played_metadata)
     
     games_played_id = game_played.ID
 
     # Update hits for PositionMetadata and GamesPlayedMetadata
-    position_hits, game_hits = update_hits(session, position.ID, games_played_id, move_hash)
+    position_hits, game_hits = update_hits(session, position.ID, games_played_id)
     
     session.commit()
     session.close()
 
     return games_played_id, position_hits, game_hits
 
-def update_hits(session, position_id, game_played_id, move_hash):
+def update_hits(session, position_id, game_played_id):
     """ Update hits for PositionMetadata and GamesPlayedMetadata """
-    # Update PositionMetadata hits
-    position_metadata = session.query(PositionMetadata).filter_by(PositionID=position_id).first()
-    if not position_metadata:
-        # Insert new PositionMetadata entry
-        position_metadata = PositionMetadata(PositionID=position_id, Hits=1)
-        session.add(position_metadata)
-    else:
-        # Increment the hits
-        position_metadata.Hits += 1
-    
-    # Update GamesPlayedMetadata hits
-    gamesplayed_metadata = session.query(GamesPlayedMetadata).filter_by(GamesPlayedID=game_played_id).first()
-    if not gamesplayed_metadata:
-        # Insert new GamesPlayedMetadata entry
-        gamesplayed_metadata = GamesPlayedMetadata(GamesPlayedID=game_played_id, Hits=1)
-        session.add(gamesplayed_metadata)
-    else:
-        # Increment the hits
-        gamesplayed_metadata.Hits += 1
 
-    return position_metadata.Hits, gamesplayed_metadata.Hits
+    # Update PositionMetadata hits
+    session.query(PositionMetadata).filter_by(PositionID=position_id).update({PositionMetadata.Hits: PositionMetadata.Hits + 1})
+
+    # Update GamesPlayedMetadata hits
+    session.query(GamesPlayedMetadata).filter_by(GamesPlayedID=game_played_id).update({GamesPlayedMetadata.Hits: GamesPlayedMetadata.Hits + 1})
+
+    # Fetch updated hit counts
+    position_hits = session.query(PositionMetadata.Hits).filter_by(PositionID=position_id).scalar()
+    game_hits = session.query(GamesPlayedMetadata.Hits).filter_by(GamesPlayedID=game_played_id).scalar()
+
+    return position_hits, game_hits
+
 
 def get_game_by_game_id(game_id):
     """ Retrieve a game by a game id """

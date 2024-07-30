@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS GamesPlayedMetadata (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     GamesPlayedID INT NOT NULL,
     Hits INT DEFAULT 0,
+    Difficulty INT DEFAULT NULL, -- Integer value representing the difficulty between 0 and 100
     FOREIGN KEY (GamesPlayedID) REFERENCES GamesPlayed(ID) ON DELETE CASCADE
 );
 
@@ -54,3 +55,4 @@ CREATE INDEX idx_moves_positionid ON Moves(PositionID);
 CREATE INDEX idx_gamesplayed_positionid ON GamesPlayed(PositionID);
 CREATE INDEX idx_positionmetadata_positionid ON PositionMetadata(PositionID);
 CREATE INDEX idx_gamesplayedmetadata_gamesplayedid ON GamesPlayedMetadata(GamesPlayedID);
+CREATE INDEX idx_gamesplayedmetadata_difficulty ON GamesPlayedMetadata(Difficulty);

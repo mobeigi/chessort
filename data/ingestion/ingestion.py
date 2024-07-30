@@ -57,7 +57,14 @@ def insert_puzzle(cursor, lichess_puzzle_id, fen, rating, pre_last_move_eval, la
     query = """INSERT INTO Positions (LichessPuzzleId, FEN, Rating, PreLastMovePositionEval, LastUciMove, CurrentPositionEval) 
                VALUES (%s, %s, %s, %s, %s, %s)"""
     cursor.execute(query, (lichess_puzzle_id, fen, rating, pre_last_move_eval, last_uci_move, current_pos_eval))
-    return cursor.lastrowid
+    position_id = cursor.lastrowid
+    insert_position_metadata(cursor, position_id)
+    return position_id
+
+def insert_position_metadata(cursor, position_id):
+    """ Insert a new entry into PositionMetadata """
+    query = "INSERT INTO PositionMetadata (PositionID, Hits) VALUES (%s, %s)"
+    cursor.execute(query, (position_id, 0))
 
 def insert_move(cursor, position_id, uci_move, engine_eval, engine_overall_rank):
     """ Insert a move into the Moves table """

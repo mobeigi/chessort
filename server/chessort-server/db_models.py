@@ -42,3 +42,4 @@ class GamesPlayedMetadata(Base):
     ID = Column(Integer, primary_key=True, autoincrement=True)
     GamesPlayedID = Column(Integer, ForeignKey('GamesPlayed.ID'), nullable=False)
     Hits = Column(Integer, default=0)
+    Difficulty = Column(Integer)
