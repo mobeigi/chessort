@@ -23,10 +23,9 @@ import { Card1, Card2, Card3, Card4, WhiteMove, BlackMove } from './examples';
 import { SvgIcon } from '../../styles/icon';
 import DropSvg from '../../assets/icons/Drop.svg?react';
 import ClickSvg from '../../assets/icons/click.svg?react';
+import { DISCORD_INVITE_URL } from '../../constants/socials';
 
 const numOfMovesToSort = 4;
-const engineEvaluationDepthUsed = 22;
-const discordInviteLink = 'https://discord.gg/pjJUG3CWnc';
 
 const HowToContent = () => {
   const [revealed, setRevealed] = useState([false, false, false, false]);
@@ -170,7 +169,7 @@ const HowToContent = () => {
       </ExampleCardsContainer>
 
       <DiscordContainer $animationDone={discordAnimationDone}>
-        <a href={discordInviteLink} target="_blank">
+        <a href={DISCORD_INVITE_URL} target="_blank">
           <span>Join the conversation on </span>
           <DiscordLogoWrapper>
             <i className="bx bxl-discord"></i>

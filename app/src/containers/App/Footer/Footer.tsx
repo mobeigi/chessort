@@ -4,6 +4,7 @@ import { FooterWrapper, SocialContainer, CreatedByWrapper, IconWrapper } from '.
 import { useTheme } from 'styled-components';
 import { ThemeMode } from '../../../types/theme';
 import { SvgIcon } from '../../../styles/icon';
+import { DISCORD_INVITE_URL, EMAIL_ADDRESS, GITHUB_REPO_URL } from '../../../constants/socials';
 
 export const Footer = () => {
   const theme = useTheme();
@@ -27,15 +28,21 @@ export const Footer = () => {
         !!
       </CreatedByWrapper>
       <SocialContainer>
-        <IconWrapper data-tooltip-id={`base-tooltip`} data-tooltip-content={'Visit our Discord'}>
-          <i className="bx bxl-discord"></i>
-        </IconWrapper>
-        <IconWrapper data-tooltip-id={`base-tooltip`} data-tooltip-content={'Checkout source on Github'}>
-          <i className="bx bxl-github"></i>
-        </IconWrapper>
-        <IconWrapper data-tooltip-id={`base-tooltip`} data-tooltip-content={'Contact Us'}>
-          <i className="bx bx-envelope"></i>
-        </IconWrapper>
+        <a href={DISCORD_INVITE_URL}>
+          <IconWrapper>
+            <i className="bx bxl-discord"></i>
+          </IconWrapper>
+        </a>
+        <a href={GITHUB_REPO_URL}>
+          <IconWrapper>
+            <i className="bx bxl-github"></i>
+          </IconWrapper>
+        </a>
+        <a href={`mailto:${EMAIL_ADDRESS}`}>
+          <IconWrapper>
+            <i className="bx bx-envelope"></i>
+          </IconWrapper>
+        </a>
       </SocialContainer>
     </FooterWrapper>
   );
