@@ -42,7 +42,7 @@ def convert_eval_to_downscaled_centipawn(eval_str):
         return int(eval_str)  / centipawn_downscale_factor
 
 # Sort input evals from strongest to weakest
-# This returns the strings as in.
+# This returns the strings as is but in sorted order.
 # Example:
 #   ['+200', '-50', '#-1', '#1'] -> ['#1', '+200', '-50', '#-1']
 def sort_evals(evals):
