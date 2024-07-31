@@ -51,11 +51,11 @@ const getBackgroundColor = (difficulty: Difficulty) => {
     case Difficulty.BEGINNER:
       return '#4caf50'; // Green
     case Difficulty.EASY:
-      return '#8bc34a'; // Light green
+      return '#68b114'; // Light green
     case Difficulty.MEDIUM:
-      return '#ffeb3b'; // Yellow
+      return '#c6951b'; // Yellow
     case Difficulty.HARD:
-      return '#ff9800'; // Orange
+      return '#d97700'; // Orange
     case Difficulty.MASTER:
       return '#f44336'; // Red
     default:
@@ -68,8 +68,8 @@ export const DifficultyLozenge = styled.span<DifficultyWrapperProps>`
   justify-content: center;
   align-items: center;
   padding: 0.1em 0.3em;
-  border-radius: 4px;
-  font-size: 0.8rem;
+  border-radius: 0.2em;
+  font-size: 0.8em;
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
