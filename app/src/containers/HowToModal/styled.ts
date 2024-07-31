@@ -177,6 +177,12 @@ export const DiscordContainer = styled.p<DiscordContainerProps>`
 
   padding-top: 1em;
 
+  // Center the link child
+  & a {
+    display: flex;
+    gap: 0.2em;
+  }
+
   // Discord pallete
   color: #7289da;
   & a {
