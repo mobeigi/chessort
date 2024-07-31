@@ -17,6 +17,7 @@ export const Description = ({ gameId, difficulty, positionHits, gameHits }: Desc
 
   const gameHitsTooltipHtml = `<span>Game (position + moves) played <strong>${gameHits}</strong> times.</span>`;
   const positionHitsTooltipHtml = `<span>Position (FEN) played <strong>${positionHits}</strong> times.</span>`;
+  const difficultyLozengeTooltipHtml = `<span><strong>[BETA]</strong> Estimated solve difficulty for humans.</span>`;
 
   return (
     <DescriptionContainer>
@@ -50,7 +51,13 @@ export const Description = ({ gameId, difficulty, positionHits, gameHits }: Desc
       </Line>
       <Line>
         <strong>Difficulty:</strong>
-        <DifficultyLozenge $difficulty={difficulty}>{difficulty}</DifficultyLozenge>
+        <DifficultyLozenge
+          $difficulty={difficulty}
+          data-tooltip-id="base-tooltip"
+          data-tooltip-html={difficultyLozengeTooltipHtml}
+        >
+          {difficulty}
+        </DifficultyLozenge>
       </Line>
     </DescriptionContainer>
   );

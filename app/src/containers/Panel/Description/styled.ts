@@ -76,4 +76,5 @@ export const DifficultyLozenge = styled.span<DifficultyWrapperProps>`
   color: #ececec;
   background-color: ${({ $difficulty }) => getBackgroundColor($difficulty)};
   white-space: nowrap;
+  user-select: none;
 `;
