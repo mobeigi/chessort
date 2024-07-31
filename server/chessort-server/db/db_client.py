@@ -4,7 +4,7 @@ from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
 import urllib.parse
 from .db_models import Base, Positions, Move, GamesPlayed, PositionMetadata, GamesPlayedMetadata
-from .utils import from_move_hash
+from ..utils.helpers import from_move_hash
 
 load_dotenv()
 

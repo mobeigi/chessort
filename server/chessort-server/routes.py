@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
-from .db_client import get_random_game, get_game_by_game_id, register_game_played, get_game_solution, get_games_played_id
-from .utils import generate_game_id, decode_game_id, to_move_hash, map_difficulty
-from .generation.difficulty import get_difficulty
+from .db.db_client import get_random_game, get_game_by_game_id, register_game_played, get_game_solution, get_games_played_id
+from .utils.sqids import generate_game_id, decode_game_id
+from .utils.helpers import to_move_hash, map_difficulty
+from .services.difficulty import get_difficulty
 import random
 
 app = Blueprint('app', __name__)
