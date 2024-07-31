@@ -23,14 +23,6 @@ export const CardContainer = styled.div.attrs<CardContainerProps>(({ $isDragging
   border-radius: 0.4em;
   align-items: center;
 
-  > *:not(:first-child) {
-    margin-left: 0.4em; /* Set the default gap */
-  }
-
-  > *:nth-child(2) {
-    margin-left: 0.2em; /* No gap between 1st & 2nd child */
-  }
-
   ${({ $isPreviewed, $isDragging, theme }) =>
     ($isPreviewed || $isDragging) &&
     `
@@ -139,6 +131,7 @@ export const MoveNotation = styled.span<SanMovePieceProps>`
 
 export const EngineRankWrapper = styled.span`
   display: flex;
+  margin-right: 0.2em;
   filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25)); // Need to add the drop shadow here so it affects clip-path in child
 
   // Highlight effect on hover
