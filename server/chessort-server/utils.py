@@ -1,6 +1,7 @@
 import os
 from sqids import Sqids
 from dotenv import load_dotenv
+from .models import Difficulty
 
 load_dotenv()
 
@@ -42,3 +43,18 @@ def from_move_hash(move_hash):
         list: A sorted list of UCI moves.
     """
     return move_hash.split(',')
+
+def map_difficulty(difficulty):
+    if not (0 <= difficulty <= 100):
+        raise ValueError("Difficulty must be within the range of 0 to 100.")
+    
+    if difficulty < 20:
+        return Difficulty.BEGINNER
+    elif 20 <= difficulty < 40:
+        return Difficulty.EASY
+    elif 40 <= difficulty < 60:
+        return Difficulty.MEDIUM
+    elif 60 <= difficulty < 80:
+        return Difficulty.HARD
+    else:
+        return Difficulty.MASTER

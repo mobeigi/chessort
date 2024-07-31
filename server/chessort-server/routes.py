@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from .db_client import get_random_game, get_game_by_game_id, register_game_played, get_game_solution, get_games_played_id
-from .utils import generate_game_id, decode_game_id, to_move_hash
+from .utils import generate_game_id, decode_game_id, to_move_hash, map_difficulty
+from .generation.difficulty import get_difficulty
 import random
 
 app = Blueprint('app', __name__)
@@ -26,6 +27,11 @@ def get_game(gameId):
     move_hash = to_move_hash(uci_moves)
     _, position_hits, game_hits = register_game_played(fen, move_hash)
 
+    # Compute difficulty
+    engine_evals = [move.EngineEval for move in moves]
+    difficulty = get_difficulty(engine_evals)
+    difficulty_str = map_difficulty(difficulty).value
+
     # Shuffle the moves for the response
     random.shuffle(uci_moves)
 
@@ -33,7 +39,7 @@ def get_game(gameId):
         'gameId': gameId,
         'fen': position.FEN,
         'uciMoves': uci_moves,
-        'difficulty': 'BEGINNER',
+        'difficulty': difficulty_str,
         'positionHits': position_hits,
         'gameHits': game_hits
     })
@@ -55,13 +61,18 @@ def api_get_random_game():
     # Generate the game ID
     game_id = generate_game_id(game_played_id)
 
+    # Compute difficulty
+    engine_evals = [move.EngineEval for move in moves]
+    difficulty = get_difficulty(engine_evals)
+    difficulty_str = map_difficulty(difficulty).value
+
     # Shuffle the moves for the response
     random.shuffle(uci_moves)
 
     return jsonify({
         'fen': position.FEN,
         'uciMoves': uci_moves,
-        'difficulty': 'BEGINNER',
+        'difficulty': difficulty_str,
         'gameId': game_id,
         'positionHits': position_hits,
         'gameHits': game_hits
