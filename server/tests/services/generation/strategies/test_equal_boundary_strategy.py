@@ -18,6 +18,23 @@ def test_insufficient_moves_required():
     with pytest.raises(ValueError):
         equal_boundary_strategy.select_moves(moves, 1)
 
+def test_can_handle_insufficient_moves_buckets():
+    moves = [ 
+        Move(id=1, position_id=1, uci_move="uci1", engine_eval="#1", engine_overall_rank=1),
+        Move(id=2, position_id=1, uci_move="uci2", engine_eval="#1", engine_overall_rank=2),
+        Move(id=3, position_id=1, uci_move="uci3", engine_eval="#2", engine_overall_rank=3),
+        Move(id=4, position_id=1, uci_move="uci4", engine_eval="#2", engine_overall_rank=4),
+        Move(id=5, position_id=1, uci_move="uci5", engine_eval="#3", engine_overall_rank=5),
+        Move(id=6, position_id=1, uci_move="uci5", engine_eval="#3", engine_overall_rank=6),
+     ]
+    assert len(moves) == 6
+    
+    # Can handle, enough buckets
+    assert equal_boundary_strategy.can_handle(moves=moves, num_required_moves=3)
+
+    # Cannot handle, not enough buckets
+    assert not equal_boundary_strategy.can_handle(moves=moves, num_required_moves=4)
+
 def test_insufficient_moves():
     moves = []
     assert len(moves) == 0

@@ -15,6 +15,12 @@ class EqualBoundaryStrategy(MoveSelectionStrategy):
         # Strategy requires at least 2 required moves.
         if num_required_moves < 2:
             return False
+        
+        # Need at least num_required_moves buckets
+        ggh = GameGenerationHelper(moves)
+        if ggh.smart_bucket.size < num_required_moves:
+            return False
+
         return super().can_handle(moves, num_required_moves)
 
     def select_moves(self, moves: list[Move], num_required_moves: int) -> list[Move]:

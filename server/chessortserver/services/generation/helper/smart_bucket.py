@@ -11,7 +11,8 @@ class Bucket:
     def __init__(self) -> None:
         self._contents: list[BucketItem] = []
         self._total_used = 0
-
+    
+    # TODO: Use len()
     @property
     def size(self) -> int:
         return len(self._contents)
@@ -53,6 +54,7 @@ class SmartBucket:
         # This is a core requirement that powers the functionality of this class 
         self._buckets = self._init_smart_bucket(moves)
 
+    # TODO: Use len()
     @property
     def size(self) -> int:
         return len(self._buckets)
