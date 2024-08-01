@@ -1,4 +1,4 @@
-from ..models import Difficulty
+from ..models.difficulty import Difficulty
 
 def to_move_hash(uci_moves):
     """

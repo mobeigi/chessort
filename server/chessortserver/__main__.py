@@ -18,7 +18,7 @@ def main():
     app.register_blueprint(blueprints)
 
     # Log startup
-    logger = Logger('chessort-server')
+    logger = Logger('chessortserver')
     logger.getLogger().info(f"Starting Chessort Server v{__version__}")
 
     # Disable CORS during local development

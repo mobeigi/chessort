@@ -20,24 +20,33 @@ It interacts with the backend database and provides a public API for consumption
 
 ## Requirements
 - Python 3
-- pipenv or venv
 
 ## Quick Start
 
+#### Setup virtual environment (Unix)
+#### `source ./venv/bin/activate`
+
+#### Setup virtual environment (Windows)
+#### `.\venv\Scripts\activate`
+
 #### Run in debug mode (development)
 
-#### `python -m chessort-server --debug`
+#### `python -m chessortserver --debug`
 
 #### Run in production mode
 
-#### `python -m chessort-server`
+#### `python -m chessortserver`
+
+#### Run all tests
+
+#### `pytest`
 
 ## Configuration
-TBA
+TODO
 
 ## Contributions
 Contributions are always welcome!
 Just make a [pull request](../../pulls).
 
 ## Licence
-All Rights Reserved.
+TODO

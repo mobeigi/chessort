@@ -1,7 +1,7 @@
 import os
 import logging
 
-LOGGING_FILE_PATH = 'logs/chessort-server.log'
+LOGGING_FILE_PATH = 'logs/chessortserver.log'
 
 class Logger:
     def __init__(self, name):

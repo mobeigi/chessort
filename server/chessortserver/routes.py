@@ -1,11 +1,14 @@
 from flask import Blueprint, jsonify, request
-from .db.db_client import get_random_game, get_game_by_game_id, register_game_played, get_game_solution, get_games_played_id
+from .db.db_client import get_game_by_game_id, register_game_played, get_game_solution, get_random_position_with_all_moves
 from .utils.sqids import generate_game_id, decode_game_id
 from .utils.helpers import to_move_hash, map_difficulty
 from .services.difficulty import get_difficulty
+from .services.generation.game_generator import GameGenerator
+from .models.converters import from_dao
 import random
 
 app = Blueprint('app', __name__)
+gg = GameGenerator()
 
 @app.route('/api/game/<gameId>', methods=['GET'])
 def get_game(gameId):
@@ -46,16 +49,25 @@ def get_game(gameId):
     })
 
 @app.route('/api/game/random', methods=['GET'])
-def api_get_random_game():
-    # Get a random game
-    position, moves = get_random_game()
+def get_random_game():
+    # Get a random position with all moves
+    position_dao, all_moves_daos = get_random_position_with_all_moves()
     
-    if not position or len(moves) != 4:
-        return jsonify({'error': 'No position found or insufficient/excess moves found for position.'}), 404
+    if not position_dao or len(all_moves_daos) < 4:
+        return jsonify({'error': 'No position found or insufficient moves found for position.'}), 404
+
+    # Convert to DTO's
+    all_moves = [ from_dao(move_dao) for move_dao in all_moves_daos ]
+
+    # Create a game from game generator
+    moves = gg.select_moves_for_game(all_moves, 4)
+
+    if len(moves) < 4:
+        return jsonify({'error': 'Insufficient moves found for position.'}), 404
 
     # Insert game played id
-    fen = position.FEN
-    uci_moves = [move.UciMove for move in moves]
+    fen = position_dao.FEN
+    uci_moves = [move.uci_move for move in moves]
     move_hash = to_move_hash(uci_moves)
     game_played_id, position_hits, game_hits = register_game_played(fen, move_hash)
 
@@ -63,7 +75,7 @@ def api_get_random_game():
     game_id = generate_game_id(game_played_id)
 
     # Compute difficulty
-    engine_evals = [move.EngineEval for move in moves]
+    engine_evals = [move.engine_eval for move in moves]
     difficulty = get_difficulty(engine_evals)
     difficulty_str = map_difficulty(difficulty).value
 
@@ -71,7 +83,7 @@ def api_get_random_game():
     random.shuffle(uci_moves)
 
     return jsonify({
-        'fen': position.FEN,
+        'fen': position_dao.FEN,
         'uciMoves': uci_moves,
         'difficulty': difficulty_str,
         'gameId': game_id,
@@ -93,7 +105,7 @@ def get_solution():
     if len(decoded_ids) != 1:
         return jsonify({'error': 'Invalid game id.'}), 404
     game_id = decoded_ids[0]
-
+    
     # Get solution
     solution = get_game_solution(game_id)
 

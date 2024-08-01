@@ -1,12 +1,12 @@
 __author__ = 'Mo Beigi'
-__copyright__ = 'Copyright 2024'
+__copyright__ = 'TODO'
 __description__ = 'Chessort Server'
 __email__ = 'me@mobeigi.com'
 __keywords__ = ['chessort', 'chess', 'puzzle', 'game', 'engine', 'ranking', 'evaluation']
-__license__ = "All Rights Reserved"
+__license__ = "TODO"
 __maintainer__ = 'Mo Beigi'
 __status__ = 'Production'
-__title__ = 'chessort-server'
+__title__ = 'chessortserver'
 __version_info__ = (1, 0, 0)
 __version__ = '.'.join(map(str, __version_info__))
 
