@@ -29,13 +29,13 @@ def map_difficulty(difficulty):
     if not (0 <= difficulty <= 100):
         raise ValueError("Difficulty must be within the range of 0 to 100.")
     
-    if difficulty < 20:
+    if difficulty < 50:
         return Difficulty.BEGINNER
-    elif 20 <= difficulty < 40:
+    elif 50 <= difficulty < 75:
         return Difficulty.EASY
-    elif 40 <= difficulty < 60:
+    elif 75 <= difficulty < 87.5:
         return Difficulty.MEDIUM
-    elif 60 <= difficulty < 80:
+    elif 87.5 <= difficulty < 95:
         return Difficulty.HARD
     else:
         return Difficulty.MASTER

@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from .db.db_client import get_game_by_game_id, register_game_played, get_game_solution, get_random_position_with_all_moves
 from .utils.sqids import generate_game_id, decode_game_id
 from .utils.helpers import to_move_hash, map_difficulty
-from .services.difficulty import get_difficulty
+from .utils.difficulty import get_difficulty
 from .services.generation.game_curator import GameCurator
 from .models.converters import from_dao
 import random
