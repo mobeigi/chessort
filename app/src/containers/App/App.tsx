@@ -13,8 +13,19 @@ import useUserPreferences from '../../hooks/useUserPreferences';
 import { ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
 import GlobalTooltips from './GlobalTooltip';
+import ReactGA from 'react-ga4';
+import StatCounter from '../../components/StatCounter';
+import { CHESSORT_STATCOUNTER_PROJECT, CHESSORT_STATCOUNTER_SECURITY } from '../../constants/analytics';
+import { HelmetProvider } from 'react-helmet-async';
 
 Modal.setAppElement('#root');
+
+// // Init Google Analytics
+// ReactGA.initialize(COMMON.ANALYTICS.gaTrackingId, {
+//   gtagOptions: {
+//     send_page_view: false,
+//   },
+// });
 
 const AppContainer = () => {
   const { mode } = useUserPreferences();
@@ -28,6 +39,7 @@ const AppContainer = () => {
       <StyledThemeProvider theme={{ ...theme, ...extraThemeArguments }}>
         <GlobalStyle />
         <GlobalTooltips />
+        <StatCounter project={CHESSORT_STATCOUNTER_PROJECT} security={CHESSORT_STATCOUNTER_SECURITY} />
         <Header />
         <ToastContainer />
         <Routes>
@@ -44,11 +56,13 @@ const AppContainer = () => {
 export const App = () => (
   <>
     <Router>
-      <UserPreferencesProvider>
-        <GameProvider>
-          <AppContainer />
-        </GameProvider>
-      </UserPreferencesProvider>
+      <HelmetProvider>
+        <UserPreferencesProvider>
+          <GameProvider>
+            <AppContainer />
+          </GameProvider>
+        </UserPreferencesProvider>
+      </HelmetProvider>
     </Router>
   </>
 );
