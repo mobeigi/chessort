@@ -35,7 +35,7 @@ def get_random_position_with_all_moves():
     return position, moves
 
 def register_game_played(fen, move_hash):
-    """ Insert a new game played entry and update hits """
+    """ Insert a new game played entry (if one doesn't already exist) and update hits """
     session = Session()
     
     # Check if the position already exists
