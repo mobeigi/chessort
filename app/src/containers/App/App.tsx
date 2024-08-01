@@ -13,7 +13,7 @@ import useUserPreferences from '../../hooks/useUserPreferences';
 import { ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
 import GlobalTooltips from './GlobalTooltip';
-import ReactGA from 'react-ga4';
+// import ReactGA from 'react-ga4';
 import StatCounter from '../../components/StatCounter';
 import { CHESSORT_STATCOUNTER_PROJECT, CHESSORT_STATCOUNTER_SECURITY } from '../../constants/analytics';
 import { HelmetProvider } from 'react-helmet-async';

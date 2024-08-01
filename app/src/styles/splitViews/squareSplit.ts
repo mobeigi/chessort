@@ -6,6 +6,7 @@ import type { SquareSplitProps } from './types';
  * This includes viewports with a non-squarish viewport.
  * The min width and min height are used to enforce reasonable minimums.
  */
+// @ts-expect-error We pass the param for completeness
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const SquareCss = ({ percent: leftPercent, totalPercent, minWidthPx, minHeightPx }: SquareSplitProps) => css`
   display: flex;
