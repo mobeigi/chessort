@@ -40,7 +40,7 @@ class GameGenerationHelper:
                 for j in range(0, bucket.size):
                     # Check the criteria for the move
                     move = bucket[j]
-                    if self._is_valid_move(bucket, j, move, selection):
+                    if self._does_move_match_selection_criteria(bucket, j, move, selection):
                         # Mark move as selected in bucket
                         bucket.mark_as_used(j)
                         return move
@@ -50,17 +50,21 @@ class GameGenerationHelper:
                 for j in range(0, bucket.size):
                     # Check the criteria for the move
                     move = bucket[j]
-                    if self._is_valid_move(bucket, j, move, selection):
+                    if self._does_move_match_selection_criteria(bucket, j):
                         # Mark move as selected in bucket
                         bucket.mark_as_used(j)
                         return move
         
-        # Raise an error if no move was selected
-        raise GameGenerationError("Failed to select move matching provided selection.") 
+        # Raise an error if we were unable to select any moves
+        raise GameGenerationError("Failed to select move matching provided selection.")
 
-    def _is_valid_move(self, bucket, moveIndex, move, selection):
-        # TODO: finish
+    def _does_move_match_selection_criteria(self, bucket, moveIndex):
+        """
+        Check if we the move matches the selection criteria.
+        """
+        # Do not reuse moves
         if bucket.is_used(moveIndex):
             return False
         
+        # TODO: Implement additional capabilties for Selection here
         return True
