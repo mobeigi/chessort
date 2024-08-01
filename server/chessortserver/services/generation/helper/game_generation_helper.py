@@ -40,7 +40,7 @@ class GameGenerationHelper:
                 for j in range(0, bucket.size):
                     # Check the criteria for the move
                     move = bucket[j]
-                    if self._does_move_match_selection_criteria(bucket, j, move, selection):
+                    if self._does_move_match_selection_criteria(bucket, j):
                         # Mark move as selected in bucket
                         bucket.mark_as_used(j)
                         return move
