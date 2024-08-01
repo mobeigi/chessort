@@ -1,10 +1,16 @@
-from ..strategy import Strategy
+from ..move_selection_strategy import MoveSelectionStrategy
 from ..helper.game_generation_helper import GameGenerationHelper
 from ..helper.selection import Selection
 from ..exception.game_generation_error import GameGenerationError
 from ....models.models import Move
 
-class EqualBoundaryStrategy(Strategy):
+class EqualBoundaryStrategy(MoveSelectionStrategy):
+    """
+    A strategy that selects moves at evenly spaced boundaries.
+    For example, if num_required_moves is 4:
+        The strategy will pick one move at each index percentages [0%, 33%, 66%, 100%].
+    This ensures a good spread for selected values.
+    """
     def can_handle(self, moves: list[Move], num_required_moves: int) -> bool:
         # Strategy requires at least 2 required moves.
         if num_required_moves < 2:

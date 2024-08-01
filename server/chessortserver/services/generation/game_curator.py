@@ -1,9 +1,11 @@
 import random
-from .strategies.random_strategy import RandomStrategy
 from .strategies.equal_boundary_strategy import EqualBoundaryStrategy
 from ...models.models import Move
 
-class GameGenerator:
+class GameCurator:
+    """
+    Responsible for curating interesting games.
+    """
     def __init__(self) -> None:
         self.strategies = [
             EqualBoundaryStrategy() 

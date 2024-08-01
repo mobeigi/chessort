@@ -52,9 +52,6 @@ class SmartBucket:
         # Buckets must be sorted by the engine overall rank!
         # This is a core requirement that powers the functionality of this class 
         self._buckets = self._init_smart_bucket(moves)
-        
-        if len(self._buckets) != len(moves):
-            raise ValueError('Failed to create SmartBucket of expected size.')
 
     @property
     def size(self) -> int:
@@ -66,8 +63,8 @@ class SmartBucket:
         else:
             raise IndexError("Index out of range")
 
-    def _init_smart_bucket(self, moves: list[Move]):
-        # Early exit
+    def _init_smart_bucket(self, moves: list[Move]) -> list[Bucket]:
+        # Early exit if no moves are provided
         if len(moves) <= 0:
             return []
         
@@ -75,9 +72,10 @@ class SmartBucket:
         grouped_moves = {}
         for move in moves:
             if move.engine_eval not in grouped_moves:
-                grouped_moves[move.engine_overall_rank] = Bucket()
-            grouped_moves[move.engine_overall_rank].append(move)
-
-        # Sort the keys (engine_overall_rank) and create a list of Bucket objects
-        sorted_buckets = [grouped_moves[engine_overall_rank] for engine_overall_rank in sorted(grouped_moves.keys())]
+                # Initialize the bucket with the engine overall rank for sorting
+                grouped_moves[move.engine_eval] = (Bucket(), move.engine_overall_rank)
+            grouped_moves[move.engine_eval][0].append(move)
+        
+        # Sort the buckets by the overall rank
+        sorted_buckets = [grouped_move for grouped_move, _ in sorted(grouped_moves.values(), key=lambda item: item[1])]
         return sorted_buckets

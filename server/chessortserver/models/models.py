@@ -1,6 +1,5 @@
+""" The models here act as our DTOs that should be used at the service layer."""
 from pydantic import BaseModel
-
-""" These models act as our DTOs"""
 
 class Move(BaseModel):
     id: int

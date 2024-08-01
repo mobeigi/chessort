@@ -3,12 +3,12 @@ from .db.db_client import get_game_by_game_id, register_game_played, get_game_so
 from .utils.sqids import generate_game_id, decode_game_id
 from .utils.helpers import to_move_hash, map_difficulty
 from .services.difficulty import get_difficulty
-from .services.generation.game_generator import GameGenerator
+from .services.generation.game_curator import GameCurator
 from .models.converters import from_dao
 import random
 
 app = Blueprint('app', __name__)
-gg = GameGenerator()
+gc = GameCurator()
 
 @app.route('/api/game/<gameId>', methods=['GET'])
 def get_game(gameId):
@@ -60,7 +60,7 @@ def get_random_game():
     all_moves = [ from_dao(move_dao) for move_dao in all_moves_daos ]
 
     # Create a game from game generator
-    moves = gg.select_moves_for_game(all_moves, 4)
+    moves = gc.select_moves_for_game(all_moves, 4)
 
     if len(moves) < 4:
         return jsonify({'error': 'Insufficient moves found for position.'}), 404

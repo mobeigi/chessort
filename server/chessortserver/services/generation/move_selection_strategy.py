@@ -1,6 +1,6 @@
 from ...models.models import Move
 
-class Strategy:
+class MoveSelectionStrategy:
     """
     Base class for all move selection strategies.
     This class should be extended by specific strategy implementations.
