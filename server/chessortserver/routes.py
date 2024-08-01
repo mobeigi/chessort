@@ -10,7 +10,7 @@ import random
 app = Blueprint('app', __name__)
 gc = GameCurator()
 
-@app.route('/api/game/<gameId>', methods=['GET'])
+@app.route('/game/<gameId>', methods=['GET'])
 def get_game(gameId):
     # Decode game id sqid
     decoded_ids = decode_game_id(gameId)
@@ -48,7 +48,7 @@ def get_game(gameId):
         'gameHits': game_hits
     })
 
-@app.route('/api/game/random', methods=['GET'])
+@app.route('/game/random', methods=['GET'])
 def get_random_game():
     # Get a random position with all moves
     position_dao, all_moves_daos = get_random_position_with_all_moves()
@@ -91,7 +91,7 @@ def get_random_game():
         'gameHits': game_hits
     })
 
-@app.route('/api/solution', methods=['POST'])
+@app.route('/solution', methods=['POST'])
 def get_solution():
     # Get request data
     data = request.get_json()
