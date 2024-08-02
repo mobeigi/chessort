@@ -26,6 +26,10 @@ Chessort is a Chess puzzle game where you sort moves based on the chess engine's
   - [ingestion](data/ingestion): Scripts for ingesting generated Chessort data into a database.
   - [sql](data/sql): Contains SQL scripts for setting up the database schema.
 
+## Contributions
+Contributions are always welcome!  
+Just make a [pull request](../../pulls).
+
 ## Credits
 
 - [Lichess Open Database](https://database.lichess.org/)
@@ -34,9 +38,20 @@ Chessort is a Chess puzzle game where you sort moves based on the chess engine's
 
 See [Credits](CREDITS.md) for full credits.
 
-## Contributions
-Contributions are always welcome!  
-Just make a [pull request](../../pulls).
-
 ## License
-TBA
+
+### Chessort
+
+Chessort is licensed under the [GNU General Public License v3.0 (GPL-3.0)](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
+### Lichess Open Database
+
+This project uses chess data from the [Lichess Open Database](https://database.lichess.org/). The data is available under the [Creative Commons Zero (CC0) License](https://creativecommons.org/publicdomain/zero/1.0/).
+
+### Lichess Chessground
+
+This project utilizes [Lichess Chessground](https://github.com/lichess-org/chessground) for rendering the chessboard. Chessground is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+### Stockfish
+
+This project leverages the  [Stockfish](https://stockfishchess.org/) chess engine for analysis. Stockfish is licensed under the [GNU General Public License v3.0 (GPL-3.0)](https://www.gnu.org/licenses/gpl-3.0.en.html).
