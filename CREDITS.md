@@ -24,3 +24,7 @@ Special thanks to the creators of the icons used in this project:
 - **Two Way**: <a href="https://www.flaticon.com/free-icon/two-way_3381675" title="Two way icons">Two way icon by Freepik</a>
 - **Click**: <a href="https://www.flaticon.com/free-icon/click_1481058" title="click icons">Click icon created by Freepik</a>
 - **Drag & Drop**: <a href="https://www.flaticon.com/free-icon/drop_11784246" title="drag and drop icons">Drag and drop icons by Shah Rukh Qureshi</a>
+
+## Support and Gratitude
+
+Huge thanks to the [Lichess](https://discord.gg/lichess) and [Stockfish](https://discord.gg/GWDRS3kU6R) developer communities on Discord for their valuable discussions and recommendations.
