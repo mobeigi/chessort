@@ -21,11 +21,13 @@ This folder contains the script for ingesting chessort puzzle data into the MySQ
 
 ## Ingestion Script
 
-The `ingestion.py` script processes a CSV file containing chessort puzzles and inserts the data into the database. For more details on the script's functionality, refer to the header comments within the `ingestion.py` file.
+The `ingestion.py` script processes a CSV file containing chessort puzzles and inserts the data into the database. The input CSV file should be the output from the Chessort `generation` process. 
+
+For more details on the script's functionality, refer to the header comments within the `ingestion.py` file.
 
 ## Usage
 
 Run the script with the following command:
 ```sh
-python ingestion.py <csv_file_path>
+python ingestion.py <chessort_csv_file_path>
 ```
