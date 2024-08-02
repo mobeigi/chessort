@@ -106,7 +106,7 @@ export const SanMoveWrapper = styled.span`
   align-items: center;
   line-height: 1.2em;
   gap: 0.2em;
-  padding-left: 0.6em;
+  padding-left: 0.4em;
 `;
 
 export const MovePieceIcon = styled(SvgIcon)`
@@ -131,7 +131,7 @@ export const MoveNotation = styled.span<SanMovePieceProps>`
 
 export const EngineRankWrapper = styled.span`
   display: flex;
-  margin-right: 0.2em;
+  margin-right: 0.3em;
   filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25)); // Need to add the drop shadow here so it affects clip-path in child
 
   // Highlight effect on hover
