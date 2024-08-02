@@ -36,7 +36,7 @@ Just make a [pull request](../../pulls).
 - [Lichess Chessground](https://github.com/lichess-org/chessground)
 - [Stockfish](https://stockfishchess.org/) 
 
-See [Credits](CREDITS.md) for full credits.
+See [CREDITS.md](CREDITS.md) for full credits.
 
 ## License
 
