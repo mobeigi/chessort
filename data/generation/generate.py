@@ -44,7 +44,7 @@ Metadata JSON format:
 - minimumMovesRequired: Minimum number of moves required.
 - minPopularityRequired: Minimum popularity score required.
 - minNumberPlaysRequired: Minimum number of plays required.
-- minRatingDeviation: Maximum rating deviation allowed.
+- maxRatingDeviation: Maximum rating deviation allowed.
 - inputLichessFileSha256: SHA-256 hash of the input Lichess puzzle file.
 - outputFileSha256: SHA-256 hash of the generated output CSV file.
 """
@@ -216,7 +216,7 @@ def process_input_file(file_path, offset=0, limit=10):
         "minimumMovesRequired": MIN_MOVES_REQUIRED,
         "minPopularityRequired": MIN_POPULARITY_REQUIRED,
         "minNumberPlaysRequired": MIN_NUMBER_PLAYS_REQUIRED,
-        "minRatingDeviation": MAX_RATING_DEVIATION,
+        "maxRatingDeviation": MAX_RATING_DEVIATION,
         "inputLichessFileSha256": input_lichess_file_sha256,
         "outputFileSha256": output_file_sha256
     }

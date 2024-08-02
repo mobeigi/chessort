@@ -74,7 +74,7 @@ LichessPuzzleId,FEN,Rating,PreLastMovePositionEvaluation,LastMove,CurrentPositio
     "minimumMovesRequired": 4,
     "minPopularityRequired": 90,
     "minNumberPlaysRequired": 100,
-    "minRatingDeviation": 100,
+    "maxRatingDeviation": 100,
     "inputLichessFileSha256": "a480b5c25389d653800889bcf223d32a622249bd3d6ba3e210b8c75bc8092300",
     "outputFileSha256": "3c3fcc7e1f077d5299c903da2495ee170b196f34aa147d2d816dcba813f7362f"
 }
