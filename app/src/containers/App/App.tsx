@@ -20,8 +20,9 @@ import {
   CHESSORT_STATCOUNTER_PROJECT,
   CHESSORT_STATCOUNTER_SECURITY,
 } from '../../constants/analytics';
-import { HelmetProvider } from 'react-helmet-async';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useEffect } from 'react';
+import { APP_NAME } from '../../constants/app';
 
 // Set modal element
 Modal.setAppElement('#root');
@@ -54,6 +55,9 @@ const AppContainer = () => {
         <StatCounter project={CHESSORT_STATCOUNTER_PROJECT} security={CHESSORT_STATCOUNTER_SECURITY} />
         <Header />
         <ToastContainer />
+        <Helmet>
+          <title>{APP_NAME}</title>
+        </Helmet>
         <Routes>
           <Route path="/" element={<Game />} />
           <Route path="/game/:gameId" element={<Game />} />

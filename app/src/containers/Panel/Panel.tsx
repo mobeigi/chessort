@@ -28,7 +28,7 @@ import confetti from 'canvas-confetti';
 import { toast, TypeOptions } from 'react-toastify';
 import { ThemeMode } from '../../types/theme';
 import { Helmet } from 'react-helmet-async';
-import { CHESSORT_APP_BASE_URL } from '../../constants/app';
+import { CHESSORT_APP_BASE_URL, APP_NAME } from '../../constants/app';
 
 // TODO: Both below functions should be in some sort of game utils file
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
@@ -318,6 +318,9 @@ export const Panel = () => {
     <>
       {gameId && (
         <Helmet>
+          <title>
+            {APP_NAME} (#{gameId})
+          </title>
           <link rel="canonical" href={`${CHESSORT_APP_BASE_URL}/game/${gameId}`} />
         </Helmet>
       )}
