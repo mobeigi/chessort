@@ -27,6 +27,8 @@ import ActionBar from './ActionBar';
 import confetti from 'canvas-confetti';
 import { toast, TypeOptions } from 'react-toastify';
 import { ThemeMode } from '../../types/theme';
+import { Helmet } from 'react-helmet-async';
+import { CHESSORT_APP_BASE_URL } from '../../constants/app';
 
 // TODO: Both below functions should be in some sort of game utils file
 // Returns all correct ranks for a card which can then be used to compute correctness in ordering
@@ -313,63 +315,70 @@ export const Panel = () => {
   }
 
   return (
-    <PanelContainer>
-      <Hub>
-        <Description
-          gameId={state.gameDetails.gameId}
-          difficulty={state.gameDetails.difficulty}
-          positionHits={state.gameDetails.positionHits}
-          gameHits={state.gameDetails.gameHits}
-        />
-        <ActionBar fen={state.gameDetails.fen} />
-      </Hub>
-      <CardAndButtonContainer>
-        <CardsWrapper>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragStart={handleCardDragStart}
-            onDragEnd={handleCardDragEnd}
-            modifiers={[restrictToParentElement]}
-          >
-            <SortableContext
-              items={state.moveDetails.map((card) => card.uciMove)}
-              strategy={verticalListSortingStrategy}
-              disabled={state.isLoadingSolution || state.revealed}
+    <>
+      {gameId && (
+        <Helmet>
+          <link rel="canonical" href={`${CHESSORT_APP_BASE_URL}/game/${gameId}`} />
+        </Helmet>
+      )}
+      <PanelContainer>
+        <Hub>
+          <Description
+            gameId={state.gameDetails.gameId}
+            difficulty={state.gameDetails.difficulty}
+            positionHits={state.gameDetails.positionHits}
+            gameHits={state.gameDetails.gameHits}
+          />
+          <ActionBar fen={state.gameDetails.fen} />
+        </Hub>
+        <CardAndButtonContainer>
+          <CardsWrapper>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragStart={handleCardDragStart}
+              onDragEnd={handleCardDragEnd}
+              modifiers={[restrictToParentElement]}
             >
-              {state.moveDetails.map((moveDetail) => (
-                <Card
-                  key={moveDetail.uciMove}
-                  moveDetail={moveDetail}
-                  turnPlayer={turnPlayer}
-                  sanMove={uciMoveToSanMove(state.initialChessJs, moveDetail.uciMove) ?? ''}
-                  revealed={state.revealed}
-                  correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
-                  onClick={handleCardClick}
-                  isPreviewed={state.previewedMove === moveDetail.uciMove}
-                />
-              ))}
-            </SortableContext>
-          </DndContext>
-        </CardsWrapper>
-        {state.revealed ? (
-          <NextButton onClick={handleNextGame} disabled={state.isLoadingGame}>
-            {state.isLoadingGame ? (
-              <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
-            ) : (
-              <span>Next Game</span>
-            )}
-          </NextButton>
-        ) : (
-          <SubmitButton onClick={handleSubmit} disabled={state.isLoadingSolution}>
-            {state.isLoadingSolution ? (
-              <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
-            ) : (
-              <span>Submit</span>
-            )}
-          </SubmitButton>
-        )}
-      </CardAndButtonContainer>
-    </PanelContainer>
+              <SortableContext
+                items={state.moveDetails.map((card) => card.uciMove)}
+                strategy={verticalListSortingStrategy}
+                disabled={state.isLoadingSolution || state.revealed}
+              >
+                {state.moveDetails.map((moveDetail) => (
+                  <Card
+                    key={moveDetail.uciMove}
+                    moveDetail={moveDetail}
+                    turnPlayer={turnPlayer}
+                    sanMove={uciMoveToSanMove(state.initialChessJs, moveDetail.uciMove) ?? ''}
+                    revealed={state.revealed}
+                    correctRanks={computeCorrectRanks(state.solutionEvals, moveDetail)}
+                    onClick={handleCardClick}
+                    isPreviewed={state.previewedMove === moveDetail.uciMove}
+                  />
+                ))}
+              </SortableContext>
+            </DndContext>
+          </CardsWrapper>
+          {state.revealed ? (
+            <NextButton onClick={handleNextGame} disabled={state.isLoadingGame}>
+              {state.isLoadingGame ? (
+                <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
+              ) : (
+                <span>Next Game</span>
+              )}
+            </NextButton>
+          ) : (
+            <SubmitButton onClick={handleSubmit} disabled={state.isLoadingSolution}>
+              {state.isLoadingSolution ? (
+                <ClipLoader size={'1em'} color={theme.colors.status.disabled.baseHighlight} />
+              ) : (
+                <span>Submit</span>
+              )}
+            </SubmitButton>
+          )}
+        </CardAndButtonContainer>
+      </PanelContainer>
+    </>
   );
 };
