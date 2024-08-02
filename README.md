@@ -26,6 +26,14 @@ Chessort is a Chess puzzle game where you sort moves based on the chess engine's
   - [ingestion](data/ingestion): Scripts for ingesting generated Chessort data into a database.
   - [sql](data/sql): Contains SQL scripts for setting up the database schema.
 
+## Credits
+
+- [Lichess Open Database](https://database.lichess.org/)
+- [Lichess Chessground](https://github.com/lichess-org/chessground)
+- [Stockfish](https://stockfishchess.org/) 
+
+See [Credits](CREDITS.md) for full credits.
+
 ## Contributions
 Contributions are always welcome!  
 Just make a [pull request](../../pulls).
