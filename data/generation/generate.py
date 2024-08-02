@@ -71,7 +71,7 @@ LICHESS_PUZZLE_FILE_OFFSET = 1700000
 LICHESS_PUZZLE_FILE_LIMIT = 5
 
 MULTI_PV = 50
-EVALUATION_DEPTH = 22
+EVALUATION_DEPTH = 25
 
 MAX_WORKERS = 24
 STOCKFISH_THREADS_PER_ENGINE = 1
@@ -202,6 +202,7 @@ def process_input_file(file_path, offset=0, limit=10):
                     result = future.result()
                     if result:
                         writer.writerow(result)
+                        csvfile.flush()
                         print(f"[{result['LichessPuzzleId']}] Successfully processed.")
 
     # Generate and store meta data file
