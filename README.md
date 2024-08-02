@@ -1,18 +1,17 @@
-<p align="center">
-<img src="https://github.com/mobeigi/chessort/blob/main/.github/logo/logo.svg?raw=true" height="110px" width="auto"/>
-<br/>
-<h3 align="center">Chessort</h3>
-<p align="center">Chess puzzle sorting game.</p>
-<h2></h2>
-<br />
-
-<p align="center">
-<a href="../../releases"><img src="https://img.shields.io/github/release/mobeigi/chessort.svg?style=flat-square" /></a>
-<a href="../../actions"><img src="https://img.shields.io/github/actions/workflow/status/mobeigi/chessort/workflow.yml?style=flat-square" /></a>
-<a href="../../issues"><img src="https://img.shields.io/github/issues/mobeigi/chessort.svg?style=flat-square" /></a>
-<a href="../../pulls"><img src="https://img.shields.io/github/issues-pr/mobeigi/chessort.svg?style=flat-square" /></a> 
-<a href="LICENSE.md"><img src="https://img.shields.io/github/license/mobeigi/chessort.svg?style=flat-square" /></a>
-</p>
+<div align="center">
+  <img src="https://github.com/mobeigi/chessort/blob/main/.github/logo/logo.svg?raw=true" height="110px" width="auto"/>
+  <br/>
+  <h3 align="center">Chessort</h3>
+  <p align="center">Chess puzzle sorting game.</p>
+  <h2></h2>
+  <br />
+  
+  [![Issues][issues-badge]][issues-link]
+  [![Pull Requests][pulls-badge]][pulls-link]  
+  [![Website][website-badge]][website-link]
+  [![Discord][discord-badge]][discord-link]
+  [![License][license-badge]][license-link]
+</div>
 
 ## Description
 Chessort is a Chess puzzle game where you sort moves based on the chess engine's evaluation.
@@ -55,3 +54,23 @@ This project utilizes [Lichess Chessground](https://github.com/lichess-org/chess
 ### Stockfish
 
 This project leverages the  [Stockfish](https://stockfishchess.org/) chess engine for analysis. Stockfish is licensed under the [GNU General Public License v3.0 (GPL-3.0)](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
+<!-- Variables -->
+[title]: Chessort
+[tagline]: Chess puzzle sorting game.
+[logo-128]: https://i.imgur.com/ToHPLjD.png
+
+[issues-badge]: https://img.shields.io/github/issues/mobeigi/chessort.svg?style=flat-square
+[issues-link]: ../../issues
+
+[pulls-badge]: https://img.shields.io/github/issues-pr/mobeigi/chessort.svg?style=flat-square
+[pulls-link]: ../../pulls
+
+[website-badge]: https://img.shields.io/website?url=https%3A%2F%2Fchessort.com&style=flat-square
+[website-link]: http://chessort.com/
+
+[discord-badge]: https://img.shields.io/discord/1266704159894409266?style=flat-square
+[discord-link]: https://discord.gg/pjJUG3CWnc
+
+[license-badge]: https://img.shields.io/github/license/mobeigi/chessort.svg?style=flat-square
+[license-link]: LICENSE.md
