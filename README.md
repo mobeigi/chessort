@@ -16,7 +16,9 @@
 ## Description
 Chessort is a Chess puzzle game where you sort moves based on the chess engine's evaluation.
 
-<img src="https://github.com/mobeigi/chessort/blob/main/.github/screenshot/chessort-game-screenshot.png?raw=true" width="auto"/>
+<div align="center">
+  <img src="https://github.com/mobeigi/chessort/blob/main/.github/screenshots/chessort-game-screenshot.png?raw=true" width="auto"/>
+</div>
 
 ## Directory Structure
 
