@@ -2,7 +2,7 @@
 <img src="https://github.com/mobeigi/chessort/blob/main/.github/logo/logo.svg?raw=true" height="110px" width="auto"/>
 <br/>
 <h3 align="center">Chessort Server</h3>
-<p align="center">Generating games and solutions for Chessort</p>
+<p align="center">Generating games and validating solutions</p>
 <h2></h2>
 <br />
 
@@ -15,19 +15,34 @@
 </p>
 
 ## Description
-This is the Chessort Server responsible for generating games and solutions.
-It interacts with the backend database and provides a public API for consumption.
+This is the Chessort Server responsible for generating games and validating solutions.
+It interacts with the backend database and provides a public API for consumption by apps.
 
 ## Requirements
 - Python 3
 
+## Setup
+
+1. **Copy and Configure .env File**:
+    - Copy the `.env.example` file to `.env`:
+      ```sh
+      cp .env.example .env
+      ```
+    - Populate the `.env` file with your details.
+
+2. **Create virtual environment**:
+    - Create a virtual environment by running:
+      ```sh
+      python -m venv ./venv
+      ```
+
+3. **Install Dependencies**:
+    - Ensure you have the required Python packages by running:
+      ```sh
+      pip install -r requirements.txt
+      ```
+
 ## Quick Start
-
-#### Setup virtual environment (Unix)
-#### `source ./venv/bin/activate`
-
-#### Setup virtual environment (Windows)
-#### `.\venv\Scripts\activate`
 
 #### Run in debug mode (development)
 
@@ -40,13 +55,3 @@ It interacts with the backend database and provides a public API for consumption
 #### Run all tests
 
 #### `pytest`
-
-## Configuration
-TODO
-
-## Contributions
-Contributions are always welcome!
-Just make a [pull request](../../pulls).
-
-## Licence
-TODO
