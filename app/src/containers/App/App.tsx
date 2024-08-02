@@ -5,7 +5,7 @@ import theme from '../../styles/theme';
 import { ThemeMode } from '../../types/theme';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import GlobalStyle from '../../styles/GlobalStyle';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { GameProvider } from '../../context/gameContext';
 import Game from '../Game';
 import { UserPreferencesProvider } from '../../context/userPreferencesContext';
@@ -13,26 +13,38 @@ import useUserPreferences from '../../hooks/useUserPreferences';
 import { ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
 import GlobalTooltips from './GlobalTooltip';
-// import ReactGA from 'react-ga4';
+import ReactGA from 'react-ga4';
 import StatCounter from '../../components/StatCounter';
-import { CHESSORT_STATCOUNTER_PROJECT, CHESSORT_STATCOUNTER_SECURITY } from '../../constants/analytics';
+import {
+  CHESSORT_GA_TRACKING_ID,
+  CHESSORT_STATCOUNTER_PROJECT,
+  CHESSORT_STATCOUNTER_SECURITY,
+} from '../../constants/analytics';
 import { HelmetProvider } from 'react-helmet-async';
+import { useEffect } from 'react';
 
+// Set modal element
 Modal.setAppElement('#root');
 
-// // Init Google Analytics
-// ReactGA.initialize(COMMON.ANALYTICS.gaTrackingId, {
-//   gtagOptions: {
-//     send_page_view: false,
-//   },
-// });
+// Init Google Analytics
+ReactGA.initialize(CHESSORT_GA_TRACKING_ID, {
+  gtagOptions: {
+    send_page_view: false,
+  },
+});
 
 const AppContainer = () => {
+  const location = useLocation();
   const { mode } = useUserPreferences();
   const currentTheme = mode === ThemeMode.Dark ? theme.colors.dark : theme.colors.light;
 
   // Provide current theme and mode for convenience
   const extraThemeArguments = { colors: currentTheme, mode };
+
+  // Fire pageview on every route change
+  useEffect(() => {
+    ReactGA.send({ hitType: 'pageview', page: location.pathname + location.search });
+  }, [location]);
 
   return (
     <>
