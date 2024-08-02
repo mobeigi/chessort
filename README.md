@@ -56,10 +56,6 @@ This project utilizes [Lichess Chessground](https://github.com/lichess-org/chess
 This project leverages the  [Stockfish](https://stockfishchess.org/) chess engine for analysis. Stockfish is licensed under the [GNU General Public License v3.0 (GPL-3.0)](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 <!-- Variables -->
-[title]: Chessort
-[tagline]: Chess puzzle sorting game.
-[logo-128]: https://i.imgur.com/ToHPLjD.png
-
 [issues-badge]: https://img.shields.io/github/issues/mobeigi/chessort.svg?style=flat-square
 [issues-link]: ../../issues
 
