@@ -6,3 +6,4 @@ python-dotenv==1.0.1
 sqids==0.4.1
 SQLAlchemy==2.0.31
 waitress==3.0.0
+pytest=8.3.2

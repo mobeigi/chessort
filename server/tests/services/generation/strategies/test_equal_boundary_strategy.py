@@ -50,6 +50,7 @@ def test_insufficient_moves():
 
 def _test_helper(num_moves_to_pick_from: int, num_required_moves: int, expected_indexes: list[int]) -> list[Move]:
     # Get moves to pick from
+    # TODO: Flake exists if moves have clashing evals!
     moves = [ random_move(engine_overall_rank=rank + 1) for rank in range(num_moves_to_pick_from) ]
     assert len(moves) == num_moves_to_pick_from
     
