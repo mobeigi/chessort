@@ -19,18 +19,12 @@ Chessort is a Chess puzzle game where you sort moves based on the chess engine's
 
 ## Directory Structure
 
-- **app/**: Contains the React frontend for Chessort.
-  - For more details, see the [README](app/README.md) in the `app` directory.
-
-- **server/**: Contains the server responsible for generating games and validating solutions.
-  - For more details, see the [README](server/README.md) in the `server` directory.
-
-- **data/**: Contains scripts for data generation and ingestion.
-  - **generation/**: Scripts for generating Chessort data CSV's data.
-    - For more details, see the [README](data/generation/README.md) in the `generation` directory.
-  - **ingestion/**: Scripts for ingesting generated Chessort data into a database.
-    - For more details, see the [README](data/ingestion/README.md) in the `ingestion` directory.
-  - **sql/**: Contains SQL scripts for setting up the database schema.
+- [app](app): Contains the React frontend for Chessort.
+- [server](server): Contains the server responsible for generating games and validating solutions.
+- [data](data): Contains scripts for data generation and ingestion.
+  - [generation](data/generation): Scripts for generating Chessort data CSV's data.
+  - [ingestion](data/ingestion): Scripts for ingesting generated Chessort data into a database.
+  - [sql](data/sql): Contains SQL scripts for setting up the database schema.
 
 ## Contributions
 Contributions are always welcome!  
