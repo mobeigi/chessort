@@ -16,6 +16,8 @@
 ## Description
 Chessort is a Chess puzzle game where you sort moves based on the chess engine's evaluation.
 
+<img src="https://github.com/mobeigi/chessort/blob/main/.github/screenshot/chessort-game-screenshot.png?raw=true" width="auto"/>
+
 ## Directory Structure
 
 - [app](app): Contains the React frontend for Chessort.
