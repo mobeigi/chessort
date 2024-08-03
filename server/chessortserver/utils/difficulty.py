@@ -1,6 +1,8 @@
 import math
 import statistics
 
+from ..utils.helpers import sort_evals
+
 # Downscales factors are used to divide the centipawn equivalent values before passing into sigmoid functions
 # They influence the rate of decay in the sigmoid functions output
 mate_downscale_factor = 2 # relative to mate values 1,2,3,4 etc
@@ -42,35 +44,6 @@ def convert_eval_to_normalised(eval_str):
         return mate_to_normalised(mate_value)
     else:
         return centipawn_to_normalised(int(eval_str))
-
-# Sort input evals from strongest to weakest
-# This returns the eval strings unchanged but in sorted order.
-# Example:
-#   ['+200', '-50', '#-1', '#1'] -> ['#1', '+200', '-50', '#-1']
-def sort_evals(evals):
-    white_mates = []
-    centipawns = []
-    black_mates = []
-    
-    # Put into right list
-    for eval_str in evals:
-        if eval_str.startswith("#"):
-            mate_value = int(eval_str[1:])
-            if mate_value > 0:
-                white_mates.append(eval_str)
-            else:
-                black_mates.append(eval_str)
-        else:
-            centipawns.append(eval_str)
-    
-    # Sort each list
-    white_mates.sort(key=lambda x: int(x[1:]))
-    centipawns.sort(key=lambda x: -int(x))
-    black_mates.sort(key=lambda x: int(x[1:]))
-
-    # Combine sorted lists
-    sorted_evals = white_mates + centipawns + black_mates
-    return sorted_evals
 
 # Returns the difficulty for a human to sort various moves based on their engine evaluation.
 # 

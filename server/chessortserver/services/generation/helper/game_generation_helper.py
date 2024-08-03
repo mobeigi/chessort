@@ -1,4 +1,4 @@
-from ..helper.smart_bucket import SmartBucket
+from ..helper.smart_bucket import Bucket, SmartBucket
 from ..helper.selection import Selection
 from ..exception.game_generation_error import GameGenerationError
 from ....models.models import Move
@@ -40,7 +40,7 @@ class GameGenerationHelper:
                 for j in range(0, bucket.size):
                     # Check the criteria for the move
                     move = bucket[j]
-                    if self._does_move_match_selection_criteria(bucket, j):
+                    if self._does_move_match_selection_criteria(bucket, j, selection):
                         # Mark move as selected in bucket
                         bucket.mark_as_used(j)
                         return move
@@ -50,7 +50,7 @@ class GameGenerationHelper:
                 for j in range(0, bucket.size):
                     # Check the criteria for the move
                     move = bucket[j]
-                    if self._does_move_match_selection_criteria(bucket, j):
+                    if self._does_move_match_selection_criteria(bucket, j, selection):
                         # Mark move as selected in bucket
                         bucket.mark_as_used(j)
                         return move
@@ -58,12 +58,14 @@ class GameGenerationHelper:
         # Raise an error if we were unable to select any moves
         raise GameGenerationError("Failed to select move matching provided selection.")
 
-    def _does_move_match_selection_criteria(self, bucket, moveIndex):
+    def _does_move_match_selection_criteria(self, bucket: Bucket, moveIndex: int, selection: Selection):
         """
         Check if we the move matches the selection criteria.
         """
-        # Do not reuse moves
         if bucket.is_used(moveIndex):
+            return False
+        
+        if selection.max_bucket_usage_count and bucket.total_used >= selection.max_bucket_usage_count:
             return False
         
         # TODO: Implement additional capabilties for Selection here

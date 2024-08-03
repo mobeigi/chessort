@@ -1,5 +1,6 @@
 import random
 from .strategies.equal_boundary_strategy import EqualBoundaryStrategy
+from .strategies.top_strongest_strategy import TopStrongestStrategy
 from .strategies.random_strategy import RandomStrategy
 from ...models.models import Move
 
@@ -10,6 +11,7 @@ class GameCurator:
     def __init__(self) -> None:
         self.strategies = [
             EqualBoundaryStrategy(),
+            TopStrongestStrategy(distinct=True),
         ]
 
         self.fallback_strategy = RandomStrategy()
