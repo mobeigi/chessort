@@ -63,7 +63,7 @@ def get_random_game():
     moves = gc.select_moves_for_game(all_moves, 4)
 
     if len(moves) < 4:
-        return jsonify({'error': 'Insufficient moves found for position.'}), 404
+        return jsonify({'error': 'Failed to generate moves for game.'}), 500
 
     # Insert game played id
     fen = position_dao.FEN

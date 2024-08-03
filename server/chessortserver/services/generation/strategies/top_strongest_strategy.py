@@ -38,7 +38,7 @@ class TopStrongestStrategy(MoveSelectionStrategy):
 
         # Create selections
         selections = [
-            Selection(start=0, end=100, max_bucket_usage_count=1) for _ in range(num_required_moves)
+            Selection(start=0.0, end=1.0, max_bucket_usage_count=1) for _ in range(num_required_moves)
         ]
 
         # Get all the moves we need
