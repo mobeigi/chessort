@@ -48,4 +48,5 @@ class TopStrongestStrategy(MoveSelectionStrategy):
             # This should never happen!
             raise GameGenerationError("Failed to generate required number of moves.")
 
-        return selected_moves
+        sorted_selected_moves = sorted(selected_moves, key=lambda x: x.engine_overall_rank)
+        return sorted_selected_moves

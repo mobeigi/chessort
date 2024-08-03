@@ -12,6 +12,7 @@ class Selection:
                  end: float = None, 
                  search_method = SearchMethod.TRAVERSAL, 
                  max_bucket_usage_count: int = None,
+                 min_bucket_size: int = 0,
                  evaluation_type: EvaluationType = None,
                  advantage: list[Color] = None
     ):
@@ -21,6 +22,8 @@ class Selection:
         :param start: Starting index (as a percentage of total buckets) to begin search at. Inclusive. Can be higher or lower than end.
         :param end: Ending index (as a percentage of total buckets) to end search at. Exclusive. Can be higher or lower than start. None defaults to location of last bucket.
         :param search_method: The search method used when iterating through items.
+        :param max_bucket_usage_count: The max number of times a bucket is allowed to be used.
+        :param min_bucket_size: The minimum size of a bucket.
         :param evaluation_type: The move's evaluation type to pick. None means any.
         :param advantage: A list of acceptable advantages. None means any.
         """
@@ -28,13 +31,14 @@ class Selection:
         self.end = end
         self.search_method = search_method
         self.max_bucket_usage_count = max_bucket_usage_count
+        self.min_bucket_size = min_bucket_size
         self.evaluation_type = evaluation_type
         self.advantage = advantage
 
     def __str__(self):
         return (f"Selection(start={self.start}, end={self.end}, search_method={self.search_method.value}, "
-                f"max_bucket_usage_count={self.max_bucket_usage_count}, eval_type={self.evaluation_type}, "
-                f"advantage_for={self.advantage})")
+                f"max_bucket_usage_count={self.max_bucket_usage_count}, min_bucket_size={self.min_bucket_size}, "
+                f"evaluation_type={self.evaluation_type}, advantage={self.advantage})")
 
     def __repr__(self):
         return self.__str__()

@@ -7,4 +7,6 @@ class RandomStrategy(MoveSelectionStrategy):
     A strategy which simply picks the number of required moves randomly.
     """
     def select_moves(self, moves: list[Move], num_required_moves: int) -> list[Move]:
-        return random.sample(moves, num_required_moves)
+        selected_moves = random.sample(moves, num_required_moves)
+        sorted_selected_moves = sorted(selected_moves, key=lambda x: x.engine_overall_rank)
+        return sorted_selected_moves

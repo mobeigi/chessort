@@ -16,11 +16,12 @@ class MoveSelectionStrategy:
     def select_moves(self, moves: list[Move], num_required_moves: int) -> list[Move]:
         """
         Select moves based on the strategy.
+        The returned moves should be sorted by overall rank. 
         This method should be implemented by subclasses.
         
         :param moves: List of all available moves.
         :param num_required_moves: The number of moves to select.
-        :return: List of the selected moves. Should return len(num_required_moves) moves.
+        :return: List of the selected moves sorted by its overall rank. Should return len(num_required_moves) moves.
         :raises NotImplementedError: If the method is not implemented in the subclass.
         """
         raise NotImplementedError("This method should be implemented by subclasses.")

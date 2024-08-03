@@ -8,12 +8,6 @@ from fixtures.fixtures import random_move
 
 strategy = OneOfEachStrategy()
 
-# def test_one_num_required_moves():
-#     moves = [ random_move(engine_overall_rank=rank + 1) for rank in range(1) ]
-#     assert len(moves) == 1
-#     game_moves = strategy.select_moves(moves, 1)
-#     assert len(game_moves) == len(moves)
-
 def test_insufficient_moves():
     moves = [ random_move(engine_overall_rank=rank+1) for rank in range(10) ]
     with pytest.raises(ValueError):

@@ -72,7 +72,7 @@ class GameGenerationHelper:
                     if not self._does_bucket_match_selection_criteria(bucket, selection):
                         continue
 
-                    for j in range(0, len(bucket), -1): # search buckets from bottom upwards
+                    for j in range(len(bucket)-1, -1, -1): # search buckets in reverse
                         bucket_item = bucket[j]
                         if self._does_bucket_item_match_selection_criteria(bucket_item, selection):
                             bucket.mark_as_used(j)
@@ -114,6 +114,9 @@ class GameGenerationHelper:
             return False
         
         if selection.max_bucket_usage_count and bucket.total_used >= selection.max_bucket_usage_count:
+            return False
+        
+        if len(bucket) < selection.min_bucket_size:
             return False
         
         if selection.advantage and bucket.advantage not in selection.advantage:
