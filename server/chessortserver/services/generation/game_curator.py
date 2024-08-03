@@ -1,3 +1,4 @@
+from collections import defaultdict
 import random
 
 from chessortserver.services.generation.exception.game_generation_error import GameGenerationError
@@ -14,14 +15,26 @@ class GameCurator:
     Responsible for curating interesting games.
     """
     def __init__(self) -> None:
-        self.strategies: list[MoveSelectionStrategy] = [
-            EqualRandomSegmentsStrategy(),
-            OneOfEachStrategy(),
-            DualSidedDuplicateStrategy(left=1, right=3),
-            DualSidedDuplicateStrategy(left=2, right=2),
-            DualSidedDuplicateStrategy(left=3, right=1),
-            TopStrongestStrategy(distinct=True),
-        ]
+        self.strategy_groups: dict[str, list[MoveSelectionStrategy]] = {
+            'EqualRandomSegments': [
+                EqualRandomSegmentsStrategy(),
+            ],
+            'OneOfEach': [
+                OneOfEachStrategy(),
+            ],
+            'DualSidedDuplicates': [
+                DualSidedDuplicateStrategy(left=1, right=3),
+                DualSidedDuplicateStrategy(left=2, right=2),
+                DualSidedDuplicateStrategy(left=3, right=1),
+            ],
+            'Top4': [
+                TopStrongestStrategy(distinct=True),
+            ]
+        }
+
+        # Initialize usage tracking
+        self.group_usage = defaultdict(int)
+        self.strategy_usage = defaultdict(int)
 
         # Set fallback to a strategy that will always succeed!
         self.fallback_strategy = TopStrongestStrategy(distinct=False)
@@ -29,17 +42,24 @@ class GameCurator:
         self.logger = Logger('chessortserver').getLogger()
     
     def select_moves_for_game(self, all_moves: list[Move], num_required_moves:int) -> list[Move]:
-        # Filter strategies that are capable
-        capable_strategies = [strategy for strategy in self.strategies if strategy.can_handle(all_moves, num_required_moves)]
-        
-        # Pick a random strategy from the list
-        if len(capable_strategies) > 0:
-            selected_strategy = random.choice(capable_strategies)
+        # Filter strategies that are capable and organize by groups
+        capable_groups = {}
+        for group, strategies in self.strategy_groups.items():
+            capable_strategies = [s for s in strategies if s.can_handle(all_moves, num_required_moves)]
+            if capable_strategies:
+                capable_groups[group] = capable_strategies
+
+        # Pick the least used group and then the least used strategy within that group
+        if capable_groups:
+            least_used_group = min(capable_groups, key=lambda g: self.group_usage[g])
+            selected_strategy = min(capable_groups[least_used_group], key=lambda s: self.strategy_usage[s])
+            self.group_usage[least_used_group] += 1
+            self.strategy_usage[selected_strategy] += 1
         else:
             self.logger.warn(f"No capable strategy found. Using fallback: {self.fallback_strategy.__class__}. Moves: {all_moves}. num_required_moves: {num_required_moves}")
             selected_strategy = self.fallback_strategy
         
-        # Try to generate moves for a game
+        # Try to generate moves for a game using our selected strategy
         selected_moves = []
         try:
             selected_moves = selected_strategy.select_moves(all_moves, num_required_moves)
