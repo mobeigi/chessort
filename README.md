@@ -70,7 +70,7 @@ This project leverages the  [Stockfish](https://stockfishchess.org/) chess engin
 [website-link]: http://chessort.com/
 
 [discord-badge]: https://img.shields.io/discord/1266704159894409266?style=flat-square&logo=Discord&logoColor=ffffff&label=Discord
-[discord-link]: https://discord.gg/pjJUG3CWnc
+[discord-link]: https://discord.gg/QZW8V56jkt
 
 [license-badge]: https://img.shields.io/github/license/mobeigi/chessort.svg?style=flat-square
 [license-link]: LICENSE.md
