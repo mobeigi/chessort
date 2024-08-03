@@ -1,7 +1,6 @@
 import random
 from .strategies.equal_boundary_strategy import EqualBoundaryStrategy
 from .strategies.top_strongest_strategy import TopStrongestStrategy
-from .strategies.random_strategy import RandomStrategy
 from ...models.models import Move
 
 class GameCurator:
@@ -14,7 +13,7 @@ class GameCurator:
             TopStrongestStrategy(distinct=True),
         ]
 
-        self.fallback_strategy = RandomStrategy()
+        self.fallback_strategy = TopStrongestStrategy(distinct=False)
     
     def select_moves_for_game(self, all_moves: list[Move], num_required_moves:int) -> list[Move]:
         # Filter strategies that are capable
