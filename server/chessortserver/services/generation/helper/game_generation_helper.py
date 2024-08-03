@@ -1,5 +1,5 @@
 import random
-from ..helper.smart_bucket import Bucket, SmartBucket
+from ..helper.smart_bucket import Bucket, BucketItem, SmartBucket
 from ..helper.selection import SearchMethod, Selection
 from ..exception.game_generation_error import GameGenerationError
 from ....models.models import Move
@@ -55,18 +55,28 @@ class GameGenerationHelper:
             if start_index < end_index:
                 for i in range(start_index, end_index):
                     bucket = self.smart_bucket[i]
+
+                    if not self._does_bucket_match_selection_criteria(bucket, selection):
+                        continue
+
                     for j in range(0, bucket.size):
-                        if self._does_move_match_selection_criteria(bucket, j, selection):
+                        bucket_item = bucket[j]
+                        if self._does_bucket_item_match_selection_criteria(bucket_item, selection):
                             bucket.mark_as_used(j)
-                            return bucket[j]
+                            return bucket_item.move
             # Backwards traversal
             else:
                 for i in range(start_index, end_index, -1):
                     bucket = self.smart_bucket[i]
+
+                    if not self._does_bucket_match_selection_criteria(bucket, selection):
+                        continue
+
                     for j in range(0, bucket.size, -1): # search buckets from bottom upwards
-                        if self._does_move_match_selection_criteria(bucket, j, selection):
+                        bucket_item = bucket[j]
+                        if self._does_bucket_item_match_selection_criteria(bucket_item, selection):
                             bucket.mark_as_used(j)
-                            return bucket[j]
+                            return bucket_item.move
         elif selection.search_method == SearchMethod.RANDOM:
             # TODO: Support random selection if using backwards search
             # Create a list of valid bucket indexes to pick from
@@ -78,32 +88,42 @@ class GameGenerationHelper:
                 random_bucket_index = random.choice(valid_bucket_indexes)
                 random_bucket = self.smart_bucket[random_bucket_index]
 
-                # Ensure the random_bucket_item_index is within the size of the bucket
-                if random_bucket.size > 0:
-                    random_bucket_item_index = random.choice([i for i in range(random_bucket.size) if i not in seen_indexes_per_bucket[random_bucket_index]])
-
-                    if self._does_move_match_selection_criteria(random_bucket, random_bucket_item_index, selection):
-                        random_bucket.mark_as_used(random_bucket_item_index)
-                        return random_bucket[random_bucket_item_index]
-                    else:
-                        seen_indexes_per_bucket[random_bucket_index].append(random_bucket_item_index)
-                        if len(seen_indexes_per_bucket[random_bucket_index]) == random_bucket.size:
-                            valid_bucket_indexes.remove(random_bucket_index)
-                else:
+                if not self._does_bucket_match_selection_criteria(random_bucket, selection):
                     valid_bucket_indexes.remove(random_bucket_index)
+                    continue
+
+                random_bucket_item_index = random.choice([i for i in range(random_bucket.size) if i not in seen_indexes_per_bucket[random_bucket_index]])
+                random_bucket_item = random_bucket[random_bucket_item_index]
+
+                if self._does_bucket_item_match_selection_criteria(random_bucket_item, selection):
+                    random_bucket.mark_as_used(random_bucket_item_index)
+                    return random_bucket_item.move
+                else:
+                    seen_indexes_per_bucket[random_bucket_index].append(random_bucket_item_index)
+                    if len(seen_indexes_per_bucket[random_bucket_index]) == random_bucket.size:
+                        valid_bucket_indexes.remove(random_bucket_index)
         
         # Raise an error if we were unable to select any moves
         raise GameGenerationError("Failed to select move matching provided selection.")
 
-    def _does_move_match_selection_criteria(self, bucket: Bucket, moveIndex: int, selection: Selection):
+    def _does_bucket_match_selection_criteria(self, bucket: Bucket, selection: Selection):
         """
-        Check if we the move matches the selection criteria.
+        Check if we the bucket matches the selection criteria.
         """
-        if bucket.is_used(moveIndex):
+        if bucket.available <= 0:
             return False
         
         if selection.max_bucket_usage_count and bucket.total_used >= selection.max_bucket_usage_count:
             return False
         
-        # TODO: Implement additional capabilties for Selection here
+        return True
+
+
+    def _does_bucket_item_match_selection_criteria(self, bucket_item: BucketItem, selection: Selection):
+        """
+        Check if we the bucket item matches the selection criteria.
+        """
+        if bucket_item.used:
+            return False
+        
         return True

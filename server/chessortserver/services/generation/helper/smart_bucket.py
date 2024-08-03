@@ -3,8 +3,16 @@ from ....models.models import Move
 class BucketItem:
     """ A bucket item contains a move and additional useful fields for the move. """
     def __init__(self, move: Move) -> None:
-        self.move = move
-        self.used = False
+        self._move = move
+        self._used = False
+
+    @property
+    def move(self) -> Move:
+        return self._move
+
+    @property
+    def used(self) -> bool:
+        return self._used
 
 class Bucket:
     """ A bucket stores a list of bucket items and some other useful fields to track usage. """
@@ -25,25 +33,19 @@ class Bucket:
     def available(self) -> int:
         return self.size - self.total_used
 
-    def append(self, move) -> Move:
+    def append(self, move: Move) -> None:
         bucket_item = BucketItem(move)
         self._contents.append(bucket_item)
 
-    def __getitem__(self, index: int) -> Move:
+    def __getitem__(self, index: int) -> BucketItem:
         if 0 <= index < self.size:
-            return self._contents[index].move
-        else:
-            raise IndexError("Index out of range")
-    
-    def is_used(self, index: int) -> bool:
-        if 0 <= index < self.size:
-            return self._contents[index].used
+            return self._contents[index]
         else:
             raise IndexError("Index out of range")
 
     def mark_as_used(self, index: int) -> None:
         if 0 <= index < self.size:
-            self._contents[index].used = True
+            self._contents[index]._used = True
             self._total_used += 1
         else:
             raise IndexError("Index out of range")
