@@ -50,7 +50,19 @@ def _test_helper(moves: list[Move], num_required_moves: int, expected_ids: list[
     for i in range(num_required_moves):
         assert game_moves[i].id in expected_ids[i]
 
-def test_equal_random_segment_strategy():
+def test_equal_random_segment_strategy_4_buckets():
+    moves = [ 
+        Move(id=1, position_id=1, uci_move="uci1", engine_eval="#1", engine_overall_rank=1),
+        Move(id=2, position_id=1, uci_move="uci2", engine_eval="#2", engine_overall_rank=2),
+        Move(id=3, position_id=1, uci_move="uci3", engine_eval="+200", engine_overall_rank=3),
+        Move(id=4, position_id=1, uci_move="uci4", engine_eval="-200", engine_overall_rank=4),
+     ]
+    assert len(moves) == 4
+
+    _test_helper(moves=moves, num_required_moves=2, expected_ids=[[1,2], [3,4]])
+    _test_helper(moves=moves, num_required_moves=4, expected_ids=[[1], [2], [3], [4]])
+
+def test_equal_random_segment_strategy_5_buckets():
     moves = [ 
         Move(id=1, position_id=1, uci_move="uci1", engine_eval="#1", engine_overall_rank=1),
         
@@ -70,15 +82,3 @@ def test_equal_random_segment_strategy():
 
     _test_helper(moves=moves, num_required_moves=2, expected_ids=[[1,2,3,4], [5,6,7,8,9]])
     _test_helper(moves=moves, num_required_moves=4, expected_ids=[[1], [2,3,4], [5,6,7], [8,9]])
-
-def test_equal_random_segment_strategy_2():
-    moves = [ 
-        Move(id=1, position_id=1, uci_move="uci1", engine_eval="#1", engine_overall_rank=1),
-        Move(id=2, position_id=1, uci_move="uci2", engine_eval="#2", engine_overall_rank=2),
-        Move(id=3, position_id=1, uci_move="uci3", engine_eval="+200", engine_overall_rank=3),
-        Move(id=4, position_id=1, uci_move="uci4", engine_eval="0", engine_overall_rank=4),
-     ]
-    assert len(moves) == 4
-
-    _test_helper(moves=moves, num_required_moves=2, expected_ids=[[1,2], [3,4]])
-    _test_helper(moves=moves, num_required_moves=4, expected_ids=[[1], [2], [3], [4]])

@@ -2,6 +2,7 @@ import random
 
 from chessortserver.services.generation.exception.game_generation_error import GameGenerationError
 from chessortserver.services.generation.strategies.equal_random_segments_strategy import EqualRandomSegmentsStrategy
+from chessortserver.services.generation.strategies.one_of_each_strategy import OneOfEachStrategy
 from .strategies.top_strongest_strategy import TopStrongestStrategy
 from ...models.models import Move
 from ...logger import Logger
@@ -14,7 +15,8 @@ class GameCurator:
     def __init__(self) -> None:
         self.strategies: list[MoveSelectionStrategy] = [
             EqualRandomSegmentsStrategy(),
-            TopStrongestStrategy(distinct=True),
+            OneOfEachStrategy(),
+            TopStrongestStrategy(distinct=True)
         ]
 
         # Set fallback to a strategy that will always succeed!
@@ -30,6 +32,7 @@ class GameCurator:
         if len(capable_strategies) > 0:
             selected_strategy = random.choice(capable_strategies)
         else:
+            self.logger.warn(f"No capable strategy found. Using fallback: {self.fallback_strategy.__class__}. Moves: {all_moves}. num_required_moves: {num_required_moves}")
             selected_strategy = self.fallback_strategy
         
         # Try to generate moves for a game
@@ -39,8 +42,8 @@ class GameCurator:
         except GameGenerationError:
             try:
                 # Strategy failed, use fallback
-                selected_moves = self.fallback_strategy.select_moves(all_moves, num_required_moves)
                 self.logger.warn(f"Strategy failed to generate game. Strategy: {selected_strategy.__class__}. Moves: {all_moves}. num_required_moves: {num_required_moves}")
+                selected_moves = self.fallback_strategy.select_moves(all_moves, num_required_moves)
             except GameGenerationError:
                 self.logger.error(f"Fallback strategy failed to generate game. Moves: {all_moves}. num_required_moves: {num_required_moves}")
 

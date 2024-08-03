@@ -1,4 +1,6 @@
+from chessortserver.utils.move import get_advantage, get_evaluation_type
 from ....models.models import Move
+from ....models.chess import Color, EvaluationType
 
 class BucketItem:
     """ A bucket item contains a move and additional useful fields for the move. """
@@ -27,6 +29,20 @@ class Bucket:
     @property
     def available(self) -> int:
         return len(self) - self.total_used
+
+    @property
+    def advantage(self) -> Color:
+        if len(self) <= 0:
+            raise IndexError("Not enough elements")
+        # Advantage of every item in bucket is the same
+        return get_advantage(self._contents[0].move)
+
+    @property
+    def evaluation_type(self) -> EvaluationType:
+        if len(self) <= 0:
+            raise IndexError("Not enough elements")
+        # Evaluation type of each item in bucket is the same
+        return get_evaluation_type(self._contents[0].move)
 
     def __len__(self) -> int:
         return len(self._contents)

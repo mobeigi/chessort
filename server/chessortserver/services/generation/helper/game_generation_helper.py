@@ -116,6 +116,12 @@ class GameGenerationHelper:
         if selection.max_bucket_usage_count and bucket.total_used >= selection.max_bucket_usage_count:
             return False
         
+        if selection.advantage and bucket.advantage not in selection.advantage:
+            return False
+        
+        if selection.evaluation_type and bucket.evaluation_type != selection.evaluation_type:
+            return False
+
         return True
 
 
