@@ -20,7 +20,7 @@ class TopStrongestStrategy(MoveSelectionStrategy):
         else:
             # Need at least num_required_moves buckets
             ggh = GameGenerationHelper(moves)
-            if ggh.smart_bucket.size < num_required_moves:
+            if len(ggh.smart_bucket) < num_required_moves:
                 return False
         
         return super().can_handle(moves, num_required_moves)

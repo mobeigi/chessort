@@ -20,31 +20,29 @@ class Bucket:
         self._contents: list[BucketItem] = []
         self._total_used = 0
     
-    # TODO: Use len()
-    @property
-    def size(self) -> int:
-        return len(self._contents)
-
     @property
     def total_used(self) -> int:
         return self._total_used
 
     @property
     def available(self) -> int:
-        return self.size - self.total_used
+        return len(self) - self.total_used
+
+    def __len__(self) -> int:
+        return len(self._contents)
+
+    def __getitem__(self, index: int) -> BucketItem:
+        if 0 <= index < len(self):
+            return self._contents[index]
+        else:
+            raise IndexError("Index out of range")
 
     def append(self, move: Move) -> None:
         bucket_item = BucketItem(move)
         self._contents.append(bucket_item)
 
-    def __getitem__(self, index: int) -> BucketItem:
-        if 0 <= index < self.size:
-            return self._contents[index]
-        else:
-            raise IndexError("Index out of range")
-
     def mark_as_used(self, index: int) -> None:
-        if 0 <= index < self.size:
+        if 0 <= index < len(self):
             self._contents[index]._used = True
             self._total_used += 1
         else:
@@ -56,13 +54,11 @@ class SmartBucket:
         # This is a core requirement that powers the functionality of this class 
         self._buckets = self._init_smart_bucket(moves)
 
-    # TODO: Use len()
-    @property
-    def size(self) -> int:
+    def __len__(self) -> int:
         return len(self._buckets)
 
     def __getitem__(self, index: int) -> Bucket:
-        if 0 <= index < self.size:
+        if 0 <= index < len(self):
             return self._buckets[index]
         else:
             raise IndexError("Index out of range")

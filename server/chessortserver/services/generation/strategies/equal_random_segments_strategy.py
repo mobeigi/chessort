@@ -13,7 +13,7 @@ class EqualRandomSegmentsStrategy(MoveSelectionStrategy):
     def can_handle(self, moves: list[Move], num_required_moves: int) -> bool:
         # Need at least num_required_moves buckets
         ggh = GameGenerationHelper(moves)
-        if ggh.smart_bucket.size < num_required_moves:
+        if len(ggh.smart_bucket) < num_required_moves:
             return False
         
         return super().can_handle(moves, num_required_moves)

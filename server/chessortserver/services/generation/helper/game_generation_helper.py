@@ -26,7 +26,7 @@ class GameGenerationHelper:
             raise GameGenerationError(f"End must be within [0,1]. End: {selection.end}.")
 
         # Get the number of buckets
-        num_buckets = self.smart_bucket.size
+        num_buckets = len(self.smart_bucket)
         total_available = sum(bucket.available for bucket in self.smart_bucket)
 
         if num_buckets <= 0:
@@ -59,7 +59,7 @@ class GameGenerationHelper:
                     if not self._does_bucket_match_selection_criteria(bucket, selection):
                         continue
 
-                    for j in range(0, bucket.size):
+                    for j in range(0, len(bucket)):
                         bucket_item = bucket[j]
                         if self._does_bucket_item_match_selection_criteria(bucket_item, selection):
                             bucket.mark_as_used(j)
@@ -72,7 +72,7 @@ class GameGenerationHelper:
                     if not self._does_bucket_match_selection_criteria(bucket, selection):
                         continue
 
-                    for j in range(0, bucket.size, -1): # search buckets from bottom upwards
+                    for j in range(0, len(bucket), -1): # search buckets from bottom upwards
                         bucket_item = bucket[j]
                         if self._does_bucket_item_match_selection_criteria(bucket_item, selection):
                             bucket.mark_as_used(j)
@@ -92,7 +92,7 @@ class GameGenerationHelper:
                     valid_bucket_indexes.remove(random_bucket_index)
                     continue
 
-                random_bucket_item_index = random.choice([i for i in range(random_bucket.size) if i not in seen_indexes_per_bucket[random_bucket_index]])
+                random_bucket_item_index = random.choice([i for i in range(len(random_bucket)) if i not in seen_indexes_per_bucket[random_bucket_index]])
                 random_bucket_item = random_bucket[random_bucket_item_index]
 
                 if self._does_bucket_item_match_selection_criteria(random_bucket_item, selection):
@@ -100,7 +100,7 @@ class GameGenerationHelper:
                     return random_bucket_item.move
                 else:
                     seen_indexes_per_bucket[random_bucket_index].append(random_bucket_item_index)
-                    if len(seen_indexes_per_bucket[random_bucket_index]) == random_bucket.size:
+                    if len(seen_indexes_per_bucket[random_bucket_index]) == len(random_bucket):
                         valid_bucket_indexes.remove(random_bucket_index)
         
         # Raise an error if we were unable to select any moves
