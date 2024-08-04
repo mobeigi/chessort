@@ -32,13 +32,13 @@ def get_difficulty(evals: list[str]) -> Difficulty:
     if not (0 <= difficulty <= 100):
         raise ValueError("Difficulty must be within the range of 0 to 100.")
     
-    if difficulty < 60:
+    if difficulty < 50:
         return Difficulty.BEGINNER
-    elif 60 <= difficulty < 90:
+    elif 50 <= difficulty < 70:
         return Difficulty.EASY
-    elif 90 <= difficulty < 97:
+    elif 70 <= difficulty < 91:
         return Difficulty.MEDIUM
-    elif 97 <= difficulty < 99.5:
+    elif 91 <= difficulty < 98.5:
         return Difficulty.HARD
     else:
         return Difficulty.MASTER
