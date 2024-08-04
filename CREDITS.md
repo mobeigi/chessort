@@ -17,6 +17,9 @@ This project leverages the powerful [Stockfish](https://stockfishchess.org/) che
 
 ## Icons
 
+### Chess Piece Set
+We use the Maestro piece sets from the [Lichess lila repository](https://github.com/lichess-org/lila/tree/master/public/piece).
+
 ### Flaticon Icons
 Special thanks to the creators of the icons used in this project:
 
