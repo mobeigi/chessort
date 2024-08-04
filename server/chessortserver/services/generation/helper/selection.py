@@ -10,7 +10,8 @@ class Selection:
     def __init__(self, 
                  start: float, 
                  end: float = None, 
-                 search_method = SearchMethod.TRAVERSAL, 
+                 bucket_search_method = SearchMethod.TRAVERSAL, 
+                 bucket_item_search_method = SearchMethod.TRAVERSAL, 
                  max_bucket_usage_count: int = None,
                  min_bucket_size: int = 0,
                  evaluation_type: EvaluationType = None,
@@ -22,7 +23,8 @@ class Selection:
 
         :param start: Starting index (as a percentage of total buckets) to begin search at. Inclusive. Can be higher or lower than end.
         :param end: Ending index (as a percentage of total buckets) to end search at. Exclusive. Can be higher or lower than start. None defaults to location of last bucket.
-        :param search_method: The search method used when iterating through items.
+        :param bucket_search_method: The search method used to find the bucket.
+        :param bucket_item_search_method: The search method used to find items in the bucket.
         :param max_bucket_usage_count: The max number of times a bucket is allowed to be used.
         :param min_bucket_size: The minimum size of a bucket.
         :param evaluation_type: The move's evaluation type to pick. None means any.
@@ -31,7 +33,8 @@ class Selection:
         """
         self.start = start
         self.end = end
-        self.search_method = search_method
+        self.bucket_search_method = bucket_search_method
+        self.bucket_item_search_method = bucket_item_search_method
         self.max_bucket_usage_count = max_bucket_usage_count
         self.min_bucket_size = min_bucket_size
         self.evaluation_type = evaluation_type
@@ -39,9 +42,9 @@ class Selection:
         self.max_norm_eval_strength = max_norm_eval_strength
 
     def __str__(self):
-        return (f"Selection(start={self.start}, end={self.end}, search_method={self.search_method}, "
-                f"max_bucket_usage_count={self.max_bucket_usage_count}, min_bucket_size={self.min_bucket_size}, "
-                f"evaluation_type={self.evaluation_type}, advantage={self.advantage}, "
+        return (f"Selection(start={self.start}, end={self.end}, bucket_search_method={self.bucket_search_method}, "
+                f"bucket_item_search_method={self.bucket_item_search_method}, max_bucket_usage_count={self.max_bucket_usage_count}, "
+                f"min_bucket_size={self.min_bucket_size}, evaluation_type={self.evaluation_type}, advantage={self.advantage}, "
                 f"max_norm_eval_strength={self.max_norm_eval_strength})")
 
     def __repr__(self):

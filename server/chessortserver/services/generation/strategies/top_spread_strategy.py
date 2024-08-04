@@ -3,13 +3,14 @@ from chessortserver.utils.engine.strength import normalised_strength
 from chessortserver.utils.chess import get_turn_player_from_fen
 from ..move_selection_strategy import MoveSelectionStrategy
 from ..helper.game_generation_helper import GameGenerationHelper
-from ..helper.selection import Selection
+from ..helper.selection import SearchMethod, Selection
 from ..exception.game_generation_error import GameGenerationError
 from ....models.models import Move, Position
 
 class TopSpreadStrategy(MoveSelectionStrategy):
     """
-    A strategy that always picks the top move, then the next distict top moves while enforcing a minimum normalised spread.
+    A strategy that always picks the top strength move, then the next distict top moves while enforcing a minimum normalised spread.
+    The actual move itself is picked randomly selected from the target bucket.
     """
 
     def __init__(self, normalised_spread: float = 0.0):
@@ -39,9 +40,15 @@ class TopSpreadStrategy(MoveSelectionStrategy):
         selected_moves = []
         max_norm_eval_strength = None # Initially we don't care about strength
         turn_player = get_turn_player_from_fen(position.fen)
-
+        
         for _ in range(num_required_moves):
-            selection = Selection(start=0.0, end=1.0, max_bucket_usage_count=1, max_norm_eval_strength=max_norm_eval_strength)
+            selection = Selection(start=0.0, 
+                                  end=1.0, 
+                                  max_bucket_usage_count=1, 
+                                  max_norm_eval_strength=max_norm_eval_strength, 
+                                  bucket_search_method=SearchMethod.TRAVERSAL,
+                                  bucket_item_search_method=SearchMethod.RANDOM
+            )
             move = ggh.select_move(selection)
             selected_moves.append(move)
 

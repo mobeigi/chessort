@@ -1,4 +1,5 @@
 import random
+from typing import Optional
 
 from chessortserver.models.chess import Color
 from chessortserver.utils.engine.strength import normalised_strength
@@ -55,61 +56,106 @@ class GameGenerationHelper:
             start_index = start_index - 1
             end_index = end_index - 1 
 
-        if selection.search_method == SearchMethod.TRAVERSAL:
-            # Forwards traversal
-            if start_index < end_index:
-                for i in range(start_index, end_index):
-                    bucket = self.smart_bucket[i]
-
-                    if not self._does_bucket_match_selection_criteria(bucket, selection):
-                        continue
-
-                    for j in range(0, len(bucket)):
-                        bucket_item = bucket[j]
-                        if self._does_bucket_item_match_selection_criteria(bucket_item, selection):
-                            bucket.mark_as_used(j)
-                            return bucket_item.move
-            # Backwards traversal
-            else:
-                for i in range(start_index, end_index, -1):
-                    bucket = self.smart_bucket[i]
-
-                    if not self._does_bucket_match_selection_criteria(bucket, selection):
-                        continue
-
-                    for j in range(len(bucket)-1, -1, -1): # search buckets in reverse
-                        bucket_item = bucket[j]
-                        if self._does_bucket_item_match_selection_criteria(bucket_item, selection):
-                            bucket.mark_as_used(j)
-                            return bucket_item.move
-        elif selection.search_method == SearchMethod.RANDOM:
-            # TODO: Support random selection if using backwards search
-            # Create a list of valid bucket indexes to pick from
-            valid_bucket_indexes = list(range(start_index, end_index))
-            
-            seen_indexes_per_bucket = {i: [] for i in valid_bucket_indexes}
-
-            while len(valid_bucket_indexes) > 0:
-                random_bucket_index = random.choice(valid_bucket_indexes)
-                random_bucket = self.smart_bucket[random_bucket_index]
-
-                if not self._does_bucket_match_selection_criteria(random_bucket, selection):
-                    valid_bucket_indexes.remove(random_bucket_index)
-                    continue
-
-                random_bucket_item_index = random.choice([i for i in range(len(random_bucket)) if i not in seen_indexes_per_bucket[random_bucket_index]])
-                random_bucket_item = random_bucket[random_bucket_item_index]
-
-                if self._does_bucket_item_match_selection_criteria(random_bucket_item, selection):
-                    random_bucket.mark_as_used(random_bucket_item_index)
-                    return random_bucket_item.move
-                else:
-                    seen_indexes_per_bucket[random_bucket_index].append(random_bucket_item_index)
-                    if len(seen_indexes_per_bucket[random_bucket_index]) == len(random_bucket):
-                        valid_bucket_indexes.remove(random_bucket_index)
+        move = None
+        if selection.bucket_search_method == SearchMethod.TRAVERSAL:
+            move = self._pick_via_traversal(start_index, end_index, selection)
+        elif selection.bucket_search_method == SearchMethod.RANDOM:
+            move = self._pick_via_random(start_index, end_index, selection)
         
         # Raise an error if we were unable to select any moves
-        raise GameGenerationError("Failed to select move matching provided selection.")
+        if move is None:
+            raise GameGenerationError("Failed to select move matching provided selection.")
+        return move
+
+    def _pick_via_traversal(self, start_index: int, end_index: int, selection: Selection) -> Optional[Move]:
+        # Forwards traversal
+        if start_index < end_index:
+            for i in range(start_index, end_index):
+                bucket = self.smart_bucket[i]
+
+                if not self._does_bucket_match_selection_criteria(bucket, selection):
+                    continue
+
+                move = None
+                if selection.bucket_item_search_method == SearchMethod.TRAVERSAL:
+                    move = self._traverse(True, selection, bucket)
+                elif selection.bucket_item_search_method == SearchMethod.RANDOM:
+                    move = self._random(selection, bucket)
+
+                if move is not None:
+                    return move
+        # Backwards traversal
+        else:
+            for i in range(start_index, end_index, -1):
+                bucket = self.smart_bucket[i]
+
+                if not self._does_bucket_match_selection_criteria(bucket, selection):
+                    continue
+
+                move = None
+                if selection.bucket_item_search_method == SearchMethod.TRAVERSAL:
+                    move = self._traverse(False, selection, bucket)
+                elif selection.bucket_item_search_method == SearchMethod.RANDOM:
+                    move = self._random(selection, bucket)
+
+                if move is not None:
+                    return move
+        return None
+
+    def _pick_via_random(self, start_index: int, end_index: int, selection: Selection) -> Optional[Move]:
+        # TODO: Support random selection if using backwards search
+        # Create a list of valid bucket indexes to pick from
+        valid_bucket_indexes = list(range(start_index, end_index + 1))
+
+        while valid_bucket_indexes:
+            random_bucket_index = random.choice(valid_bucket_indexes)
+            random_bucket = self.smart_bucket[random_bucket_index]
+
+            if not self._does_bucket_match_selection_criteria(random_bucket, selection):
+                valid_bucket_indexes.remove(random_bucket_index)
+                continue
+
+            random_move = None
+            if selection.bucket_item_search_method == SearchMethod.TRAVERSAL:
+                random_move = self._traverse(True, selection, random_bucket) # TODO: handle backwards
+            elif selection.bucket_item_search_method == SearchMethod.RANDOM:
+                random_move = self._random(selection, random_bucket)
+            
+            if random_move is not None:
+                return random_move
+            else:
+                valid_bucket_indexes.remove(random_bucket_index)
+        return None
+    
+    def _traverse(self, forwards: bool, selection: Selection, bucket: Bucket) -> Optional[Move]:
+        # Forwards traversal
+        if forwards:
+            for j in range(0, len(bucket)):
+                bucket_item = bucket[j]
+                if self._does_bucket_item_match_selection_criteria(bucket_item, selection):
+                    bucket.mark_as_used(j)
+                    return bucket_item.move
+        # Backwards traversal
+        else:
+            for j in range(len(bucket)-1, -1, -1): # search buckets in reverse
+                bucket_item = bucket[j]
+                if self._does_bucket_item_match_selection_criteria(bucket_item, selection):
+                    bucket.mark_as_used(j)
+                    return bucket_item.move
+        return None
+    
+    def _random(self, selection: Selection, bucket: Bucket) -> Optional[Move]:
+        available_indexes = list(range(len(bucket)))
+        random.shuffle(available_indexes)
+
+        for random_bucket_item_index in available_indexes:
+            random_bucket_item = bucket[random_bucket_item_index]
+
+            if self._does_bucket_item_match_selection_criteria(random_bucket_item, selection):
+                bucket.mark_as_used(random_bucket_item_index)
+                return random_bucket_item.move
+        
+        return None
 
     def _does_bucket_match_selection_criteria(self, bucket: Bucket, selection: Selection):
         """
