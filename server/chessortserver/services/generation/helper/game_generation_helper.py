@@ -1,7 +1,7 @@
 import random
 
 from chessortserver.models.chess import Color
-from chessortserver.utils.difficulty import normalised_strength
+from chessortserver.utils.engine.strength import normalised_strength
 from chessortserver.utils.chess import get_turn_player_from_fen
 from ..helper.smart_bucket import Bucket, BucketItem, SmartBucket
 from ..helper.selection import SearchMethod, Selection

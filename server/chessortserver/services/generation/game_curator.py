@@ -1,15 +1,12 @@
 from collections import defaultdict
 
 from chessortserver.services.generation.exception.game_generation_error import GameGenerationError
-from chessortserver.services.generation.strategies.dual_sided_duplicate_strategy import DualSidedDuplicateStrategy
-from chessortserver.services.generation.strategies.equal_random_segments_strategy import EqualRandomSegmentsStrategy
-from chessortserver.services.generation.strategies.one_of_each_strategy import OneOfEachStrategy
 from chessortserver.services.generation.strategies.top_spread_strategy import TopSpreadStrategy
 from .strategies.top_strongest_strategy import TopStrongestStrategy
 from ...models.models import Move, Position
 from ...logger import Logger
 from .move_selection_strategy import MoveSelectionStrategy
-from ...utils.difficulty import normalised_strength
+from ...utils.engine.strength import normalised_strength
 
 class GameCurator:
     """

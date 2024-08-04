@@ -3,8 +3,7 @@ from flask import Blueprint, jsonify, request
 from chessortserver.models.models import Move, Position
 from .db.db_client import get_game_by_game_id, register_game_played, get_game_solution, get_random_position_with_all_moves
 from .utils.sqids import generate_game_id, decode_game_id
-from .utils.helpers import to_move_hash, map_difficulty
-from .utils.difficulty import get_difficulty
+from .utils.helpers import to_move_hash, get_difficulty
 from .services.generation.game_curator import GameCurator
 from .models.converters import from_dao
 import random
@@ -36,7 +35,6 @@ def get_game(gameId):
     # Compute difficulty
     engine_evals = [move.EngineEval for move in moves]
     difficulty = get_difficulty(engine_evals)
-    difficulty_str = map_difficulty(difficulty).value
 
     # Shuffle the moves for the response
     random.shuffle(uci_moves)
@@ -45,7 +43,7 @@ def get_game(gameId):
         'gameId': gameId,
         'fen': position.FEN,
         'uciMoves': uci_moves,
-        'difficulty': difficulty_str,
+        'difficulty': difficulty.value,
         'positionHits': position_hits,
         'gameHits': game_hits
     })
@@ -79,7 +77,6 @@ def get_random_game():
     # Compute difficulty
     engine_evals = [move.engine_eval for move in moves]
     difficulty = get_difficulty(engine_evals)
-    difficulty_str = map_difficulty(difficulty).value
 
     # Shuffle the moves for the response
     random.shuffle(uci_moves)
@@ -87,7 +84,7 @@ def get_random_game():
     return jsonify({
         'fen': position.fen,
         'uciMoves': uci_moves,
-        'difficulty': difficulty_str,
+        'difficulty': difficulty.value,
         'gameId': game_id,
         'positionHits': position_hits,
         'gameHits': game_hits

@@ -1,5 +1,5 @@
 from chessortserver.models.chess import Color
-from chessortserver.utils.difficulty import normalised_strength
+from chessortserver.utils.engine.strength import normalised_strength
 from chessortserver.utils.chess import get_turn_player_from_fen
 from ..move_selection_strategy import MoveSelectionStrategy
 from ..helper.game_generation_helper import GameGenerationHelper

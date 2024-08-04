@@ -39,6 +39,37 @@ def get_evaluation_type(move: Move) -> EvaluationType:
     else:
         return EvaluationType.CENTIPAWN
 
+def sort_evals(evals):
+    """
+    Sort input evals from strongest to weakest
+    This returns the eval strings unchanged but in sorted order.
+    Example:
+      ['+200', '-50', '#-1', '#1'] -> ['#1', '+200', '-50', '#-1']
+    """
+    white_mates = []
+    centipawns = []
+    black_mates = []
+    
+    # Put into right list
+    for eval_str in evals:
+        if eval_str.startswith("#"):
+            mate_value = int(eval_str[1:])
+            if mate_value > 0:
+                white_mates.append(eval_str)
+            else:
+                black_mates.append(eval_str)
+        else:
+            centipawns.append(eval_str)
+    
+    # Sort each list
+    white_mates.sort(key=lambda x: int(x[1:]))
+    centipawns.sort(key=lambda x: -int(x))
+    black_mates.sort(key=lambda x: int(x[1:]))
+
+    # Combine sorted lists
+    sorted_evals = white_mates + centipawns + black_mates
+    return sorted_evals
+
 def get_turn_player_from_fen(fen: str) -> Color:
     """
     Get the turn player from a FEN string.
