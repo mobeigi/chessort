@@ -1,4 +1,4 @@
-from chessortserver.utils.move import get_advantage, get_evaluation_type
+from chessortserver.utils.chess import get_advantage, get_evaluation_type
 from ....models.models import Move
 from ....models.chess import Color, EvaluationType
 

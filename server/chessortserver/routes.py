@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify, request
+
+from chessortserver.models.models import Move, Position
 from .db.db_client import get_game_by_game_id, register_game_played, get_game_solution, get_random_position_with_all_moves
 from .utils.sqids import generate_game_id, decode_game_id
 from .utils.helpers import to_move_hash, map_difficulty
@@ -57,19 +59,19 @@ def get_random_game():
         return jsonify({'error': 'No position found or insufficient moves found for position.'}), 404
 
     # Convert to DTO's
+    position = from_dao(position_dao)
     all_moves = [ from_dao(move_dao) for move_dao in all_moves_daos ]
 
     # Create a game from game generator
-    moves = gc.select_moves_for_game(all_moves, 4)
+    moves = gc.select_moves_for_game(position, all_moves, 4)
 
     if len(moves) < 4:
         return jsonify({'error': 'Failed to generate moves for game.'}), 500
 
     # Insert game played id
-    fen = position_dao.FEN
     uci_moves = [move.uci_move for move in moves]
     move_hash = to_move_hash(uci_moves)
-    game_played_id, position_hits, game_hits = register_game_played(fen, move_hash)
+    game_played_id, position_hits, game_hits = register_game_played(position.fen, move_hash)
 
     # Generate the game ID
     game_id = generate_game_id(game_played_id)
@@ -83,7 +85,7 @@ def get_random_game():
     random.shuffle(uci_moves)
 
     return jsonify({
-        'fen': position_dao.FEN,
+        'fen': position.fen,
         'uciMoves': uci_moves,
         'difficulty': difficulty_str,
         'gameId': game_id,

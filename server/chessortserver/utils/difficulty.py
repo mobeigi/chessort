@@ -1,6 +1,8 @@
 import math
 import statistics
 
+from chessortserver.models.chess import Color
+
 from ..utils.helpers import sort_evals
 
 # Downscales factors are used to divide the centipawn equivalent values before passing into sigmoid functions
@@ -89,3 +91,22 @@ def get_difficulty(evals):
     difficulty = 100 - (harmonic_mean / max_harmonic_mean) * 100
     
     return difficulty
+
+# TODO: Document
+def normalised_strength(evals: list[str], turn_player: Color = Color.WHITE) -> list[float]:
+    # Sort input.
+    # We rely on natural strength ordering (from mate in 1 for white first to mate in 1 for black last).
+    sorted_evals = sort_evals(evals)
+
+    # Get centipawn values
+    centipawn_values = [convert_eval_to_normalised(move) for move in sorted_evals]
+
+    # Renormalise all values in [1.5, -0.5] range to bind to [0, 1] range.
+    # The scaling here is linear.
+    normalized_centipawn_values = normalize(centipawn_values, -0.5, 1.5)
+    
+    # Convert to relative if needed
+    if turn_player == Color.BLACK:
+        normalized_centipawn_values = [ 1 - x for x in normalized_centipawn_values]
+
+    return normalized_centipawn_values

@@ -1,15 +1,20 @@
 import random
+
+from chessortserver.models.chess import Color
+from chessortserver.utils.difficulty import normalised_strength
+from chessortserver.utils.chess import get_turn_player_from_fen
 from ..helper.smart_bucket import Bucket, BucketItem, SmartBucket
 from ..helper.selection import SearchMethod, Selection
 from ..exception.game_generation_error import GameGenerationError
-from ....models.models import Move
+from ....models.models import Position, Move
 from ....utils.math import col_round
 
 class GameGenerationHelper:
-    def __init__(self, moves: list[Move]):
+    def __init__(self, position: Position, moves: list[Move]):
         """
-        Initialize the GameGenerationHelper with a list of moves.
+        Initialize the GameGenerationHelper.
         """
+        self.position = position
         self.moves = moves
         self.smart_bucket: SmartBucket = SmartBucket(self.moves)
 
@@ -124,6 +129,13 @@ class GameGenerationHelper:
         
         if selection.evaluation_type and bucket.evaluation_type != selection.evaluation_type:
             return False
+        
+        if selection.max_norm_eval_strength is not None:
+            turn_player = get_turn_player_from_fen(self.position.fen)
+            # All bucket items have the same eval so any will do
+            bucket_normalised_strength = normalised_strength([bucket[0].move.engine_eval], turn_player)[0]
+            if bucket_normalised_strength > selection.max_norm_eval_strength:
+                return False
 
         return True
 

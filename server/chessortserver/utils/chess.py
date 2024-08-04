@@ -1,7 +1,6 @@
 from chessortserver.models.chess import Color, EvaluationType
 from chessortserver.models.models import Move
 
-
 def get_advantage(move: Move) -> Color:
     """
     Determine the advantage based on the engine evaluation.
@@ -39,3 +38,23 @@ def get_evaluation_type(move: Move) -> EvaluationType:
         return EvaluationType.MATE
     else:
         return EvaluationType.CENTIPAWN
+
+def get_turn_player_from_fen(fen: str) -> Color:
+    """
+    Get the turn player from a FEN string.
+
+    :param fen: FEN string representing the board state.
+    :return: Color.WHITE if it's white's turn, Color.BLACK if it's black's turn.
+    """
+    # The FEN string is space-separated. The turn player is the second field.
+    fen_parts = fen.split(' ')
+    if len(fen_parts) < 2:
+        raise ValueError("Invalid FEN string")
+
+    turn_player = fen_parts[1]
+    if turn_player == 'w':
+        return Color.WHITE
+    elif turn_player == 'b':
+        return Color.BLACK
+    else:
+        raise ValueError("Invalid turn player in FEN string")

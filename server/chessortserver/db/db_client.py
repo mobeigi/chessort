@@ -19,7 +19,7 @@ DATABASE_URL = f"mysql+pymysql://{username}:{password}@{host}/{database}"
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 
-def get_random_position_with_all_moves():
+def get_random_position_with_all_moves() -> tuple[PositionsDAO, list[MoveDAO]]:
     """ Get a random game with all the moves from the database """
     session = Session()
     

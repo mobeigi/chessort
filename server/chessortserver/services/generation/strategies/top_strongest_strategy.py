@@ -13,20 +13,26 @@ class TopStrongestStrategy(MoveSelectionStrategy):
     def __init__(self, distinct: bool = True):
         self.distinct = distinct
 
-    def can_handle(self, moves: list[Move], num_required_moves: int) -> bool:
+    def __str__(self):
+        return f"TopStrongestStrategy(distinct={self.distinct})"
+
+    def __repr__(self):
+        return self.__str__()
+
+    def can_handle(self, position, moves: list[Move], num_required_moves: int) -> bool:
         if not self.distinct:
             if len(moves) < num_required_moves:
                 return False
         else:
             # Need at least num_required_moves buckets
-            ggh = GameGenerationHelper(moves)
+            ggh = GameGenerationHelper(position, moves)
             if len(ggh.smart_bucket) < num_required_moves:
                 return False
         
-        return super().can_handle(moves, num_required_moves)
+        return super().can_handle(position, moves, num_required_moves)
 
-    def select_moves(self, moves: list[Move], num_required_moves: int) -> list[Move]:
-        if not self.can_handle(moves, num_required_moves):
+    def select_moves(self, position, moves: list[Move], num_required_moves: int) -> list[Move]:
+        if not self.can_handle(position, moves, num_required_moves):
             raise ValueError('Cannot handle input. Make sure you call can_handle() first.')
 
         # Top N moves
@@ -34,7 +40,7 @@ class TopStrongestStrategy(MoveSelectionStrategy):
             return moves[:num_required_moves]
 
         # Get smart buckets
-        ggh = GameGenerationHelper(moves)
+        ggh = GameGenerationHelper(position, moves)
 
         # Create selections
         selections = [

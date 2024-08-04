@@ -1,4 +1,4 @@
-from ...models.models import Move
+from ...models.models import Move, Position
 
 class MoveSelectionStrategy:
     """
@@ -13,12 +13,13 @@ class MoveSelectionStrategy:
         """
         pass
 
-    def select_moves(self, moves: list[Move], num_required_moves: int) -> list[Move]:
+    def select_moves(self, position: Position, moves: list[Move], num_required_moves: int) -> list[Move]:
         """
         Select moves based on the strategy.
         The returned moves should be sorted by overall rank. 
         This method should be implemented by subclasses.
         
+        :param position: The position being played.
         :param moves: List of all available moves.
         :param num_required_moves: The number of moves to select.
         :return: List of the selected moves sorted by its overall rank. Should return len(num_required_moves) moves.
@@ -26,11 +27,13 @@ class MoveSelectionStrategy:
         """
         raise NotImplementedError("This method should be implemented by subclasses.")
 
-    def can_handle(self, moves: list[Move], num_required_moves: int) -> bool:
+    def can_handle(self, position: Position, moves: list[Move], num_required_moves: int) -> bool:
         """
         Determines if this strategy can select moves for the given moves and number of required moves.
+        This does not gaurantee the strategy will not fail! It is simply a means to do quick & cheap precondition checks.
         This method can be overridden by subclasses.
         
+        :param position: The position being played.
         :param moves: List of all available moves.
         :param num_required_moves: The number of moves to select.
         :return: True if the strategy will be able to handle this set of moves and required moves.

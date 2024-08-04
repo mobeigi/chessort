@@ -14,7 +14,8 @@ class Selection:
                  max_bucket_usage_count: int = None,
                  min_bucket_size: int = 0,
                  evaluation_type: EvaluationType = None,
-                 advantage: list[Color] = None
+                 advantage: list[Color] = None,
+                 max_norm_eval_strength: int = None
     ):
         """
         Initialize the Selection object with the given parameters.
@@ -26,6 +27,7 @@ class Selection:
         :param min_bucket_size: The minimum size of a bucket.
         :param evaluation_type: The move's evaluation type to pick. None means any.
         :param advantage: A list of acceptable advantages. None means any.
+        :param max_norm_eval_strength: The maximum normalised eval strength to allow for the move. Relative to the turn player.
         """
         self.start = start
         self.end = end
@@ -34,11 +36,13 @@ class Selection:
         self.min_bucket_size = min_bucket_size
         self.evaluation_type = evaluation_type
         self.advantage = advantage
+        self.max_norm_eval_strength = max_norm_eval_strength
 
     def __str__(self):
-        return (f"Selection(start={self.start}, end={self.end}, search_method={self.search_method.value}, "
+        return (f"Selection(start={self.start}, end={self.end}, search_method={self.search_method}, "
                 f"max_bucket_usage_count={self.max_bucket_usage_count}, min_bucket_size={self.min_bucket_size}, "
-                f"evaluation_type={self.evaluation_type}, advantage={self.advantage})")
+                f"evaluation_type={self.evaluation_type}, advantage={self.advantage}, "
+                f"max_norm_eval_strength={self.max_norm_eval_strength})")
 
     def __repr__(self):
         return self.__str__()
