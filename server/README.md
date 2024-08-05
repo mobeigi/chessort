@@ -17,16 +17,23 @@ It interacts with the backend database and provides a public API for consumption
     - Populate the `.env` file with your details.
 
 2. **Create virtual environment**:
-    - Create a virtual environment by running:
-      ```sh
-      python -m venv ./venv
-      ```
+    ```sh
+    python -m venv ./venv
+    ```
 
-3. **Install Dependencies**:
-    - Ensure you have the required Python packages by running:
-      ```sh
-      pip install -r requirements.txt
-      ```
+3. **Activate the virtual environment**:
+    ```sh
+    # On Windows
+    .\venv\Scripts\activate
+
+    # On Unix
+    source venv/bin/activate
+    ```
+
+4. **Install Dependencies**:
+    ```sh
+    pip install -r requirements.txt
+    ```
 
 ## Quick Start
 
