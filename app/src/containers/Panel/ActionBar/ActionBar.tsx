@@ -55,7 +55,7 @@ const showToast = (message: string, type: TypeOptions, themeMode: ThemeMode) => 
 };
 
 export const ActionBar = ({ fen }: ActionBarProps) => {
-  const { mode, toggleThemeMode, boardOrientation, setBoardOrientation, onboardingCompelte, setOnboardingComplete } =
+  const { mode, toggleThemeMode, boardOrientation, setBoardOrientation, onboardingComplete, setOnboardingComplete } =
     useUserPreferences();
   const [fenRecentlyCopied, setFenRecentlyCopied] = useState(false);
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
@@ -64,13 +64,15 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
    * Trigger onboarding for new users
    */
   useEffect(() => {
-    setTimeout(() => {
-      if (!onboardingCompelte) {
+    const timeoutId = setTimeout(() => {
+      if (!onboardingComplete) {
         setIsHowToModalOpen(true);
         setOnboardingComplete(true);
       }
-    }, 100); // Delay needed to allow rendering on mobile
-  }, [onboardingCompelte, setOnboardingComplete]);
+    }, 500); // Delay needed to allow rendering on mobile
+    // Cleanup
+    return () => clearTimeout(timeoutId);
+  }, [onboardingComplete, setOnboardingComplete]);
 
   const getBoardOrientationNiceName = (boardOrientation: BoardOrientationType): string => {
     switch (boardOrientation) {

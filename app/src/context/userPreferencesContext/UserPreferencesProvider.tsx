@@ -14,7 +14,7 @@ import {
 export const UserPreferencesProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [mode, setMode] = useState<ThemeMode>(ThemeMode.Dark);
   const [boardOrientation, setBoardOrientation] = useState<BoardOrientation>(BoardOrientation.Turn);
-  const [onboardingCompelte, setOnboardingComplete] = useState<boolean>(false);
+  const [onboardingComplete, setOnboardingComplete] = useState<boolean>(false);
 
   useEffect(() => {
     const initialTheme = getStoredTheme();
@@ -37,9 +37,9 @@ export const UserPreferencesProvider: React.FC<{ children: ReactNode }> = ({ chi
     setStoredBoardOrientation(boardOrientation);
   };
 
-  const setOnboardingCompleteFn = (onboardingCompelte: boolean) => {
-    setOnboardingComplete(onboardingCompelte);
-    setStoredOnboardingComplete(onboardingCompelte);
+  const setOnboardingCompleteFn = (onboardingComplete: boolean) => {
+    setOnboardingComplete(onboardingComplete);
+    setStoredOnboardingComplete(onboardingComplete);
   };
 
   return (
@@ -49,7 +49,7 @@ export const UserPreferencesProvider: React.FC<{ children: ReactNode }> = ({ chi
         toggleThemeMode,
         boardOrientation,
         setBoardOrientation: setBoardOrientationFn,
-        onboardingCompelte,
+        onboardingComplete: onboardingComplete,
         setOnboardingComplete: setOnboardingCompleteFn,
       }}
     >
