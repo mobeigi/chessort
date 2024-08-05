@@ -64,10 +64,12 @@ export const ActionBar = ({ fen }: ActionBarProps) => {
    * Trigger onboarding for new users
    */
   useEffect(() => {
-    if (!onboardingCompelte) {
-      setIsHowToModalOpen(true);
-      setOnboardingComplete(true);
-    }
+    setTimeout(() => {
+      if (!onboardingCompelte) {
+        setIsHowToModalOpen(true);
+        setOnboardingComplete(true);
+      }
+    }, 100); // Delay needed to allow rendering on mobile
   }, [onboardingCompelte, setOnboardingComplete]);
 
   const getBoardOrientationNiceName = (boardOrientation: BoardOrientationType): string => {
