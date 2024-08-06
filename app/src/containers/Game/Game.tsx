@@ -36,8 +36,6 @@ export const Game = () => {
 
   const stateRef = useRef<typeof state | null>(state);
   const apiRef = useRef<Api>();
-
-  const [lastPreviewedMove, setLastPreviewedMove] = useState<string | null>(state.previewedMove);
   const [shapes, setShapes] = useState<Map<string | null, DrawShape[]>>(new Map());
 
   /**
@@ -70,19 +68,6 @@ export const Game = () => {
       });
     }
   }, []);
-
-  /**
-   * Redraw arrows instantly as we update the previewed mode
-   */
-  useEffect(() => {
-    if (apiRef.current) {
-      if (state.previewedMove !== lastPreviewedMove) {
-        apiRef.current.redrawAll();
-        setLastPreviewedMove(state.previewedMove);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiRef.current, state.previewedMove, lastPreviewedMove]);
 
   // Transform last move to expected form
   const lastMoveFrom = state.previewedMove?.slice(0, 2) as Key;

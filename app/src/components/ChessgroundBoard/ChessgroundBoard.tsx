@@ -39,7 +39,10 @@ export const ChessgroundBoard = forwardRef<Api | undefined, ChessGroundBoardProp
     // This essentially binds the props to the API
     useEffect(() => {
       if (api) {
-        console.log(api.state.drawable.shapes);
+        // Update shapes first
+        // This allows it to render instantly without waiting for animation duration
+        api.setShapes(shapes);
+
         api.set({
           fen,
           lastMove,
