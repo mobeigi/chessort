@@ -52,10 +52,7 @@ export const Game = () => {
    */
   useEffect(() => {
     if (apiRef.current) {
-      setLastPreviewedMove(state.previewedMove);
       setShapes(new Map());
-      apiRef.current.setShapes([]);
-      apiRef.current.redrawAll();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiRef.current, state.gameDetails.fen]);
@@ -75,36 +72,19 @@ export const Game = () => {
   }, []);
 
   /**
-   * Set shapes onChange handler once as api ref becomes available.
-   */
-  useEffect(() => {
-    if (apiRef.current) {
-      apiRef.current.state.drawable.onChange = onShapesChanged;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiRef.current]);
-
-  /**
-   * Load stored shapes as previewed move changes.
+   * Redraw arrows instantly as we update the previewed mode
    */
   useEffect(() => {
     if (apiRef.current) {
       if (state.previewedMove !== lastPreviewedMove) {
-        if (shapes) {
-          const storedShapes = shapes.get(state.previewedMove);
-          if (storedShapes) {
-            apiRef.current.setShapes(storedShapes);
-          } else {
-            apiRef.current.setShapes([]);
-          }
-          apiRef.current.redrawAll();
-        }
+        apiRef.current.redrawAll();
         setLastPreviewedMove(state.previewedMove);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiRef.current, state.previewedMove, lastPreviewedMove]);
 
+  // Transform last move to expected form
   const lastMoveFrom = state.previewedMove?.slice(0, 2) as Key;
   const lastMoveTo = state.previewedMove?.slice(2, 4) as Key;
   const lastMove = [...(lastMoveFrom && lastMoveTo ? [lastMoveFrom, lastMoveTo] : [])];
@@ -121,6 +101,8 @@ export const Game = () => {
           turnColor={chessJsTurnToColor(state.initialChessJs.turn())}
           lastMove={lastMove}
           orientation={orientation}
+          shapes={shapes.get(state.previewedMove) || []}
+          onShapesChanged={onShapesChanged}
         />
       </ChessBoardWrapper>
       <PanelWrapper>

@@ -10,7 +10,17 @@ import '../../assets/pieces/maestro/chessground.maestro.external.css';
 import '../../assets/chessground/chessground.chessort.css';
 
 export const ChessgroundBoard = forwardRef<Api | undefined, ChessGroundBoardProps>(
-  ({ fen, lastMove = [], turnColor = 'white', orientation = 'white' }: ChessGroundBoardProps, apiRef) => {
+  (
+    {
+      fen,
+      lastMove = [],
+      turnColor = 'white',
+      orientation = 'white',
+      shapes = [],
+      onShapesChanged: onShapesChanged,
+    }: ChessGroundBoardProps,
+    apiRef,
+  ) => {
     const boardRef = useRef(null);
     const [api, setApi] = useState<Api>();
 
@@ -36,11 +46,12 @@ export const ChessgroundBoard = forwardRef<Api | undefined, ChessGroundBoardProp
           turnColor,
           orientation,
           drawable: {
-            ...api.state.drawable,
+            shapes,
+            onChange: onShapesChanged,
           },
         });
       }
-    }, [api, fen, lastMove, turnColor, orientation]);
+    }, [api, fen, lastMove, turnColor, orientation, shapes, onShapesChanged]);
 
     // Expose API ref to parent
     useImperativeHandle(apiRef, () => api, [api]);
