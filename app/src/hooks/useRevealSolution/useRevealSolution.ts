@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useGameContext } from '../useGameContext';
-import { getGameSolution } from '../../services/chessortServer/api';
-import { SolutionApiResponse } from '../../services/chessortServer';
+import { getGameSolution, SolutionApiResponse } from '../../services/chessortServer';
 
 export const useRevealSolution = () => {
   const { state, dispatch } = useGameContext();
