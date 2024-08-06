@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
 import { ChessgroundContainer } from './styled';
 import { Chessground } from 'chessground';
 import { Api } from 'chessground/api';
@@ -9,36 +9,42 @@ import '../../assets/chessground/chessground.base.css';
 import '../../assets/pieces/maestro/chessground.maestro.external.css';
 import '../../assets/chessground/chessground.chessort.css';
 
-export const ChessgroundBoard = ({
-  fen,
-  lastMove = [],
-  turnColor = 'white',
-  orientation = 'white',
-}: ChessGroundBoardProps) => {
-  const boardRef = useRef(null);
-  const [api, setApi] = useState<Api>();
+export const ChessgroundBoard = forwardRef<Api | undefined, ChessGroundBoardProps>(
+  ({ fen, lastMove = [], turnColor = 'white', orientation = 'white' }: ChessGroundBoardProps, apiRef) => {
+    const boardRef = useRef(null);
+    const [api, setApi] = useState<Api>();
 
-  // Init the board on first render
-  useEffect(() => {
-    if (boardRef.current) {
-      const api = Chessground(boardRef.current, initialConfig);
-      setApi(api);
-      return () => {
-        api.destroy();
-      };
-    }
-  }, []);
+    // Init the board on first render
+    useEffect(() => {
+      if (boardRef.current) {
+        const api = Chessground(boardRef.current, initialConfig);
+        setApi(api);
+        return () => {
+          api.destroy();
+        };
+      }
+    }, []);
 
-  // Update board state via API
-  // This essentially binds the props to the API
-  useEffect(() => {
-    api?.set({
-      fen,
-      lastMove,
-      turnColor,
-      orientation,
-    });
-  }, [api, fen, lastMove, orientation, turnColor]);
+    // Update board state via API
+    // This essentially binds the props to the API
+    useEffect(() => {
+      if (api) {
+        console.log(api.state.drawable.shapes);
+        api.set({
+          fen,
+          lastMove,
+          turnColor,
+          orientation,
+          drawable: {
+            ...api.state.drawable,
+          },
+        });
+      }
+    }, [api, fen, lastMove, turnColor, orientation]);
 
-  return <ChessgroundContainer ref={boardRef}></ChessgroundContainer>;
-};
+    // Expose API ref to parent
+    useImperativeHandle(apiRef, () => api, [api]);
+
+    return <ChessgroundContainer ref={boardRef}></ChessgroundContainer>;
+  },
+);
