@@ -1,9 +1,6 @@
 # Git
 .git
 
-# Env file
-.env
-
 # Logs
 logs
 *.log

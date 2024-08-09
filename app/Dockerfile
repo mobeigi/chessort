@@ -4,6 +4,9 @@ FROM node:alpine AS builder
 WORKDIR /app
 COPY . .
 
+# Ensure .env binary present as its required during the build
+RUN test -f .env || { echo "Error: .env file is required!" && exit 1; }
+
 RUN yarn install
 RUN yarn build
 
