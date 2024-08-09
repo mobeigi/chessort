@@ -1,11 +1,11 @@
+# Git
+.git
+
 # Contains sensitive database information
 .env
 
 # Logs
 logs/
-
-# Git
-.git/
 
 # Github.com gitignore/Python.gitignore
 # Byte-compiled / optimized / DLL files
