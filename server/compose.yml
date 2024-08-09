@@ -1,0 +1,9 @@
+services:
+  chessort-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "64355"
+    env_file:
+      - ./.env
