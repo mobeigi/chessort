@@ -12,9 +12,10 @@ load_dotenv()
 username = urllib.parse.quote_plus(os.getenv('DB_USER'))
 password = urllib.parse.quote_plus(os.getenv('DB_PASSWORD'))
 host = os.getenv('DB_HOST')
+port = os.getenv('DB_PORT')
 database = os.getenv('DB_DATABASE')
 
-DATABASE_URL = f"mysql+pymysql://{username}:{password}@{host}/{database}"
+DATABASE_URL = f"mysql+pymysql://{username}:{password}@{host}:{port}/{database}"
 
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
