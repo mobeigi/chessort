@@ -60,7 +60,7 @@ const AppContainer = () => {
         </Helmet>
         <Routes>
           <Route path="/" element={<Game />} />
-          <Route path="/game/:gameId" element={<Game />} />
+          <Route path="/game/:gameId/" element={<Game />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />

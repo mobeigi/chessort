@@ -80,10 +80,10 @@ export const Panel = () => {
    * To support back/forward browser navigation.
    */
   useEffect(() => {
-    const targetPathname = game ? `/game/${game.gameId}` : '';
+    const targetPathname = game ? `/game/${game.gameId}/` : '';
     if (game?.gameId && location.pathname !== targetPathname) {
       // Populate browser navigation history
-      navigate(`/game/${game.gameId}`);
+      navigate(`/game/${game.gameId}/`);
     }
     // Only fire when gameId changes (indicating fresh game just loaded)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,7 +109,9 @@ export const Panel = () => {
    */
   useEffect(() => {
     if (location.pathname !== lastLocation) {
-      const gameIdInUrl = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
+      const urlParts = location.pathname.split('/');
+      const gameIdInUrl = urlParts.pop() || urlParts.pop(); // handle trailing slash
+
       if (state.gameDetails.gameId !== gameIdInUrl) {
         loadGame(gameIdInUrl);
       }
