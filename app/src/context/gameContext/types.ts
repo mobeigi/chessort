@@ -31,5 +31,7 @@ export type MoveDetail = {
 
 export interface GameAction {
   type: string;
+  // TODO: Add typing here
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload?: any; // TODO: Type this properly instead of using any
 }
