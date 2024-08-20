@@ -22,7 +22,7 @@ import {
 } from '../../constants/analytics';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useEffect } from 'react';
-import { APP_NAME } from '../../constants/app';
+import { APP_NAME, APP_TAGLINE, CHESSORT_APP_BASE_URL } from '../../constants/app';
 
 // Set modal element
 Modal.setAppElement('#root');
@@ -56,7 +56,10 @@ const AppContainer = () => {
         <Header />
         <ToastContainer />
         <Helmet>
-          <title>{APP_NAME}</title>
+          <title>
+            {APP_NAME}: {APP_TAGLINE}
+          </title>
+          <link rel="canonical" href={`${CHESSORT_APP_BASE_URL}/`} />
         </Helmet>
         <Routes>
           <Route path="/" element={<Game />} />
