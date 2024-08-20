@@ -69,6 +69,7 @@ export const Panel = () => {
 
   const { gameId } = useParams<{ gameId?: string }>();
   const [lastLocation, setLastLocation] = useState(location.pathname);
+  const [isFirstGame, setIsFirstGame] = useState(true);
 
   // We have special states to track the initial loading / failure
   const [isInitLoadAttempted, setIsInitLoadAttempted] = useState(false);
@@ -80,6 +81,11 @@ export const Panel = () => {
    * To support back/forward browser navigation.
    */
   useEffect(() => {
+    // Don't rewrite url for the very first game
+    if (isFirstGame) {
+      return;
+    }
+
     const targetPathname = game ? `/game/${game.gameId}/` : '';
     if (game?.gameId && location.pathname !== targetPathname) {
       // Populate browser navigation history
@@ -95,6 +101,7 @@ export const Panel = () => {
   useEffect(() => {
     if (!isInitLoadAttempted) {
       loadGame(gameId);
+      setIsFirstGame(true);
       setIsInitLoadAttempted(true);
     }
 
@@ -172,7 +179,10 @@ export const Panel = () => {
   );
 
   const handleSubmit = useCallback(() => revealSolution(), [revealSolution]);
-  const handleNextGame = useCallback(() => loadGame(), [loadGame]);
+  const handleNextGame = useCallback(() => {
+    loadGame();
+    setIsFirstGame(false);
+  }, [loadGame]);
 
   /**
    * Keyboard listeners to play the game
