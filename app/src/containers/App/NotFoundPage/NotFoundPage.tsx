@@ -8,7 +8,7 @@ export const NotFoundPage = () => {
     <>
       <Helmet>
         <title>{APP_NAME}: 404 Not Found</title>
-        <link rel="canonical" href={`${CHESSORT_APP_BASE_URL}/404`} />
+        <link rel="canonical" href={`${CHESSORT_APP_BASE_URL}/404/`} />
       </Helmet>
       <NotFoundContainer>
         <h1>404 Not Found</h1>

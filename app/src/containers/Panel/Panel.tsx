@@ -81,8 +81,8 @@ export const Panel = () => {
    * To support back/forward browser navigation.
    */
   useEffect(() => {
-    // Don't rewrite url for the very first game
-    if (isFirstGame) {
+    // Don't rewrite url for the very first game on homepage
+    if (isFirstGame && location.pathname === '/') {
       return;
     }
 
@@ -319,6 +319,12 @@ export const Panel = () => {
   if (isInitLoadCompleted && initError) {
     return (
       <PanelContainer>
+        <Helmet>
+          <title>
+            {APP_NAME}: Failed to load game (#{gameId})
+          </title>
+          <link rel="canonical" href={`${CHESSORT_APP_BASE_URL}/game/${gameId}/`} />
+        </Helmet>
         <div>
           <i className="bx bx-error"></i> <span>Failed to load game.</span>
         </div>
@@ -333,7 +339,9 @@ export const Panel = () => {
           <title>
             {APP_NAME} (#{gameId})
           </title>
-          <link rel="canonical" href={`${CHESSORT_APP_BASE_URL}/game/${gameId}`} />
+          {!(isFirstGame && location.pathname === '/') && (
+            <link rel="canonical" href={`${CHESSORT_APP_BASE_URL}/game/${gameId}/`} />
+          )}
         </Helmet>
       )}
       <PanelContainer>
