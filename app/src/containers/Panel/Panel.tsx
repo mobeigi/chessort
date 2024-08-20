@@ -69,6 +69,7 @@ export const Panel = () => {
 
   const { gameId } = useParams<{ gameId?: string }>();
   const [lastLocation, setLastLocation] = useState(location.pathname);
+  const [isFirstGame, setIsFirstGame] = useState(true);
 
   // We have special states to track the initial loading / failure
   const [isInitLoadAttempted, setIsInitLoadAttempted] = useState(false);
@@ -80,10 +81,15 @@ export const Panel = () => {
    * To support back/forward browser navigation.
    */
   useEffect(() => {
-    const targetPathname = game ? `/game/${game.gameId}` : '';
+    // Don't rewrite url for the very first game
+    if (isFirstGame) {
+      return;
+    }
+
+    const targetPathname = game ? `/game/${game.gameId}/` : '';
     if (game?.gameId && location.pathname !== targetPathname) {
       // Populate browser navigation history
-      navigate(`/game/${game.gameId}`);
+      navigate(`/game/${game.gameId}/`);
     }
     // Only fire when gameId changes (indicating fresh game just loaded)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -95,6 +101,7 @@ export const Panel = () => {
   useEffect(() => {
     if (!isInitLoadAttempted) {
       loadGame(gameId);
+      setIsFirstGame(true);
       setIsInitLoadAttempted(true);
     }
 
@@ -109,7 +116,9 @@ export const Panel = () => {
    */
   useEffect(() => {
     if (location.pathname !== lastLocation) {
-      const gameIdInUrl = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
+      const urlParts = location.pathname.split('/');
+      const gameIdInUrl = urlParts.pop() || urlParts.pop(); // handle trailing slash
+
       if (state.gameDetails.gameId !== gameIdInUrl) {
         loadGame(gameIdInUrl);
       }
@@ -170,7 +179,10 @@ export const Panel = () => {
   );
 
   const handleSubmit = useCallback(() => revealSolution(), [revealSolution]);
-  const handleNextGame = useCallback(() => loadGame(), [loadGame]);
+  const handleNextGame = useCallback(() => {
+    loadGame();
+    setIsFirstGame(false);
+  }, [loadGame]);
 
   /**
    * Keyboard listeners to play the game
