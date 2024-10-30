@@ -16,20 +16,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: Install
       working-directory: ./app
       run: yarn install
+
     - name: Lint
       working-directory: ./app
       run: yarn lint
+
     - name: Build
       working-directory: ./app
       run: yarn build
-      
+
   build_test_server:
     runs-on: ubuntu-latest
 
@@ -39,10 +43,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Python ${{ matrix.python-versio }}
+    - name: Use Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
-        python-versio: ${{ matrix.python-versio }}
+        python-version: ${{ matrix.python-version }}
     - name: Install
       working-directory: ./server
       run: pip install -r requirements.txt
