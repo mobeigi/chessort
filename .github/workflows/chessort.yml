@@ -29,7 +29,7 @@ jobs:
     - name: Build
       working-directory: ./app
       run: yarn build
-      
+
   build_test_server:
     runs-on: ubuntu-latest
 
