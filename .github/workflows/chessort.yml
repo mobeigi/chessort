@@ -7,7 +7,6 @@ on:
     branches: [ main ]
 
 jobs:
-
   build_test_app:
     runs-on: ubuntu-latest
 
@@ -17,16 +16,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: Install
       working-directory: ./app
       run: yarn install
+
     - name: Lint
       working-directory: ./app
       run: yarn lint
+
     - name: Build
       working-directory: ./app
       run: yarn build
