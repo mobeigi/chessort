@@ -39,10 +39,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Python ${{ matrix.python-versio }}
+    - name: Use Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
-        python-versio: ${{ matrix.python-versio }}
+        python-version: ${{ matrix.python-version }}
     - name: Install
       working-directory: ./server
       run: pip install -r requirements.txt
