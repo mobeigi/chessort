@@ -7,6 +7,7 @@ COPY . .
 # Ensure .env binary present as its required during the build
 RUN test -f .env || { echo "Error: .env file is required!" && exit 1; }
 
+RUN npm install -g yarn@1
 RUN yarn install
 RUN yarn build
 
